@@ -1,0 +1,27 @@
+src/*.exe
+src/ENDO
+src/Endod
+src/test_Endo
+src/build.h
+.*.swp
+*.*~*
+*.bak
+*.rej
+*.orig
+*.o
+*.patch
+.ENDO
+#compilation and Qt preprocessor part
+*.qm
+.qmake.stash
+Makefile
+ENDO-qt
+#resources cpp
+qrc_*.cpp
+#qt creator
+*.pro.user
+#mac specific
+.DS_Store
+build
+
+!src/leveldb/Makefile
