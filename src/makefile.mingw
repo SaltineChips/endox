@@ -66,7 +66,6 @@ OBJS= \
     obj/blocksizecalculator.o \
     obj/allocators.o \
     obj/version.o \
-    obj/velocity.o \
     obj/support/cleanse.o \
     obj/checkpoints.o \
     obj/netbase.o \
@@ -90,8 +89,6 @@ OBJS= \
     obj/rpcnet.o \
     obj/rpcblockchain.o \
     obj/rpcrawtransaction.o \
-    obj/rpcsmessage.o \
-    obj/rpcvelocity.o \
     obj/script.o \
     obj/scrypt.o \
     obj/sync.o \
@@ -102,17 +99,15 @@ OBJS= \
     obj/kernel.o \
     obj/pbkdf2.o \
     obj/chainparams.o \
-    obj/blockparams.o \
     obj/stealth.o \
     obj/activemasternode.o \
-    obj/darksend.o \
-    obj/darksend-relay.o \
+    obj/mnengine.o \
     obj/instantx.o \
     obj/masternodeconfig.o \
     obj/masternodeman.o \
     obj/masternode.o \
     obj/masternode-payments.o \
-    obj/rpcdarksend.o \
+    obj/rpcmnengine.o \
     obj/spork.o \
     obj/crypto/hmac_sha256.o \
     obj/crypto/hmac_sha512.o \
@@ -120,9 +115,8 @@ OBJS= \
     obj/crypto/sha1.o \
     obj/crypto/sha256.o \
     obj/crypto/sha512.o \
-    obj/smessage.o    \
-    obj/hashalgo/bmw/aes_helper.o \
-    obj/hashalgo/bmw/bmw.o
+    obj/aes_helper.o \
+    obj/bmw.o
 
 ifeq (${USE_WALLET}, 1)
     DEFS += -DENABLE_WALLET
@@ -136,7 +130,7 @@ ifeq (${USE_WALLET}, 1)
         obj/walletdb.o
 endif
 
-all: Endod.exe
+all: Endox-Coind.exe
 
 LIBS += $(CURDIR)/leveldb/libleveldb.a $(CURDIR)/leveldb/libmemenv.a
 DEFS += $(addprefix -I,$(CURDIR)/leveldb/include)
@@ -152,12 +146,12 @@ obj/%.o: %.cpp $(HEADERS)
 obj/%.o: %.c $(HEADERS)
 	$(CXX) -c $(CFLAGS) -fpermissive -o $@ $<
 
-Endod.exe: $(OBJS:obj/%=obj/%)
+Endox-Coind.exe: $(OBJS:obj/%=obj/%)
 	g++ $(CFLAGS) $(LDFLAGS) -o $@ $(LIBPATHS) $^ $(LIBS)
 
 clean:
 	-rm -f obj/*.o
-	-rm -f Endod.exe
+	-rm -f Endox-Coind.exe
 	-rm -f obj/build.h
 	cd leveldb && TARGET_OS=NATIVE_WINDOWS $(MAKE) clean && cd ..
 

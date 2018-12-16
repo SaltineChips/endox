@@ -72,7 +72,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
         }
     }
 
-    ui->unit->setModel(new BitcoinUnits(this));
+    ui->unit->setModel(new EndoxCoinUnits(this));
 
     /* Widget-to-option mapper */
     mapper = new MonitoredDataMapper(this);
@@ -105,7 +105,7 @@ void OptionsDialog::setModel(OptionsModel *model)
         mapper->toFirst();
     }
 
-    /* update the display unit, to not use the default ("BTC") */
+    /* update the display unit, to not use the default ("ENDOX") */
     updateDisplayUnit();
 
     /* warn only when language selection changes by user action (placed here so init via mapper doesn't trigger this) */
@@ -140,10 +140,6 @@ void OptionsDialog::setMapper()
     mapper->addMapping(ui->unit, OptionsModel::DisplayUnit);
     mapper->addMapping(ui->coinControlFeatures, OptionsModel::CoinControlFeatures);
     mapper->addMapping(ui->useBlackTheme, OptionsModel::UseBlackTheme);
-
-    /* Darksend Rounds */
-    mapper->addMapping(ui->darksendRounds, OptionsModel::DarksendRounds);
-    mapper->addMapping(ui->anonymizeEndo, OptionsModel::AnonymizeEndoAmount);
 }
 
 void OptionsDialog::enableApplyButton()
@@ -195,7 +191,7 @@ void OptionsDialog::showRestartWarning_Proxy()
 {
     if(!fRestartWarningDisplayed_Proxy)
     {
-        QMessageBox::warning(this, tr("Warning"), tr("This setting will take effect after restarting ENDO."), QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Warning"), tr("This setting will take effect after restarting Endox-Coin."), QMessageBox::Ok);
         fRestartWarningDisplayed_Proxy = true;
     }
 }
@@ -204,7 +200,7 @@ void OptionsDialog::showRestartWarning_Lang()
 {
     if(!fRestartWarningDisplayed_Lang)
     {
-        QMessageBox::warning(this, tr("Warning"), tr("This setting will take effect after restarting ENDO."), QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Warning"), tr("This setting will take effect after restarting Endox-Coin."), QMessageBox::Ok);
         fRestartWarningDisplayed_Lang = true;
     }
 }

@@ -1,7 +1,7 @@
 src/*.exe
-src/ENDO
-src/Endod
-src/test_Endo
+src/Endox-Coin
+src/Endox-Coind
+src/test_Endox-Coin
 src/build.h
 .*.swp
 *.*~*
@@ -10,12 +10,11 @@ src/build.h
 *.orig
 *.o
 *.patch
-.ENDO
+.Endox-Coin
 #compilation and Qt preprocessor part
-*.qm
 .qmake.stash
 Makefile
-ENDO-qt
+Endox-Coin-qt
 #resources cpp
 qrc_*.cpp
 #qt creator

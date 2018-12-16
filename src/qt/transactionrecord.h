@@ -76,11 +76,9 @@ public:
         RecvWithAddress,
         RecvFromOther,
         SendToSelf,
-        RecvWithDarksend,
-        DarksendDenominate,
-        DarksendCollateralPayment,
-        DarksendMakeCollaterals,
-        DarksendCreateDenominations,
+        RecvWithMNengine,
+        MNengineCollateralPayment,
+        MNengineMakeCollaterals,
         Darksent
     };
 

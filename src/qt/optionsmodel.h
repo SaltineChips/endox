@@ -13,7 +13,7 @@ QT_BEGIN_NAMESPACE
 class QNetworkProxy;
 QT_END_NAMESPACE
 
-/** Interface from Qt to configuration data structure for Bitcoin client.
+/** Interface from Qt to configuration data structure for EndoxCoin client.
    To Qt, the options are presented as a list with the different options
    laid out vertically.
    This can be changed to a tree once the settings become sufficiently
@@ -37,12 +37,12 @@ public:
         ProxySocksVersion,      // int
         Fee,                    // qint64
         ReserveBalance,         // qint64
-        DisplayUnit,            // BitcoinUnits::Unit
+        DisplayUnit,            // EndoxCoinUnits::Unit
         Language,               // QString
         CoinControlFeatures,    // bool
         UseBlackTheme,     // bool
-        DarksendRounds,    // int
-        AnonymizeEndoAmount, //int
+        MNengineRounds,    // int
+        AnonymizeEndoxCoinAmount, //int
         OptionIDRowCount,
     };
 
@@ -83,8 +83,8 @@ signals:
     void transactionFeeChanged(qint64);
     void reserveBalanceChanged(qint64);
     void coinControlFeaturesChanged(bool);
-    void darksendRoundsChanged(int);
-    void AnonymizeEndoAmountChanged(int);
+    void mnengineRoundsChanged(int);
+    void AnonymizeEndoxCoinAmountChanged(int);
 };
 
 #endif // OPTIONSMODEL_H

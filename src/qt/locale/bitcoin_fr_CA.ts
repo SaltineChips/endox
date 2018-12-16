@@ -3,22 +3,22 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+14"/>
-        <source>About ENDO</source>
-        <translation>Au sujet de ENDO</translation>
+        <source>About Endox-Coin</source>
+        <translation>Au sujet de Endox-Coin</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>&lt;b&gt;ENDO&lt;/b&gt; version</source>
-        <translation>Version de &lt;b&gt;ENDO&lt;/b&gt;</translation>
+        <source>&lt;b&gt;Endox-Coin&lt;/b&gt; version</source>
+        <translation>Version de &lt;b&gt;Endox-Coin&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Copyright © 2009-2014 The Bitcoin developers
 Copyright © 2012-2014 The NovaCoin developers
-Copyright © 2017-2018 The Endo developers</source>
+Copyright © 2014 The Endox-Coin developers</source>
         <translation>Copyright © 2009-2014 Les développeurs Bitcoin
 Copyright © 2012-2014 Les développeurs NovaCoin
-Copyright © 2014 Les développeurs ENDO</translation>
+Copyright © 2014 Les développeurs Endox-Coin</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -60,7 +60,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-43"/>
-        <source>These are your ENDO addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <source>These are your Endox-Coin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
         <translation>Ce sont vos adresses pour recevoir vos paiements. Vous pouvez utiliser une adresse différente pour chaque réception afin d&apos;identifier facilement le payeur.</translation>
     </message>
     <message>
@@ -75,8 +75,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+7"/>
-        <source>Sign a message to prove you own a ENDO address</source>
-        <translation>Signer un message afin de valider l&apos;identité de votre adresse ENDO</translation>
+        <source>Sign a message to prove you own a Endox-Coin address</source>
+        <translation>Signer un message afin de valider l&apos;identité de votre adresse Endox-Coin</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -90,8 +90,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-10"/>
-        <source>Verify a message to ensure it was signed with a specified ENDO address</source>
-        <translation>Vérifier un message pour s&apos;assurer qu&apos;il vient d&apos;un adresse ENDO spécifique.</translation>
+        <source>Verify a message to ensure it was signed with a specified Endox-Coin address</source>
+        <translation>Vérifier un message pour s&apos;assurer qu&apos;il vient d&apos;un adresse Endox-Coin spécifique.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -227,7 +227,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+1"/>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR COINS&lt;/b&gt;!</source>
-        <translation>ATTENTION : Si vous cryptez votre portefeuille et perdez votre passphrase, vous ne pourrez plus accéder à vos Endos</translation>
+        <translation>ATTENTION : Si vous cryptez votre portefeuille et perdez votre passphrase, vous ne pourrez plus accéder à vos Endox-Coins</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -258,8 +258,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+82"/>
-        <source>ENDO will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
-        <translation>L&apos;application ENDO va désormais se terminer afin de finaliser le processus de cryptage. Merci de noter que le cryptage du portefeuille ne garantit pas de se prémunir du vol via l&apos;utilisation de malware, qui auraient pu infecter votre ordinateur. </translation>
+        <source>Endox-Coin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
+        <translation>L&apos;application Endox-Coin va désormais se terminer afin de finaliser le processus de cryptage. Merci de noter que le cryptage du portefeuille ne garantit pas de se prémunir du vol via l&apos;utilisation de malware, qui auraient pu infecter votre ordinateur. </translation>
     </message>
     <message>
         <location line="+13"/>
@@ -304,7 +304,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
 </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>EndoxCoinGUI</name>
     <message>
         <location filename="../bitcoingui.cpp" line="+297"/>
         <source>Sign &amp;message...</source>
@@ -352,8 +352,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+4"/>
-        <source>Show information about ENDO</source>
-        <translation>Afficher des informations au sujet du ENDO</translation>
+        <source>Show information about Endox-Coin</source>
+        <translation>Afficher des informations au sujet du Endox-Coin</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -392,13 +392,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-55"/>
-        <source>Send coins to a ENDO address</source>
-        <translation>Envoyer des monnaies vers une adresse ENDO</translation>
+        <source>Send coins to a Endox-Coin address</source>
+        <translation>Envoyer des monnaies vers une adresse Endox-Coin</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>Modify configuration options for ENDO</source>
-        <translation>Modification des options de configuration de ENDO</translation>
+        <source>Modify configuration options for Endox-Coin</source>
+        <translation>Modification des options de configuration de Endox-Coin</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -438,8 +438,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-214"/>
         <location line="+551"/>
-        <source>ENDO</source>
-        <translation>ENDO</translation>
+        <source>Endox-Coin</source>
+        <translation>Endox-Coin</translation>
     </message>
     <message>
         <location line="-551"/>
@@ -448,8 +448,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+193"/>
-        <source>&amp;About ENDO</source>
-        <translation>A propos de ENDO</translation>
+        <source>&amp;About Endox-Coin</source>
+        <translation>A propos de Endox-Coin</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -500,13 +500,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+0"/>
         <location line="+58"/>
-        <source>ENDO client</source>
-        <translation>Client ENDO</translation>
+        <source>Endox-Coin client</source>
+        <translation>Client Endox-Coin</translation>
     </message>
     <message numerus="yes">
         <location line="+70"/>
-        <source>%n active connection(s) to ENDO network</source>
-        <translation><numerusform>%n connexion active au réseau ENDO</numerusform><numerusform>%n connexions actives au réseau ENDO</numerusform></translation>
+        <source>%n active connection(s) to Endox-Coin network</source>
+        <translation><numerusform>%n connexion active au réseau Endox-Coin</numerusform><numerusform>%n connexions actives au réseau Endox-Coin</numerusform></translation>
     </message>
     <message>
         <location line="+488"/>
@@ -600,8 +600,8 @@ Adresse : %4
     <message>
         <location line="-15"/>
         <location line="+15"/>
-        <source>URI can not be parsed! This can be caused by an invalid ENDO address or malformed URI parameters.</source>
-        <translation>L&apos;adresse du portefeuille ENDO n&apos;as pas pu être correctement identifiée, car invalide ou malformée.</translation>
+        <source>URI can not be parsed! This can be caused by an invalid Endox-Coin address or malformed URI parameters.</source>
+        <translation>L&apos;adresse du portefeuille Endox-Coin n&apos;as pas pu être correctement identifiée, car invalide ou malformée.</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -723,8 +723,8 @@ Adresse : %4
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+104"/>
-        <source>A fatal error occurred. ENDO can no longer continue safely and will quit.</source>
-        <translation>Une erreur fatale a été rencontrée. L&apos;application ENDO ne peut plus être s&apos;exécuter de façon correcte et doit se terminer.</translation>
+        <source>A fatal error occurred. Endox-Coin can no longer continue safely and will quit.</source>
+        <translation>Une erreur fatale a été rencontrée. L&apos;application Endox-Coin ne peut plus être s&apos;exécuter de façon correcte et doit se terminer.</translation>
     </message>
 </context>
 <context>
@@ -1057,8 +1057,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="-5"/>
-        <source>The entered address &quot;%1&quot; is not a valid ENDO address.</source>
-        <translation>L&apos;adresse &quot;%1&quot; renseignée n&apos;est pas une adresse ENDO valide.</translation>
+        <source>The entered address &quot;%1&quot; is not a valid Endox-Coin address.</source>
+        <translation>L&apos;adresse &quot;%1&quot; renseignée n&apos;est pas une adresse Endox-Coin valide.</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1076,8 +1076,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     <message>
         <location filename="../guiutil.cpp" line="+426"/>
         <location line="+12"/>
-        <source>ENDO-Qt</source>
-        <translation>ENDO-Qt</translation>
+        <source>Endox-Coin-Qt</source>
+        <translation>Endox-Coin-Qt</translation>
     </message>
     <message>
         <location line="-12"/>
@@ -1149,13 +1149,13 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+31"/>
-        <source>Automatically start ENDO after logging in to the system.</source>
-        <translation>Démarrage automatique du client ENDO lors de la connexion au système</translation>
+        <source>Automatically start Endox-Coin after logging in to the system.</source>
+        <translation>Démarrage automatique du client Endox-Coin lors de la connexion au système</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Start ENDO on system login</source>
-        <translation>&amp;Démarrage du client ENDO à la connexion au système</translation>
+        <source>&amp;Start Endox-Coin on system login</source>
+        <translation>&amp;Démarrage du client Endox-Coin à la connexion au système</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -1164,8 +1164,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+6"/>
-        <source>Automatically open the ENDO client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Ouverture automatique du port client de ENDO sur le routeur. Ceci ne fonctionne que dans le cas où le support UPnP sur votre routeur existe et est actif.</translation>
+        <source>Automatically open the Endox-Coin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Ouverture automatique du port client de Endox-Coin sur le routeur. Ceci ne fonctionne que dans le cas où le support UPnP sur votre routeur existe et est actif.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1174,8 +1174,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+7"/>
-        <source>Connect to the ENDO network through a SOCKS proxy (e.g. when connecting through Tor).</source>
-        <translation>Connexion au réseau ENDO à travers un proxy SOCKS (e.g. Connexion via le réseau Tor).</translation>
+        <source>Connect to the Endox-Coin network through a SOCKS proxy (e.g. when connecting through Tor).</source>
+        <translation>Connexion au réseau Endox-Coin à travers un proxy SOCKS (e.g. Connexion via le réseau Tor).</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1249,8 +1249,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+13"/>
-        <source>The user interface language can be set here. This setting will take effect after restarting ENDO.</source>
-        <translation>La langue d&apos;interface de de l&apos;utilisateur peut être définie ici. Ces modification seront effectives après redémarrage de l&apos;application ENDO</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting Endox-Coin.</source>
+        <translation>La langue d&apos;interface de de l&apos;utilisateur peut être définie ici. Ces modification seront effectives après redémarrage de l&apos;application Endox-Coin</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -1316,8 +1316,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     <message>
         <location line="-9"/>
         <location line="+9"/>
-        <source>This setting will take effect after restarting ENDO.</source>
-        <translation>Les paramètres prendront effet après redémarrage du client ENDO</translation>
+        <source>This setting will take effect after restarting Endox-Coin.</source>
+        <translation>Les paramètres prendront effet après redémarrage du client Endox-Coin</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -1335,8 +1335,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     <message>
         <location line="+46"/>
         <location line="+247"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the ENDO network after a connection is established, but this process has not completed yet.</source>
-        <translation>Les informations affichées peuvent être obsolètes. Votre portefeuille se synchronise automatiquement avec le réseau ENDO mais ce processus n&apos;est pas encore terminé.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Endox-Coin network after a connection is established, but this process has not completed yet.</source>
+        <translation>Les informations affichées peuvent être obsolètes. Votre portefeuille se synchronise automatiquement avec le réseau Endox-Coin mais ce processus n&apos;est pas encore terminé.</translation>
     </message>
     <message>
         <location line="-173"/>
@@ -1409,7 +1409,7 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     <name>PaymentServer</name>
     <message>
         <location filename="../paymentserver.cpp" line="+107"/>
-        <source>Cannot start ENDO: click-to-pay handler</source>
+        <source>Cannot start Endox-Coin: click-to-pay handler</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1577,8 +1577,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the ENDO-Qt help message to get a list with possible ENDO command-line options.</source>
-        <translation>Afficher le message d&apos;aide ENDO-Qt afin d&apos;obtenir la liste des options de de L&apos;outil en ligne de commande ENDO</translation>
+        <source>Show the Endox-Coin-Qt help message to get a list with possible Endox-Coin command-line options.</source>
+        <translation>Afficher le message d&apos;aide Endox-Coin-Qt afin d&apos;obtenir la liste des options de de L&apos;outil en ligne de commande Endox-Coin</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1597,13 +1597,13 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="-104"/>
-        <source>ENDO - Debug window</source>
-        <translation>ENDO - Fenêtre de déboggage</translation>
+        <source>Endox-Coin - Debug window</source>
+        <translation>Endox-Coin - Fenêtre de déboggage</translation>
     </message>
     <message>
         <location line="+25"/>
-        <source>ENDO Core</source>
-        <translation>ENDO Core</translation>
+        <source>Endox-Coin Core</source>
+        <translation>Endox-Coin Core</translation>
     </message>
     <message>
         <location line="+256"/>
@@ -1612,8 +1612,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+7"/>
-        <source>Open the ENDO debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Ouvrir le fichier journal de debug ENDO au sein du répertoire courant. Cette opération peut prendre quelques secondes dans le cas de fichiers journaux volumineux.</translation>
+        <source>Open the Endox-Coin debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Ouvrir le fichier journal de debug Endox-Coin au sein du répertoire courant. Cette opération peut prendre quelques secondes dans le cas de fichiers journaux volumineux.</translation>
     </message>
     <message>
         <location line="+102"/>
@@ -1622,8 +1622,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="+325"/>
-        <source>Welcome to the ENDO RPC console.</source>
-        <translation>Bienvenue sur la console ENDO RPC.</translation>
+        <source>Welcome to the Endox-Coin RPC console.</source>
+        <translation>Bienvenue sur la console Endox-Coin RPC.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1816,8 +1816,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location filename="../sendcoinsdialog.cpp" line="-173"/>
-        <source>Enter a ENDO address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>Entrer une adresse ENDO (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>Enter a Endox-Coin address (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
+        <translation>Entrer une adresse Endox-Coin (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -1916,8 +1916,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+247"/>
-        <source>WARNING: Invalid ENDO address</source>
-        <translation>AVERTISSEMENT: Adresse ENDO Invalide</translation>
+        <source>WARNING: Invalid Endox-Coin address</source>
+        <translation>AVERTISSEMENT: Adresse Endox-Coin Invalide</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -1927,7 +1927,7 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     <message>
         <location line="+4"/>
         <source>WARNING: unknown change address</source>
-        <translation>AVERTISSEMET: Adresse ENDO Invalide</translation>
+        <translation>AVERTISSEMET: Adresse Endox-Coin Invalide</translation>
     </message>
 </context>
 <context>
@@ -1949,7 +1949,7 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+34"/>
-        <source>The address to send the payment to (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
+        <source>The address to send the payment to (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1990,8 +1990,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a ENDO address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>Entrer une adresse ENDO (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>Enter a Endox-Coin address (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
+        <translation>Entrer une adresse Endox-Coin (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</translation>
     </message>
 </context>
 <context>
@@ -2014,8 +2014,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+18"/>
-        <source>The address to sign the message with (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>Entrer une adresse ENDO (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>The address to sign the message with (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
+        <translation>Entrer une adresse Endox-Coin (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -2051,8 +2051,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this ENDO address</source>
-        <translation>Signer le message afin de prouver l&apos;identité de votre adresse ENDO</translation>
+        <source>Sign the message to prove you own this Endox-Coin address</source>
+        <translation>Signer le message afin de prouver l&apos;identité de votre adresse Endox-Coin</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2078,13 +2078,13 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+21"/>
-        <source>The address the message was signed with (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>L&apos;adresse avec laquelle le message à été signé (ex: B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>The address the message was signed with (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
+        <translation>L&apos;adresse avec laquelle le message à été signé (ex: ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</translation>
     </message>
     <message>
         <location line="+40"/>
-        <source>Verify the message to ensure it was signed with the specified ENDO address</source>
-        <translation>Vérifier un message pour s&apos;assurer qu&apos;il vient d&apos;un adresse ENDO spécifique.</translation>
+        <source>Verify the message to ensure it was signed with the specified Endox-Coin address</source>
+        <translation>Vérifier un message pour s&apos;assurer qu&apos;il vient d&apos;un adresse Endox-Coin spécifique.</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2094,8 +2094,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
-        <source>Enter a ENDO address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>Entrer une adresse ENDO (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>Enter a Endox-Coin address (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
+        <translation>Entrer une adresse Endox-Coin (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</translation>
     </message>
     <message>
         <location line="-2"/>
@@ -2104,8 +2104,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+3"/>
-        <source>Enter ENDO signature</source>
-        <translation>Entrer une signature ENDO</translation>
+        <source>Enter Endox-Coin signature</source>
+        <translation>Entrer une signature Endox-Coin</translation>
     </message>
     <message>
         <location line="+82"/>
@@ -2683,8 +2683,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     <name>bitcoin-core</name>
     <message>
         <location filename="../bitcoinstrings.cpp" line="+173"/>
-        <source>ENDO version</source>
-        <translation>Version ENDO</translation>
+        <source>Endox-Coin version</source>
+        <translation>Version Endox-Coin</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2693,8 +2693,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+1"/>
-        <source>Send command to -server or Endod</source>
-        <translation>Envoyer commande à -server ou Endod</translation>
+        <source>Send command to -server or Endox-Coind</source>
+        <translation>Envoyer commande à -server ou Endox-Coind</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2713,13 +2713,13 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+2"/>
-        <source>Specify configuration file (default: ENDO.conf)</source>
-        <translation>Spécifier le fichier de configuration (defaut: ENDO.conf)</translation>
+        <source>Specify configuration file (default: Endox-Coin.conf)</source>
+        <translation>Spécifier le fichier de configuration (defaut: Endox-Coin.conf)</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Specify pid file (default: Endod.pid)</source>
-        <translation>Spécifier le fichier pid (defaut: Endod.pid)
+        <source>Specify pid file (default: Endox-Coind.pid)</source>
+        <translation>Spécifier le fichier pid (defaut: Endox-Coind.pid)
 </translation>
     </message>
     <message>
@@ -2737,13 +2737,13 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
         <source>%s, you must set a rpcpassword in the configuration file:
 %s
 It is recommended you use the following random password:
-rpcuser=Endorpc
+rpcuser=Endox-Coinrpc
 rpcpassword=%s
 (you do not need to remember this password)
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s &quot;ENDO Alert&quot; admin@foo.com
+for example: alertnotify=echo %%s | mail -s &quot;Endox-Coin Alert&quot; admin@foo.com
 </source>
         <translation type="unfinished"/>
     </message>
@@ -2849,8 +2849,8 @@ for example: alertnotify=echo %%s | mail -s &quot;ENDO Alert&quot; admin@foo.com
     </message>
     <message>
         <location line="-103"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong ENDO will not work properly.</source>
-        <translation>Avertissement: Veuillez vérifier la date et l&apos;heure de votre ordinateur. ENDO ne pourra pas fonctionner correctement si l&apos;horloge est réglée de façon incorrecte</translation>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Endox-Coin will not work properly.</source>
+        <translation>Avertissement: Veuillez vérifier la date et l&apos;heure de votre ordinateur. Endox-Coin ne pourra pas fonctionner correctement si l&apos;horloge est réglée de façon incorrecte</translation>
     </message>
     <message>
         <location line="+132"/>
@@ -2924,8 +2924,8 @@ for example: alertnotify=echo %%s | mail -s &quot;ENDO Alert&quot; admin@foo.com
     </message>
     <message>
         <location line="+41"/>
-        <source>SSL options: (see the Bitcoin Wiki for SSL setup instructions)</source>
-        <translation>Options SSL : (voir le Wiki de Bitcoin pour les instructions de configuration du SSL)</translation>
+        <source>SSL options: (see the EndoxCoin Wiki for SSL setup instructions)</source>
+        <translation>Options SSL : (voir le Wiki de EndoxCoin pour les instructions de configuration du SSL)</translation>
     </message>
     <message>
         <location line="-81"/>
@@ -3156,7 +3156,7 @@ for example: alertnotify=echo %%s | mail -s &quot;ENDO Alert&quot; admin@foo.com
     </message>
     <message>
         <location line="+10"/>
-        <source>Initialization sanity check failed. ENDO is shutting down.</source>
+        <source>Initialization sanity check failed. Endox-Coin is shutting down.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -3221,13 +3221,13 @@ for example: alertnotify=echo %%s | mail -s &quot;ENDO Alert&quot; admin@foo.com
     </message>
     <message>
         <location line="+4"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of ENDO</source>
-        <translation>Erreur de chargement du fichier wallet.dat: le portefeuille nécessite une version plus récente de l&apos;application ENDO</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of Endox-Coin</source>
+        <translation>Erreur de chargement du fichier wallet.dat: le portefeuille nécessite une version plus récente de l&apos;application Endox-Coin</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Wallet needed to be rewritten: restart ENDO to complete</source>
-        <translation>le portefeuille nécessite d&apos;être réédité : Merci de relancer l&apos;application ENDO</translation>
+        <source>Wallet needed to be rewritten: restart Endox-Coin to complete</source>
+        <translation>le portefeuille nécessite d&apos;être réédité : Merci de relancer l&apos;application Endox-Coin</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3291,8 +3291,8 @@ for example: alertnotify=echo %%s | mail -s &quot;ENDO Alert&quot; admin@foo.com
     </message>
     <message>
         <location line="+125"/>
-        <source>Unable to bind to %s on this computer. ENDO is probably already running.</source>
-        <translation>Connexion au port %s impossible. L&apos;application ENDO est probablement déjà en cours d&apos;exécution</translation>
+        <source>Unable to bind to %s on this computer. Endox-Coin is probably already running.</source>
+        <translation>Connexion au port %s impossible. L&apos;application Endox-Coin est probablement déjà en cours d&apos;exécution</translation>
     </message>
     <message>
         <location line="-101"/>
@@ -3331,7 +3331,7 @@ for example: alertnotify=echo %%s | mail -s &quot;ENDO Alert&quot; admin@foo.com
     </message>
     <message>
         <location line="+3"/>
-        <source>Cannot obtain a lock on data directory %s. ENDO is probably already running.</source>
+        <source>Cannot obtain a lock on data directory %s. Endox-Coin is probably already running.</source>
         <translation type="unfinished"/>
     </message>
     <message>

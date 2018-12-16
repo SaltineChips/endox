@@ -7,15 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>340</width>
-    <height>532</height>
+    <height>533</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>QR Code Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">color: rgb(204, 155, 68);
-background-color: rgb(244, 244, 244);</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
@@ -31,9 +30,6 @@ background-color: rgb(244, 244, 244);</string>
        <width>300</width>
        <height>300</height>
       </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: #eb1f24</string>
      </property>
      <property name="textFormat">
       <enum>Qt::PlainText</enum>
@@ -60,9 +56,6 @@ background-color: rgb(244, 244, 244);</string>
        <height>50</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true">color: #eb1f24</string>
-     </property>
      <property name="tabChangesFocus">
       <bool>true</bool>
      </property>
@@ -79,9 +72,6 @@ background-color: rgb(244, 244, 244);</string>
         <property name="enabled">
          <bool>true</bool>
         </property>
-        <property name="styleSheet">
-         <string notr="true">color: #eb1f24</string>
-        </property>
         <property name="text">
          <string>Request Payment</string>
         </property>
@@ -94,9 +84,6 @@ background-color: rgb(244, 244, 244);</string>
         </property>
         <item row="1" column="0">
          <widget class="QLabel" name="lblLabel">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>Label:</string>
           </property>
@@ -112,17 +99,10 @@ background-color: rgb(244, 244, 244);</string>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="lnLabel">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
-         </widget>
+         <widget class="QLineEdit" name="lnLabel"/>
         </item>
         <item row="2" column="0">
          <widget class="QLabel" name="lblMessage">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>Message:</string>
           </property>
@@ -138,11 +118,7 @@ background-color: rgb(244, 244, 244);</string>
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QLineEdit" name="lnMessage">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
-         </widget>
+         <widget class="QLineEdit" name="lnMessage"/>
         </item>
         <item row="0" column="0">
          <widget class="QLabel" name="lblAmount">
@@ -151,9 +127,6 @@ background-color: rgb(244, 244, 244);</string>
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
           </property>
           <property name="text">
            <string>Amount:</string>
@@ -170,7 +143,7 @@ background-color: rgb(244, 244, 244);</string>
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="BitcoinAmountField" name="lnReqAmount">
+         <widget class="EndoxCoinAmountField" name="lnReqAmount">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -179,9 +152,6 @@ background-color: rgb(244, 244, 244);</string>
             <width>80</width>
             <height>0</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
           </property>
          </widget>
         </item>
@@ -204,9 +174,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item>
          <widget class="QPushButton" name="btnSaveAs">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>&amp;Save As...</string>
           </property>
@@ -221,7 +188,7 @@ background-color: rgb(244, 244, 244);</string>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>BitcoinAmountField</class>
+   <class>EndoxCoinAmountField</class>
    <extends>QSpinBox</extends>
    <header>bitcoinamountfield.h</header>
    <container>1</container>

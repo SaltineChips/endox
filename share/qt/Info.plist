@@ -7,23 +7,23 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleGetInfoString</key>
-	<string>ENDO-Qt</string>
+	<string>Endox-Coin-Qt</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleExecutable</key>
-	<string>ENDO-Qt</string>
+	<string>Endox-Coin-Qt</string>
 	<key>CFBundleIdentifier</key>
-	<string>co.ENDO.ENDO-Qt</string>
+	<string>co.Endox-Coin.Endox-Coin-Qt</string>
         <key>CFBundleURLTypes</key>
         <array>
           <dict>
             <key>CFBundleTypeRole</key>
             <string>Editor</string>
             <key>CFBundleURLName</key>
-            <string>co.ENDO.EndoPayment</string>
+            <string>co.Endox-Coin.Endox-CoinPayment</string>
             <key>CFBundleURLSchemes</key>
             <array>
-              <string>ENDO</string>
+              <string>Endox-Coin</string>
             </array>
           </dict>
         </array>

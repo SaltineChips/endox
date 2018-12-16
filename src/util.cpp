@@ -82,16 +82,14 @@ string strMasterNodeAddr = "";
 bool fLiteMode = false;
 bool fEnableInstantX = true;
 int nInstantXDepth = 10;
-int nDarksendRounds = 2;
-int nAnonymizeEndoAmount = 1000;
+int nMNengineRounds = 2;
+int nAnonymizeEndoxCoinAmount = 1000;
 int nLiquidityProvider = 0;
 /** Spork enforcement enabled time */
 int64_t enforceMasternodePaymentsTime = 4085657524;
 int nMasternodeMinProtocol = 0;
 bool fSucessfullyLoaded = false;
-bool fEnableDarksend = false;
-/** All denominations used by darksend */
-std::vector<int64_t> darkSendDenominations;
+bool fEnableMNengine = false;
 
 map<string, string> mapArgs;
 map<string, vector<string> > mapMultiArgs;
@@ -1075,7 +1073,7 @@ static std::string FormatException(std::exception* pex, const char* pszThread)
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "ENDO";
+    const char* pszModule = "Endox-Coin";
 #endif
     if (pex)
         return strprintf(
@@ -1105,13 +1103,13 @@ void PrintExceptionContinue(std::exception* pex, const char* pszThread)
 boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\ENDO
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\ENDO
-    // Mac: ~/Library/Application Support/ENDO
-    // Unix: ~/.ENDO
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\ENDOX
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\ENDOX
+    // Mac: ~/Library/Application Support/ENDOX
+    // Unix: ~/.ENDOX
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "ENDO";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "ENDOX";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -1123,10 +1121,10 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     fs::create_directory(pathRet);
-    return pathRet / "ENDO";
+    return pathRet / "ENDOX";
 #else
     // Unix
-    return pathRet / ".ENDO";
+    return pathRet / ".ENDOX";
 #endif
 #endif
 }
@@ -1175,7 +1173,7 @@ void ClearDatadirCache()
 
 boost::filesystem::path GetConfigFile()
 {
-    boost::filesystem::path pathConfigFile(GetArg("-conf", "ENDO.conf"));
+    boost::filesystem::path pathConfigFile(GetArg("-conf", "Endox-Coin.conf"));
     if (!pathConfigFile.is_complete()) pathConfigFile = GetDataDir(false) / pathConfigFile;
     return pathConfigFile;
 }
@@ -1196,30 +1194,30 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
     if (!streamConfig.good())
     {
         boost::filesystem::path ConfPath;
-               ConfPath = GetDataDir() / "ENDO.conf";
+               ConfPath = GetDataDir() / "Endox-Coin.conf";
                FILE* ConfFile = fopen(ConfPath.string().c_str(), "w");
                fprintf(ConfFile, "listen=1\n");
                fprintf(ConfFile, "server=1\n");
-               fprintf(ConfFile, "maxconnections=500\n");
+               fprintf(ConfFile, "maxconnections=150\n");
                fprintf(ConfFile, "rpcuser=yourusername\n");
 
-               char s[34];
-               for (int i = 0; i < 34; ++i)
+               char s[32];
+               for (int i = 0; i < 32; ++i)
                {
                    s[i] = alphanum[rand() % (sizeof(alphanum) - 1)];
                }
 
-               std::string str(s, 34);
-               std::string rpcpass = "rpcpassword=" + str + "\n";
-               fprintf(ConfFile, rpcpass.c_str());
-               fprintf(ConfFile, "port=20029\n");
-               fprintf(ConfFile, "rpcport=20167\n");
+               std::string str(s, 32);
+               fprintf(ConfFile, "rpcpassword=%s\n", str.c_str());
+               fprintf(ConfFile, "port=51441\n");
+               fprintf(ConfFile, "rpcport=51221\n");
                fprintf(ConfFile, "rpcconnect=127.0.0.1\n");
                fprintf(ConfFile, "rpcallowip=127.0.0.1\n");
-               fprintf(ConfFile, "addnode=46.101.73.64\n");
-               fprintf(ConfFile, "addnode=188.166.109.87\n");
+               fprintf(ConfFile, "addnode=cryptonode.online\n");
+               fprintf(ConfFile, "addnode=178.128.242.233\n");
+               fprintf(ConfFile, "addnode=142.93.108.48\n");
                fprintf(ConfFile, "addnode=159.203.240.221\n");
-               fprintf(ConfFile, "addnode=165.227.34.98\n");
+               fprintf(ConfFile, "addnode=188.166.109.87\n");
 
                fclose(ConfFile);
 
@@ -1255,7 +1253,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 
 boost::filesystem::path GetPidFile()
 {
-    boost::filesystem::path pathPidFile(GetArg("-pid", "Endod.pid"));
+    boost::filesystem::path pathPidFile(GetArg("-pid", "Endox-Coind.pid"));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }
@@ -1299,7 +1297,7 @@ std::string getTimeString(int64_t timestamp, char *buffer, size_t nBuffer)
     struct tm* dt;
     time_t t = timestamp;
     dt = localtime(&t);
-    
+
     strftime(buffer, nBuffer, "%Y-%m-%d %H:%M:%S %z", dt); // %Z shows long strings on windows
     return std::string(buffer); // copies the null-terminated character sequence
 };
@@ -1314,7 +1312,7 @@ std::string bytesReadable(uint64_t nBytes)
         return strprintf("%.2f MB", nBytes/1024.0/1024.0);
     if (nBytes >= 1024)
         return strprintf("%.2f KB", nBytes/1024.0);
-    
+
     return strprintf("%d B", nBytes);
 };
 
@@ -1416,7 +1414,7 @@ void AddTimeData(const CNetAddr& ip, int64_t nTime)
                 if (!fMatch)
                 {
                     fDone = true;
-                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong ENDO will not work properly.");
+                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong Endox-Coin will not work properly.");
                     strMiscWarning = strMessage;
                     LogPrintf("*** %s\n", strMessage);
                     uiInterface.ThreadSafeMessageBox(strMessage, "", CClientUIInterface::MSG_WARNING);

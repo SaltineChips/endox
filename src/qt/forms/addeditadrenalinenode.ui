@@ -11,11 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Add/Edit ENDO Node</string>
+   <string>Add/Edit Endox-Coin Node</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">color: rgb(204, 155, 68);
-background-color: rgb(244, 244, 244);</string>
+   <string notr="true"/>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -29,11 +28,8 @@ background-color: rgb(244, 244, 244);</string>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="styleSheet">
-      <string notr="true">color: #eb1f24</string>
-     </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter an Alias (friendly name) for your Master Node and its address (either clearnet IP and port or Tor onion address and port). The address should be in the format 123.456.789.123:10255 or akjdsafxjkhasdf.onion:10255. You must send exactly 50,000 ENDO to the collateral address.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter an Alias (friendly name) for your Master Node and its address (either clearnet IP and port or Tor onion address and port). The address should be in the format 123.456.789.123:51441 or akjdsafxjkhasdf.onion:51441. You must send exactly 10,000 ENDOX to the collateral address.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -47,9 +43,6 @@ background-color: rgb(244, 244, 244);</string>
      </property>
      <item>
       <widget class="QLabel" name="label_4">
-       <property name="styleSheet">
-        <string notr="true">color: #eb1f24</string>
-       </property>
        <property name="text">
         <string>Alias*</string>
        </property>
@@ -67,9 +60,6 @@ background-color: rgb(244, 244, 244);</string>
      </property>
      <item>
       <widget class="QLabel" name="label_6">
-       <property name="styleSheet">
-        <string notr="true">color: #eb1f24</string>
-       </property>
        <property name="text">
         <string>Address*</string>
        </property>
@@ -104,9 +94,6 @@ background-color: rgb(244, 244, 244);</string>
      </property>
      <item>
       <widget class="QLabel" name="label_5">
-       <property name="styleSheet">
-        <string notr="true">color: #eb1f24</string>
-       </property>
        <property name="text">
         <string>PrivKey*</string>
        </property>
@@ -141,9 +128,6 @@ background-color: rgb(244, 244, 244);</string>
      </property>
      <item>
       <widget class="QLabel" name="label_2">
-       <property name="styleSheet">
-        <string notr="true">color: #eb1f24</string>
-       </property>
        <property name="text">
         <string>TxHash*</string>
        </property>
@@ -178,9 +162,6 @@ background-color: rgb(244, 244, 244);</string>
      </property>
      <item>
       <widget class="QLabel" name="label_8">
-       <property name="styleSheet">
-        <string notr="true">color: #eb1f24</string>
-       </property>
        <property name="text">
         <string>Output Index*</string>
        </property>

@@ -9,7 +9,7 @@
 #include "clientversion.h"
 
 //
-// Bootup the masternode, look for a 50,000 ENDO input and register on the network
+// Bootup the masternode, look for a 10,000 ENDOX input and register on the network
 //
 void CActiveMasternode::ManageStatus()
 {
@@ -45,14 +45,14 @@ void CActiveMasternode::ManageStatus()
 
         LogPrintf("CActiveMasternode::ManageStatus() - Checking inbound connection to '%s'\n", service.ToString().c_str());
 
-                  
+
             if(!ConnectNode((CAddress)service, service.ToString().c_str())){
                 notCapableReason = "Could not connect to " + service.ToString();
                 status = MASTERNODE_NOT_CAPABLE;
                 LogPrintf("CActiveMasternode::ManageStatus() - not capable: %s\n", notCapableReason.c_str());
                 return;
             }
-        
+
 
         if(pwalletMain->IsLocked()){
             notCapableReason = "Wallet is locked.";
@@ -90,13 +90,13 @@ void CActiveMasternode::ManageStatus()
             CPubKey pubKeyMasternode;
             CKey keyMasternode;
 
-            if(!darkSendSigner.SetKey(strMasterNodePrivKey, errorMessage, keyMasternode, pubKeyMasternode))
+            if(!mnEngineSigner.SetKey(strMasterNodePrivKey, errorMessage, keyMasternode, pubKeyMasternode))
             {
             	LogPrintf("ActiveMasternode::Dseep() - Error upon calling SetKey: %s\n", errorMessage.c_str());
             	return;
             }
 
-            /* donations are not supported in ENDO.conf */
+            /* donations are not supported in Endox-Coin.conf */
             CScript donationAddress = CScript();
             int donationPercentage = 0;
 
@@ -123,10 +123,14 @@ bool CActiveMasternode::StopMasterNode(std::string strService, std::string strKe
     CKey keyMasternode;
     CPubKey pubKeyMasternode;
 
-    if(!darkSendSigner.SetKey(strKeyMasternode, errorMessage, keyMasternode, pubKeyMasternode)) {
+    if(!mnEngineSigner.SetKey(strKeyMasternode, errorMessage, keyMasternode, pubKeyMasternode)) {
     	LogPrintf("CActiveMasternode::StopMasterNode() - Error: %s\n", errorMessage.c_str());
 		return false;
 	}
+
+    if (GetMasterNodeVin(vin, pubKeyMasternode, keyMasternode)){
+        LogPrintf("MasternodeStop::VinFound: %s\n", vin.ToString());
+    }
 
 	return StopMasterNode(vin, CService(strService, true), keyMasternode, pubKeyMasternode, errorMessage);
 }
@@ -144,7 +148,7 @@ bool CActiveMasternode::StopMasterNode(std::string& errorMessage) {
     CPubKey pubKeyMasternode;
     CKey keyMasternode;
 
-    if(!darkSendSigner.SetKey(strMasterNodePrivKey, errorMessage, keyMasternode, pubKeyMasternode))
+    if(!mnEngineSigner.SetKey(strMasterNodePrivKey, errorMessage, keyMasternode, pubKeyMasternode))
     {
     	LogPrintf("Register::ManageStatus() - Error upon calling SetKey: %s\n", errorMessage.c_str());
     	return false;
@@ -169,7 +173,7 @@ bool CActiveMasternode::Dseep(std::string& errorMessage) {
     CPubKey pubKeyMasternode;
     CKey keyMasternode;
 
-    if(!darkSendSigner.SetKey(strMasterNodePrivKey, errorMessage, keyMasternode, pubKeyMasternode))
+    if(!mnEngineSigner.SetKey(strMasterNodePrivKey, errorMessage, keyMasternode, pubKeyMasternode))
     {
     	LogPrintf("CActiveMasternode::Dseep() - Error upon calling SetKey: %s\n", errorMessage.c_str());
     	return false;
@@ -186,13 +190,13 @@ bool CActiveMasternode::Dseep(CTxIn vin, CService service, CKey keyMasternode, C
 
     std::string strMessage = service.ToString() + boost::lexical_cast<std::string>(masterNodeSignatureTime) + boost::lexical_cast<std::string>(stop);
 
-    if(!darkSendSigner.SignMessage(strMessage, errorMessage, vchMasterNodeSignature, keyMasternode)) {
+    if(!mnEngineSigner.SignMessage(strMessage, errorMessage, vchMasterNodeSignature, keyMasternode)) {
     	retErrorMessage = "sign message failed: " + errorMessage;
     	LogPrintf("CActiveMasternode::Dseep() - Error: %s\n", retErrorMessage.c_str());
         return false;
     }
 
-    if(!darkSendSigner.VerifyMessage(pubKeyMasternode, vchMasterNodeSignature, strMessage, errorMessage)) {
+    if(!mnEngineSigner.VerifyMessage(pubKeyMasternode, vchMasterNodeSignature, strMessage, errorMessage)) {
     	retErrorMessage = "Verify message failed: " + errorMessage;
     	LogPrintf("CActiveMasternode::Dseep() - Error: %s\n", retErrorMessage.c_str());
         return false;
@@ -208,7 +212,7 @@ bool CActiveMasternode::Dseep(CTxIn vin, CService service, CKey keyMasternode, C
             pmn->UpdateLastSeen();
     } else {
     	// Seems like we are trying to send a ping while the masternode is not registered in the network
-    	retErrorMessage = "Darksend Masternode List doesn't include our masternode, Shutting down masternode pinging service! " + vin.ToString();
+        retErrorMessage = "MNengine Masternode List doesn't include our masternode, Shutting down masternode pinging service! " + vin.ToString();
     	LogPrintf("CActiveMasternode::Dseep() - Error: %s\n", retErrorMessage.c_str());
         status = MASTERNODE_NOT_CAPABLE;
         notCapableReason = retErrorMessage;
@@ -231,7 +235,7 @@ bool CActiveMasternode::Register(std::string strService, std::string strKeyMaste
     CScript donationAddress = CScript();
     int donationPercentage = 0;
 
-    if(!darkSendSigner.SetKey(strKeyMasternode, errorMessage, keyMasternode, pubKeyMasternode))
+    if(!mnEngineSigner.SetKey(strKeyMasternode, errorMessage, keyMasternode, pubKeyMasternode))
     {
         LogPrintf("CActiveMasternode::Register() - Error upon calling SetKey: %s\n", errorMessage.c_str());
         return false;
@@ -242,7 +246,7 @@ bool CActiveMasternode::Register(std::string strService, std::string strKeyMaste
         LogPrintf("CActiveMasternode::Register() - Error: %s\n", errorMessage.c_str());
         return false;
     }
-    CEndoAddress address;
+    CEndoxCoinAddress address;
     if (strDonationAddress != "")
     {
         if(!address.SetString(strDonationAddress))
@@ -280,13 +284,13 @@ bool CActiveMasternode::Register(CTxIn vin, CService service, CKey keyCollateral
 
     std::string strMessage = service.ToString() + boost::lexical_cast<std::string>(masterNodeSignatureTime) + vchPubKey + vchPubKey2 + boost::lexical_cast<std::string>(PROTOCOL_VERSION) + donationAddress.ToString() + boost::lexical_cast<std::string>(donationPercentage);
 
-    if(!darkSendSigner.SignMessage(strMessage, errorMessage, vchMasterNodeSignature, keyCollateralAddress)) {
+    if(!mnEngineSigner.SignMessage(strMessage, errorMessage, vchMasterNodeSignature, keyCollateralAddress)) {
 		retErrorMessage = "sign message failed: " + errorMessage;
 		LogPrintf("CActiveMasternode::Register() - Error: %s\n", retErrorMessage.c_str());
 		return false;
     }
 
-    if(!darkSendSigner.VerifyMessage(pubKeyCollateralAddress, vchMasterNodeSignature, strMessage, errorMessage)) {
+    if(!mnEngineSigner.VerifyMessage(pubKeyCollateralAddress, vchMasterNodeSignature, strMessage, errorMessage)) {
 		retErrorMessage = "Verify message failed: " + errorMessage;
 		LogPrintf("CActiveMasternode::Register() - Error: %s\n", retErrorMessage.c_str());
 		return false;
@@ -297,6 +301,7 @@ bool CActiveMasternode::Register(CTxIn vin, CService service, CKey keyCollateral
     {
         LogPrintf("CActiveMasternode::Register() - Adding to masternode list service: %s - vin: %s\n", service.ToString().c_str(), vin.ToString().c_str());
         CMasternode mn(service, vin, pubKeyCollateralAddress, vchMasterNodeSignature, masterNodeSignatureTime, pubKeyMasternode, PROTOCOL_VERSION, donationAddress, donationPercentage);
+        mn.ChangeNodeStatus(false);
         mn.UpdateLastSeen(masterNodeSignatureTime);
         mnodeman.Add(mn);
     }
@@ -405,7 +410,7 @@ bool CActiveMasternode::GetVinFromOutput(COutput out, CTxIn& vin, CPubKey& pubke
 
 	CTxDestination address1;
     ExtractDestination(pubScript, address1);
-    CEndoAddress address2(address1);
+    CEndoxCoinAddress address2(address1);
 
     CKeyID keyID;
     if (!address2.GetKeyID(keyID)) {
@@ -434,7 +439,7 @@ vector<COutput> CActiveMasternode::SelectCoinsMasternode()
     // Filter
     BOOST_FOREACH(const COutput& out, vCoins)
     {
-        if(out.tx->vout[out.i].nValue == MasternodeCollateral(pindexBest->nHeight, pindexBest->GetBlockTime())*COIN) { //exactly
+        if(out.tx->vout[out.i].nValue == MasternodeCollateral(pindexBest->nHeight)*COIN) { //exactly
         	filteredCoins.push_back(out);
         }
     }
@@ -444,7 +449,7 @@ vector<COutput> CActiveMasternode::SelectCoinsMasternode()
 // get all possible outputs for running masternode for a specific pubkey
 vector<COutput> CActiveMasternode::SelectCoinsMasternodeForPubKey(std::string collateralAddress)
 {
-    CEndoAddress address(collateralAddress);
+    CEndoxCoinAddress address(collateralAddress);
     CScript scriptPubKey;
     scriptPubKey.SetDestination(address.Get());
     vector<COutput> vCoins;
@@ -456,7 +461,7 @@ vector<COutput> CActiveMasternode::SelectCoinsMasternodeForPubKey(std::string co
     // Filter
     BOOST_FOREACH(const COutput& out, vCoins)
     {
-        if(out.tx->vout[out.i].scriptPubKey == scriptPubKey && out.tx->vout[out.i].nValue == MasternodeCollateral(pindexBest->nHeight, pindexBest->GetBlockTime())*COIN) { //exactly
+        if(out.tx->vout[out.i].scriptPubKey == scriptPubKey && out.tx->vout[out.i].nValue == MasternodeCollateral(pindexBest->nHeight)*COIN) { //exactly
         	filteredCoins.push_back(out);
         }
     }
@@ -469,6 +474,7 @@ bool CActiveMasternode::EnableHotColdMasterNode(CTxIn& newVin, CService& newServ
     if(!fMasterNode) return false;
 
     status = MASTERNODE_REMOTELY_ENABLED;
+    notCapableReason = "";
 
     //The values below are needed for signing dseep messages going forward
     this->vin = newVin;

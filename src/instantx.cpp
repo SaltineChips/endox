@@ -8,9 +8,8 @@
 #include "protocol.h"
 #include "instantx.h"
 #include "activemasternode.h"
-#include "blockparams.h"
 #include "masternodeman.h"
-#include "darksend.h"
+#include "mnengine.h"
 #include "spork.h"
 #include "txdb.h"
 #include <boost/lexical_cast.hpp>
@@ -34,9 +33,9 @@ int nCompleteTXLocks;
 
 void ProcessMessageInstantX(CNode* pfrom, std::string& strCommand, CDataStream& vRecv)
 {
-    if(fLiteMode) return; //disable all darksend/masternode related functionality
+    if(fLiteMode) return; //disable all mnengine/masternode related functionality
     if(!IsSporkActive(SPORK_2_INSTANTX)) return;
-    if(!darkSendPool.IsBlockchainSynced()) return;
+    if(!mnEnginePool.IsBlockchainSynced()) return;
 
     if (strCommand == "txlreq")
     {
@@ -489,7 +488,7 @@ bool CConsensusVote::SignatureValid()
         return false;
     }
 
-    if(!darkSendSigner.VerifyMessage(pmn->pubkey2, vchMasterNodeSignature, strMessage, errorMessage)) {
+    if(!mnEngineSigner.VerifyMessage(pmn->pubkey2, vchMasterNodeSignature, strMessage, errorMessage)) {
         LogPrintf("InstantX::CConsensusVote::SignatureValid() - Verify message failed\n");
         return false;
     }
@@ -507,18 +506,18 @@ bool CConsensusVote::Sign()
     //LogPrintf("signing strMessage %s \n", strMessage.c_str());
     //LogPrintf("signing privkey %s \n", strMasterNodePrivKey.c_str());
 
-    if(!darkSendSigner.SetKey(strMasterNodePrivKey, errorMessage, key2, pubkey2))
+    if(!mnEngineSigner.SetKey(strMasterNodePrivKey, errorMessage, key2, pubkey2))
     {
         LogPrintf("CConsensusVote::Sign() - ERROR: Invalid masternodeprivkey: '%s'\n", errorMessage.c_str());
         return false;
     }
 
-    if(!darkSendSigner.SignMessage(strMessage, errorMessage, vchMasterNodeSignature, key2)) {
+    if(!mnEngineSigner.SignMessage(strMessage, errorMessage, vchMasterNodeSignature, key2)) {
         LogPrintf("CConsensusVote::Sign() - Sign message failed");
         return false;
     }
 
-    if(!darkSendSigner.VerifyMessage(pubkey2, vchMasterNodeSignature, strMessage, errorMessage)) {
+    if(!mnEngineSigner.VerifyMessage(pubkey2, vchMasterNodeSignature, strMessage, errorMessage)) {
         LogPrintf("CConsensusVote::Sign() - Verify message failed");
         return false;
     }

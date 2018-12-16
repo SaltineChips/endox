@@ -3,8 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "addrman.h"
-#include "hash.h"
-#include "hashalgo/bmw/hashblock.h"
+#include "hashblock.h"
 
 using namespace std;
 
@@ -313,6 +312,9 @@ bool CAddrMan::Add_(const CAddress &addr, const CNetAddr& source, int64_t nTimeP
     if (!addr.IsRoutable())
         return false;
 
+    if (addr.GetPort() == 0)
+        return false;
+    
     bool fNew = false;
     int nId;
     CAddrInfo *pinfo = Find(addr, &nId);

@@ -89,7 +89,7 @@ int CStealthAddress::SetScanPubKey(CPubKey pk)
     return 0;
 };
 
-uint32_t BitcoinChecksum(uint8_t* p, uint32_t nBytes)
+uint32_t EndoxCoinChecksum(uint8_t* p, uint32_t nBytes)
 {
     if (!p || nBytes == 0)
         return 0;
@@ -107,7 +107,7 @@ uint32_t BitcoinChecksum(uint8_t* p, uint32_t nBytes)
 
 void AppendChecksum(data_chunk& data)
 {
-    uint32_t checksum = BitcoinChecksum(&data[0], data.size());
+    uint32_t checksum = EndoxCoinChecksum(&data[0], data.size());
     
 
     std::vector<uint8_t> tmp(4);
@@ -130,7 +130,7 @@ bool VerifyChecksum(const data_chunk& data)
     
     uint32_t checksum = from_little_endian<uint32_t>(data.end() - 4);
     
-    return BitcoinChecksum((uint8_t*)&data[0], data.size()-4) == checksum;
+    return EndoxCoinChecksum((uint8_t*)&data[0], data.size()-4) == checksum;
 };
 
 

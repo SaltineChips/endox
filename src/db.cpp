@@ -41,8 +41,6 @@ void CDBEnv::EnvShutdown()
     if (ret != 0)
         LogPrintf("EnvShutdown exception: %s (%d)\n", DbEnv::strerror(ret), ret);
     if (!fMockDb)
-        // Removed for: Qt 5.8.0 | db-6.2.23.NC | boost 1.63 - build
-        // Reason: Causes error during build process due to overloaded function
         // DbEnv(0).remove(strPath.c_str(), 0);
         DbEnv((u_int32_t)0).remove(strPath.c_str(), 0);
 }

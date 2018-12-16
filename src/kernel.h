@@ -10,6 +10,7 @@
 // Supposed to be 2^n-1
 static const int STAKE_TIMESTAMP_MASK = 15;
 
+
 // MODIFIER_INTERVAL_RATIO:
 // ratio of group interval length between the last group and the first group
 static const int MODIFIER_INTERVAL_RATIO = 3;

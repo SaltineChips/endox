@@ -43,6 +43,12 @@ namespace boost {
 static const int PING_INTERVAL = 1 * 60;
 /** Time after which to disconnect, after waiting for a ping response (or inactivity). */
 static const int TIMEOUT_INTERVAL = 20 * 60;
+/** Time between cycles to check for idle nodes, force disconnect (seconds) **/ 
+static const int IDLE_TIMEOUT = 4 * 60;
+/** Time between cycles to check for idle nodes, force disconnect (seconds) **/ 
+static const int DATA_TIMEOUT = 3 * 60;
+/** Maximum length of strSubVer in `version` message */
+static const unsigned int MAX_SUBVERSION_LENGTH = 256;
 /** The maximum number of entries in an 'inv' protocol message */
 static const unsigned int MAX_INV_SZ = 50000;
 /** The maximum number of entries in mapAskFor */
@@ -59,8 +65,11 @@ void AddOneShot(std::string strDest);
 bool RecvLine(SOCKET hSocket, std::string& strLine);
 void AddressCurrentlyConnected(const CService& addr);
 CNode* FindNode(const CNetAddr& ip);
+CNode* FindNode(const CSubNet& subNet);
+CNode* FindNode(std::string addrName);
 CNode* FindNode(const CService& ip);
-CNode* ConnectNode(CAddress addrConnect, const char *strDest = NULL, bool darkSendMaster=false);
+CNode* ConnectNode(CAddress addrConnect, const char *strDest = NULL, bool mnEngineMaster=false);
+bool CheckNode(CAddress addrConnect);
 void MapPort(bool fUseUPnP);
 unsigned short GetListenPort();
 bool BindListenPort(const CService &bindAddr, std::string& strError=REF(std::string()));
@@ -90,7 +99,6 @@ enum
     LOCAL_IF,     // address a local interface listens on
     LOCAL_BIND,   // address explicit bound to
     LOCAL_UPNP,   // address reported by UPnP
-    LOCAL_IRC,    // address reported by IRC (deprecated)
     LOCAL_MANUAL, // address explicitly specified (-externalip=)
 
     LOCAL_MAX
@@ -153,6 +161,9 @@ struct LocalServiceInfo {
 extern CCriticalSection cs_mapLocalHost;
 extern map<CNetAddr, LocalServiceInfo> mapLocalHost;
 
+/** Subversion as sent to the P2P network in `version` messages */
+extern std::string strSubVersion;
+
 class CNodeStats
 {
 public:
@@ -214,33 +225,64 @@ public:
     int readData(const char *pch, unsigned int nBytes);
 };
 
+typedef enum BanReason
+{
+    BanReasonUnknown          = 0,
+    BanReasonNodeMisbehaving  = 1,
+    BanReasonManuallyAdded    = 2
+} BanReason;
 
-class SecMsgNode
+class CBanEntry
 {
 public:
-    SecMsgNode()
+    static const int CURRENT_VERSION=1;
+    int nVersion;
+    int64_t nCreateTime;
+    int64_t nBanUntil;
+    uint8_t banReason;
+
+    CBanEntry()
     {
-        lastSeen        = 0;
-        lastMatched     = 0;
-        ignoreUntil     = 0;
-        nWakeCounter    = 0;
-        nPeerId         = 0;
-        fEnabled        = false;
-    };
-    
-    ~SecMsgNode() {};
-    
-    CCriticalSection            cs_smsg_net;
-    int64_t                     lastSeen;
-    int64_t                     lastMatched;
-    int64_t                     ignoreUntil;
-    uint32_t                    nWakeCounter;
-    uint32_t                    nPeerId;
-    bool                        fEnabled;
-    
+        SetNull();
+    }
+
+    CBanEntry(int64_t nCreateTimeIn)
+    {
+        SetNull();
+        nCreateTime = nCreateTimeIn;
+    }
+  
+    IMPLEMENT_SERIALIZE
+    (
+        READWRITE(this->nVersion);
+        nVersion = this->nVersion;
+        READWRITE(nCreateTime);
+        READWRITE(nBanUntil);
+        READWRITE(banReason);
+    )
+
+    void SetNull()
+    {
+        nVersion = CBanEntry::CURRENT_VERSION;
+        nCreateTime = 0;
+        nBanUntil = 0;
+        banReason = BanReasonUnknown;
+    }
+
+    std::string banReasonToString()
+    {
+        switch (banReason) {
+        case BanReasonNodeMisbehaving:
+            return "node misbehabing";
+        case BanReasonManuallyAdded:
+            return "manually added";
+        default:
+            return "unknown";
+        }
+    }
 };
-
-
+  
+typedef std::map<CSubNet, CBanEntry> banmap_t;
 
 /** Information about a peer */
 class CNode
@@ -287,7 +329,7 @@ public:
     // b) the peer may tell us in their version message that we should not relay tx invs
     //    until they have initialized their bloom filter.
     bool fRelayTxes;
-    bool fDarkSendMaster;
+    bool fMNengineMaster;
     CSemaphoreGrant grantOutbound;
     int nRefCount;
     NodeId id;
@@ -295,9 +337,9 @@ protected:
 
     // Denial-of-service detection/prevention
     // Key is IP address, value is banned-until-time
-    static std::map<CNetAddr, int64_t> setBanned;
+    static banmap_t setBanned;
     static CCriticalSection cs_setBanned;
-
+    static bool setBannedIsDirty;
 
     std::vector<std::string> vecRequestsFulfilled; //keep track of what client has asked for
 
@@ -321,8 +363,6 @@ public:
     CCriticalSection cs_inventory;
     std::set<uint256> setAskFor;
     std::multimap<int64_t, CInv> mapAskFor;
-
-    SecMsgNode smsgData;
 
     // Ping time measurement:
     // The pong reply we're expecting, or 0 if no pong expected.
@@ -562,7 +602,7 @@ public:
         memcpy((char*)&ssSend[CMessageHeader::MESSAGE_SIZE_OFFSET], &nSize, sizeof(nSize));
 
         // Set the checksum
-        uint256 hash = HashBmw512(ssSend.begin() + CMessageHeader::HEADER_SIZE, ssSend.end());
+        uint256 hash = Hash(ssSend.begin() + CMessageHeader::HEADER_SIZE, ssSend.end());
         unsigned int nChecksum = 0;
         memcpy(&nChecksum, &hash, sizeof(nChecksum));
         assert(ssSend.size () >= CMessageHeader::CHECKSUM_OFFSET + sizeof(nChecksum));
@@ -827,7 +867,21 @@ template<typename T1, typename T2, typename T3, typename T4, typename T5, typena
     // new code.
     static void ClearBanned(); // needed for unit testing
     static bool IsBanned(CNetAddr ip);
-    static bool Ban(const CNetAddr &ip);
+    static bool IsBanned(CSubNet subnet);
+    static void Ban(const CNetAddr &ip, const BanReason &banReason, int64_t bantimeoffset = 0, bool sinceUnixEpoch = false);
+    static void Ban(const CSubNet &subNet, const BanReason &banReason, int64_t bantimeoffset = 0, bool sinceUnixEpoch = false);
+    static bool Unban(const CNetAddr &ip);
+    static bool Unban(const CSubNet &ip);
+    static void GetBanned(banmap_t &banmap);
+    static void SetBanned(const banmap_t &banmap);
+
+    //!check is the banlist has unwritten changes
+    static bool BannedSetIsDirty();
+    //!set the "dirty" flag for the banlist
+    static void SetBannedSetDirty(bool dirty=true);
+    //!clean unused entires (if bantime has expired)
+    static void SweepBanned();
+
     void copyStats(CNodeStats &stats);
 
     // Network stats
@@ -863,5 +917,18 @@ public:
     bool Write(const CAddrMan& addr);
     bool Read(CAddrMan& addr);
 };
+
+/** Access to the banlist database (banlist.dat) */
+class CBanDB
+{
+private:
+    boost::filesystem::path pathBanlist;
+public:
+    CBanDB();
+    bool Write(const banmap_t& banSet);
+    bool Read(banmap_t& banSet);
+};
+
+void DumpBanlist();
 
 #endif

@@ -1,5 +1,5 @@
 // Copyright (c) 2012-2013 The PPCoin developers
-// Copyright (c) 2017-2018 The Endo developers
+// Copyright (c) 2014 The Endox-Coin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -74,7 +74,7 @@ static bool SelectBlockFromCandidates(vector<pair<int64_t, uint256> >& vSortedBy
         // previous proof-of-stake modifier
         CDataStream ss(SER_GETHASH, 0);
         ss << pindex->hashProof << nStakeModifierPrev;
-        uint256 hashSelection = HashBmw512(ss.begin(), ss.end());
+        uint256 hashSelection = Hash(ss.begin(), ss.end());
         // the selection hash is divided by 2**32 so that proof-of-stake block
         // is always favored over proof-of-work block. this is to preserve
         // the energy efficiency property
@@ -202,10 +202,10 @@ uint256 ComputeStakeModifierV2(const CBlockIndex* pindexPrev, const uint256& ker
 
     CDataStream ss(SER_GETHASH, 0);
     ss << kernel << pindexPrev->bnStakeModifierV2;
-    return HashBmw512(ss.begin(), ss.end());
+    return Hash(ss.begin(), ss.end());
 }
 
-// ENDO kernel protocol
+// Endox-Coin kernel protocol
 // coinstake must meet hash target according to the protocol:
 // kernel (input 0) must meet the formula
 //     hash(nStakeModifier + txPrev.block.nTime + txPrev.nTime + txPrev.vout.hash + txPrev.vout.n + nTime) < bnTarget * nWeight
@@ -232,11 +232,6 @@ bool CheckStakeKernelHash(CBlockIndex* pindexPrev, unsigned int nBits, unsigned 
     if (nTimeTx < txPrev.nTime)  // Transaction timestamp violation
         return error("CheckStakeKernelHash() : nTime violation");
 
-    if(!IsProtocolV3(txPrev.nTime)){
-        if (nTimeBlockFrom + nStakeMinAge > nTimeTx) // Min age requirement
-            return error("CheckStakeKernelHash() : min age violation");
-    }
-
     // Base target
     CBigNum bnTarget;
     bnTarget.SetCompact(nBits);
@@ -256,12 +251,9 @@ bool CheckStakeKernelHash(CBlockIndex* pindexPrev, unsigned int nBits, unsigned 
     // Calculate hash
     CDataStream ss(SER_GETHASH, 0);
 
-    if (IsProtocolV3(nTimeTx))
-        ss << bnStakeModifierV2;
-    else
-        ss << nStakeModifier << nTimeBlockFrom;
+    ss << bnStakeModifierV2;
     ss << txPrev.nTime << prevout.hash << prevout.n << nTimeTx;
-    hashProofOfStake = HashBmw512(ss.begin(), ss.end());
+    hashProofOfStake = Hash(ss.begin(), ss.end());
 
     if (fPrintProofOfStake)
     {
@@ -321,13 +313,10 @@ bool CheckProofOfStake(CBlockIndex* pindexPrev, const CTransaction& tx, unsigned
         return fDebug? error("CheckProofOfStake() : read block failed") : false; // unable to read block of previous transaction
 
     // Min age requirement
-    if (IsProtocolV3(tx.nTime))
-    {
-        int nDepth;
-        if (IsConfirmedInNPrevBlocks(txindex, pindexPrev, nStakeMinConfirmations - 1, nDepth))
-            return tx.DoS(100, error("CheckProofOfStake() : tried to stake at depth %d", nDepth + 1));
-    }
-    
+    int nDepth;
+    if (IsConfirmedInNPrevBlocks(txindex, pindexPrev, nStakeMinConfirmations - 1, nDepth))
+        return tx.DoS(100, error("CheckProofOfStake() : tried to stake at depth %d", nDepth + 1));
+
     if (!CheckStakeKernelHash(pindexPrev, nBits, block.GetBlockTime(), txPrev, txin.prevout, tx.nTime, hashProofOfStake, targetProofOfStake, fDebug))
         return tx.DoS(1, error("CheckProofOfStake() : INFO: check kernel failed on coinstake %s, hashProof=%s", tx.GetHash().ToString(), hashProofOfStake.ToString())); // may occur during initial download or if behind on block chain sync
 
@@ -355,17 +344,9 @@ bool CheckKernel(CBlockIndex* pindexPrev, unsigned int nBits, int64_t nTime, con
     if (!block.ReadFromDisk(txindex.pos.nFile, txindex.pos.nBlockPos, false))
         return false;
 
-    if (IsProtocolV3(nTime))
-    {
-        int nDepth;
-        if (IsConfirmedInNPrevBlocks(txindex, pindexPrev, nStakeMinConfirmations - 1, nDepth))
-            return false;
-    }
-    else
-    {
-        if (block.GetBlockTime() + nStakeMinAge > nTime)
-            return false; // only count coins meeting min age requirement
-    }
+   int nDepth;
+   if (IsConfirmedInNPrevBlocks(txindex, pindexPrev, nStakeMinConfirmations - 1, nDepth))
+       return false;
 
     if (pBlockTime)
         *pBlockTime = block.GetBlockTime();

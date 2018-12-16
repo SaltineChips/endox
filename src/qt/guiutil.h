@@ -22,7 +22,7 @@ class QUrl;
 class QAbstractItemView;
 QT_END_NAMESPACE
 
-/** Utility functions used by the Bitcoin Qt UI.
+/** Utility functions used by the EndoxCoin Qt UI.
  */
 namespace GUIUtil
 {
@@ -30,17 +30,17 @@ namespace GUIUtil
     QString dateTimeStr(const QDateTime &datetime);
     QString dateTimeStr(qint64 nTime);
 
-    // Render Bitcoin addresses in monospace font
+    // Render EndoxCoin addresses in monospace font
     QFont bitcoinAddressFont();
 
     // Set up widgets for address and amounts
     void setupAddressWidget(QLineEdit *widget, QWidget *parent);
     void setupAmountWidget(QLineEdit *widget, QWidget *parent);
 
-    // Parse "ENDO:" URI into recipient object, return true on successful parsing
-    // See Bitcoin URI definition discussion here: https://bitcointalk.org/index.php?topic=33490.0
-    bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out);
-    bool parseBitcoinURI(QString uri, SendCoinsRecipient *out);
+    // Parse "Endox-Coin:" URI into recipient object, return true on successful parsing
+    // See EndoxCoin URI definition discussion here: https://bitcointalk.org/index.php?topic=33490.0
+    bool parseEndoxCoinURI(const QUrl &uri, SendCoinsRecipient *out);
+    bool parseEndoxCoinURI(QString uri, SendCoinsRecipient *out);
 
     // HTML escaping for rich text controls
     QString HtmlEscape(const QString& str, bool fMultiLine=false);
@@ -53,6 +53,14 @@ namespace GUIUtil
        @see  TransactionView::copyLabel, TransactionView::copyAmount, TransactionView::copyAddress
      */
     void copyEntryData(QAbstractItemView *view, int column, int role=Qt::EditRole);
+
+    /** Return a field of the currently selected entry as a QString. Does nothing if nothing
+        is selected.
+       @param[in] column  Data column to extract from the model
+       @param[in] role    Data role to extract from the model
+       @see  TransactionView::copyLabel, TransactionView::copyAmount, TransactionView::copyAddress
+     */
+    QString getEntryData(QAbstractItemView *view, int column, int role);
 
     void setClipboard(const QString& str);
 
@@ -155,7 +163,20 @@ namespace GUIUtil
     /* Convert OS specific boost path to QString through UTF-8 */
     QString boostPathToQString(const boost::filesystem::path &path);
 
-    /** Help message for Bitcoin-Qt, shown with --help. */
+    /* Convert seconds into a QString with days, hours, mins, secs */
+    QString formatDurationStr(int secs);
+
+    /* Format CNodeStats.nServices bitmask into a user-readable string */
+    QString formatServicesStr(uint64_t mask);
+
+    /* Format a CNodeCombinedStats.dPingTime into a user-readable string or display N/A, if 0*/
+    QString formatPingTime(double dPingTime);
+
+    /* Format a CNodeCombinedStats.nTimeOffset into a user-readable string. */
+    QString formatTimeOffset(int64_t nTimeOffset);
+
+
+    /** Help message for EndoxCoin-Qt, shown with --help. */
     class HelpMessageBox : public QMessageBox
     {
         Q_OBJECT

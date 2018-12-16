@@ -11,7 +11,6 @@
 #include "sync.h"
 #include "base58.h"
 #include "db.h"
-#include "rpcvelocity.h"
 #include "ui_interface.h"
 #ifdef ENABLE_WALLET
 #include "wallet.h"
@@ -204,10 +203,10 @@ Value stop(const Array& params, bool fHelp)
     if (fHelp || params.size() > 1)
         throw runtime_error(
             "stop\n"
-            "Stop ENDO server.");
+            "Stop Endox-Coin server.");
     // Shutdown will take long enough that the response should get back
     StartShutdown();
-    return "ENDO server stopping";
+    return "Endox-Coin server stopping";
 }
 
 
@@ -229,10 +228,12 @@ static const CRPCCommand vRPCCommands[] =
     { "addnode",                &addnode,                true,      true,      false },
     { "getaddednodeinfo",       &getaddednodeinfo,       true,      true,      false },
     { "ping",                   &ping,                   true,      false,     false },
+    { "setban",                 &setban,                 true,      false,     false },
+    { "listbanned",             &listbanned,             true,      false,     false },
+    { "clearbanned",            &clearbanned,            true,      false,     false },
     { "getnettotals",           &getnettotals,           true,      true,      false },
     { "getdifficulty",          &getdifficulty,          true,      false,     false },
     { "getinfo",                &getinfo,                true,      false,     false },
-    { "getvelocityinfo",        &getvelocityinfo,        true,      false,     false },
     { "getrawmempool",          &getrawmempool,          true,      false,     false },
     { "getblock",               &getblock,               false,     false,     false },
     { "getblockbynumber",       &getblockbynumber,       false,     false,     false },
@@ -250,15 +251,12 @@ static const CRPCCommand vRPCCommands[] =
     { "verifymessage",          &verifymessage,          false,     false,     false },
     { "searchrawtransactions",  &searchrawtransactions,  false,     false,     false },
 
-/* Dark features */
+/* Masternode features */
     { "spork",                  &spork,                  true,      false,      false },
     { "masternode",             &masternode,             true,      false,      true },
     { "masternodelist",         &masternodelist,         true,      false,      false },
     
 #ifdef ENABLE_WALLET
-    { "darksend",               &darksend,               false,     false,     true },
-    { "getgenerate",            &getgenerate,            true, 	    false,     true },
-    { "setgenerate",            &setgenerate,            true, 	    false,     true },
     { "getmininginfo",          &getmininginfo,          true,      false,     false },
     { "getstakinginfo",         &getstakinginfo,         true,      false,     false },
     { "getnewaddress",          &getnewaddress,          true,      false,     true },
@@ -317,19 +315,6 @@ static const CRPCCommand vRPCCommands[] =
     { "scanforstealthtxns",     &scanforstealthtxns,     false,     false,     false },
     { "importstealthaddress",   &importstealthaddress,   false,     false,     true },
     { "sendtostealthaddress",   &sendtostealthaddress,   false,     false,     true },
-    { "smsgenable",             &smsgenable,             false,     false,     false },
-    { "smsgdisable",            &smsgdisable,            false,     false,     false },
-    { "smsglocalkeys",          &smsglocalkeys,          false,     false,     false },
-    { "smsgoptions",            &smsgoptions,            false,     false,     false },
-    { "smsgscanchain",          &smsgscanchain,          false,     false,     false },
-    { "smsgscanbuckets",        &smsgscanbuckets,        false,     false,     false },
-    { "smsgaddkey",             &smsgaddkey,             false,     false,     false },
-    { "smsggetpubkey",          &smsggetpubkey,          false,     false,     false },
-    { "smsgsend",               &smsgsend,               false,     false,     false },
-    { "smsgsendanon",           &smsgsendanon,           false,     false,     false },
-    { "smsginbox",              &smsginbox,              false,     false,     false },
-    { "smsgoutbox",             &smsgoutbox,             false,     false,     false },
-    { "smsgbuckets",            &smsgbuckets,            false,     false,     false },
 #endif
 };
 
@@ -525,7 +510,7 @@ void StartRPCThreads()
     {
         unsigned char rand_pwd[32];
         GetRandBytes(rand_pwd, 32);
-        string strWhatAmI = "To use Endod";
+        string strWhatAmI = "To use Endox-Coind";
         if (mapArgs.count("-server"))
             strWhatAmI = strprintf(_("To use the %s option"), "\"-server\"");
         else if (mapArgs.count("-daemon"))
@@ -534,13 +519,13 @@ void StartRPCThreads()
             _("%s, you must set a rpcpassword in the configuration file:\n"
               "%s\n"
               "It is recommended you use the following random password:\n"
-              "rpcuser=Endorpc\n"
+              "rpcuser=Endox-Coinrpc\n"
               "rpcpassword=%s\n"
               "(you do not need to remember this password)\n"
               "The username and password MUST NOT be the same.\n"
               "If the file does not exist, create it with owner-readable-only file permissions.\n"
               "It is also recommended to set alertnotify so you are notified of problems;\n"
-              "for example: alertnotify=echo %%s | mail -s \"ENDO Alert\" admin@foo.com\n"),
+              "for example: alertnotify=echo %%s | mail -s \"Endox-Coin Alert\" admin@foo.com\n"),
                 strWhatAmI,
                 GetConfigFile().string(),
                 EncodeBase58(&rand_pwd[0],&rand_pwd[0]+32)),
@@ -872,8 +857,19 @@ json_spirit::Value CRPCTable::execute(const std::string &strMethod, const json_s
     }
 }
 
+std::vector<std::string> CRPCTable::listCommands() const
+{
+    std::vector<std::string> commandList;
+    typedef std::map<std::string, const CRPCCommand*> commandMap;
+
+    std::transform(mapCommands.begin(), mapCommands.end(), 
+                    std::back_inserter(commandList), 
+                    boost::bind(&commandMap::value_type::first, _1));
+    return commandList;
+}
+
 std::string HelpExampleCli(string methodname, string args){
-    return "> Endod " + methodname + " " + args + "\n";
+    return "> Endox-Coind " + methodname + " " + args + "\n";
 }
 
 std::string HelpExampleRpc(string methodname, string args){

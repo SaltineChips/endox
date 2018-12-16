@@ -1,6 +1,6 @@
 #include "masternode.h"
 #include "masternodeman.h"
-#include "darksend.h"
+#include "mnengine.h"
 #include "core.h"
 #include "main.h"
 #include "sync.h"
@@ -89,6 +89,8 @@ CMasternode::CMasternode()
     nLastScanningErrorBlockHeight = 0;
     //mark last paid as current for new entries
     nLastPaid = GetAdjustedTime();
+    isPortOpen = true;
+    isOldNode = true;
 }
 
 CMasternode::CMasternode(const CMasternode& other)
@@ -117,6 +119,8 @@ CMasternode::CMasternode(const CMasternode& other)
     nLastScanningErrorBlockHeight = other.nLastScanningErrorBlockHeight;
     nLastPaid = other.nLastPaid;
     nLastPaid = GetAdjustedTime();
+    isPortOpen = other.isPortOpen;
+    isOldNode = other.isOldNode;
 }
 
 CMasternode::CMasternode(CService newAddr, CTxIn newVin, CPubKey newPubkey, std::vector<unsigned char> newSig, int64_t newSigTime, CPubKey newPubkey2, int protocolVersionIn, CScript newDonationAddress, int newDonationPercentage)
@@ -143,6 +147,8 @@ CMasternode::CMasternode(CService newAddr, CTxIn newVin, CPubKey newPubkey, std:
     lastVote = 0;
     nScanningErrorCount = 0;
     nLastScanningErrorBlockHeight = 0;
+    isPortOpen = true;
+    isOldNode = true;
 }
 
 //
@@ -192,7 +198,7 @@ void CMasternode::Check()
     if(!unitTest){
         CValidationState state;
         CTransaction tx = CTransaction();
-        CTxOut vout = CTxOut(DARKSEND_POOL_MAX, darkSendPool.collateralPubKey);
+        CTxOut vout = CTxOut(MNengine_POOL_MAX, mnEnginePool.collateralPubKey);
         tx.vin.push_back(vin);
         tx.vout.push_back(vout);
 

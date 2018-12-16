@@ -39,41 +39,39 @@ Value getinfo(const Array& params, bool fHelp)
     GetProxy(NET_IPV4, proxy);
 
     Object obj, diff;
-    obj.push_back(Pair("version",       FormatFullVersion()));
+    obj.push_back(Pair("version", FormatFullVersion()));
     obj.push_back(Pair("protocolversion",(int)PROTOCOL_VERSION));
 #ifdef ENABLE_WALLET
     if (pwalletMain) {
         obj.push_back(Pair("walletversion", pwalletMain->GetVersion()));
-        obj.push_back(Pair("balance",       ValueFromAmount(pwalletMain->GetBalance())));
-        if(!fLiteMode)
-            obj.push_back(Pair("darksend_balance", ValueFromAmount(pwalletMain->GetAnonymizedBalance())));
-        obj.push_back(Pair("newmint",       ValueFromAmount(pwalletMain->GetNewMint())));
-        obj.push_back(Pair("stake",         ValueFromAmount(pwalletMain->GetStake())));
+        obj.push_back(Pair("balance", ValueFromAmount(pwalletMain->GetBalance())));
+        obj.push_back(Pair("newmint", ValueFromAmount(pwalletMain->GetNewMint())));
+        obj.push_back(Pair("stake", ValueFromAmount(pwalletMain->GetStake())));
     }
 #endif
-    obj.push_back(Pair("blocks",        (int)nBestHeight));
-    obj.push_back(Pair("timeoffset",    (int64_t)GetTimeOffset()));
-    obj.push_back(Pair("moneysupply",   ValueFromAmount(pindexBest->nMoneySupply)));
-    obj.push_back(Pair("connections",   (int)vNodes.size()));
-    obj.push_back(Pair("proxy",         (proxy.first.IsValid() ? proxy.first.ToStringIPPort() : string())));
-    obj.push_back(Pair("ip",            GetLocalAddress(NULL).ToStringIP()));
+    obj.push_back(Pair("blocks", (int)nBestHeight));
+    obj.push_back(Pair("timeoffset", (int64_t)GetTimeOffset()));
+    obj.push_back(Pair("moneysupply", ValueFromAmount(pindexBest->nMoneySupply)));
+    obj.push_back(Pair("connections", (int)vNodes.size()));
+    obj.push_back(Pair("proxy", (proxy.first.IsValid() ? proxy.first.ToStringIPPort() : string())));
+    obj.push_back(Pair("ip", GetLocalAddress(NULL).ToStringIP()));
 
-    diff.push_back(Pair("proof-of-work",  GetDifficulty()));
+    diff.push_back(Pair("proof-of-work", GetDifficulty()));
     diff.push_back(Pair("proof-of-stake", GetDifficulty(GetLastBlockIndex(pindexBest, true))));
-    obj.push_back(Pair("difficulty",    diff));
+    obj.push_back(Pair("difficulty", diff));
 
-    obj.push_back(Pair("testnet",       TestNet()));
+    obj.push_back(Pair("testnet", TestNet()));
 #ifdef ENABLE_WALLET
     if (pwalletMain) {
         obj.push_back(Pair("keypoololdest", (int64_t)pwalletMain->GetOldestKeyPoolTime()));
-        obj.push_back(Pair("keypoolsize",   (int)pwalletMain->GetKeyPoolSize()));
+        obj.push_back(Pair("keypoolsize", (int)pwalletMain->GetKeyPoolSize()));
     }
-    obj.push_back(Pair("paytxfee",      ValueFromAmount(nTransactionFee)));
-    obj.push_back(Pair("mininput",      ValueFromAmount(nMinimumInputValue)));
+    obj.push_back(Pair("paytxfee", ValueFromAmount(nTransactionFee)));
+    obj.push_back(Pair("mininput", ValueFromAmount(nMinimumInputValue)));
     if (pwalletMain && pwalletMain->IsCrypted())
         obj.push_back(Pair("unlocked_until", (int64_t)nWalletUnlockTime));
 #endif
-    obj.push_back(Pair("errors",        GetWarnings("statusbar")));
+    obj.push_back(Pair("errors", GetWarnings("statusbar")));
     return obj;
 }
 
@@ -114,7 +112,7 @@ public:
             obj.push_back(Pair("hex", HexStr(subscript.begin(), subscript.end())));
             Array a;
             BOOST_FOREACH(const CTxDestination& addr, addresses)
-                a.push_back(CEndoAddress(addr).ToString());
+                a.push_back(CEndoxCoinAddress(addr).ToString());
             obj.push_back(Pair("addresses", a));
             if (whichType == TX_MULTISIG)
                 obj.push_back(Pair("sigsrequired", nRequired));
@@ -134,10 +132,10 @@ Value validateaddress(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
         throw runtime_error(
-            "validateaddress <ENDO>\n"
-            "Return information about <ENDO>.");
+            "validateaddress <Endox-Coin>\n"
+            "Return information about <Endox-Coin>.");
 
-    CEndoAddress address(params[0].get_str());
+    CEndoxCoinAddress address(params[0].get_str());
     bool isValid = address.IsValid();
 
     Object ret;
@@ -166,8 +164,8 @@ Value validatepubkey(const Array& params, bool fHelp)
 {
     if (fHelp || !params.size() || params.size() > 2)
         throw runtime_error(
-            "validatepubkey <Endopubkey>\n"
-            "Return information about <Endopubkey>.");
+            "validatepubkey <Endox-Coinpubkey>\n"
+            "Return information about <Endox-Coinpubkey>.");
 
     std::vector<unsigned char> vchPubKey = ParseHex(params[0].get_str());
     CPubKey pubKey(vchPubKey);
@@ -176,7 +174,7 @@ Value validatepubkey(const Array& params, bool fHelp)
     bool isCompressed = pubKey.IsCompressed();
     CKeyID keyID = pubKey.GetID();
 
-    CEndoAddress address;
+    CEndoxCoinAddress address;
     address.Set(keyID);
 
     Object ret;
@@ -206,14 +204,14 @@ Value verifymessage(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 3)
         throw runtime_error(
-            "verifymessage <ENDO> <signature> <message>\n"
+            "verifymessage <Endox-Coin> <signature> <message>\n"
             "Verify a signed message");
 
     string strAddress  = params[0].get_str();
     string strSign     = params[1].get_str();
     string strMessage  = params[2].get_str();
 
-    CEndoAddress addr(strAddress);
+    CEndoxCoinAddress addr(strAddress);
     if (!addr.IsValid())
         throw JSONRPCError(RPC_TYPE_ERROR, "Invalid address");
 

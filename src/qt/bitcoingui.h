@@ -17,11 +17,7 @@ class SignVerifyMessageDialog;
 class Notificator;
 class RPCConsole;
 class MasternodeManager;
-class MessagePage;
-class MiningPage;
-class MessageModel;
 class BlockBrowser;
-class tradingDialog;
 
 QT_BEGIN_NAMESPACE
 class QLabel;
@@ -33,16 +29,16 @@ class QScrollArea;
 QT_END_NAMESPACE
 
 /**
-  Bitcoin GUI main class. This class represents the main window of the Bitcoin UI. It communicates with both the client and
+  EndoxCoin GUI main class. This class represents the main window of the EndoxCoin UI. It communicates with both the client and
   wallet models to give the user an up-to-date view of the current core state.
 */
-class BitcoinGUI : public QMainWindow
+class EndoxCoinGUI : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit BitcoinGUI(QWidget *parent = 0);
-    ~BitcoinGUI();
+    explicit EndoxCoinGUI(QWidget *parent = 0);
+    ~EndoxCoinGUI();
 
     /** Set the client model.
         The client model represents the part of the core that communicates with the P2P network, and is wallet-agnostic.
@@ -53,7 +49,6 @@ public:
         functionality.
     */
     void setWalletModel(WalletModel *walletModel);
-    void setMessageModel(MessageModel *messageModel);
 
 protected:
     void changeEvent(QEvent *e);
@@ -64,7 +59,6 @@ protected:
 private:
     ClientModel *clientModel;
     WalletModel *walletModel;
-    MessageModel *messageModel;
 
     QToolBar *toolbar;
 
@@ -79,11 +73,8 @@ private:
     SendCoinsDialog *sendCoinsPage;
     SignVerifyMessageDialog *signVerifyMessageDialog;
     MasternodeManager *masternodeManagerPage;
-    MessagePage *messagePage;
-    MiningPage *miningPage;
     QLabel* netLabel;
     BlockBrowser *blockBrowser;
-    tradingDialog   *tradingDialogPage;
     QLabel *labelEncryptionIcon;
     QLabel *labelStakingIcon;
     QLabel *labelConnectionsIcon;
@@ -107,17 +98,18 @@ private:
     QAction *exportAction;
     QAction *encryptWalletAction;
     QAction *backupWalletAction;
+    QAction *importPrivateKeyAction;
     QAction *changePassphraseAction;
     QAction *unlockWalletAction;
     QAction *lockWalletAction;
     QAction *aboutQtAction;
     QAction *openRPCConsoleAction;
     QAction *masternodeManagerAction;
-    QAction *messageAction;
-    QAction *miningAction;
     QAction *blockAction;
-    QAction *TradingAction;
     QAction *showBackupsAction;
+    QAction *editConfigAction;
+    QAction *editConfigExtAction;
+    QAction *openDataDirAction;
 
     QSystemTrayIcon *trayIcon;
     Notificator *notificator;
@@ -184,8 +176,6 @@ private slots:
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */
     void gotoSendCoinsPage();
-   /** Switch to trading page */
-    void gotoTradingPage();
     /** Switch to block explorer*/
     void gotoBlockBrowser();
     /** Switch to masternode manager page*/
@@ -194,10 +184,6 @@ private slots:
     void gotoSignMessageTab(QString addr = "");
     /** Show Sign/Verify Message dialog and switch to verify message tab */
     void gotoVerifyMessageTab(QString addr = "");
-    /** Switch to message page*/
-    void gotoMessagePage();
-    /** Switch to mining page*/
-    void gotoMiningPage();
     /** Show configuration dialog */
     void optionsClicked();
     /** Show about dialog */
@@ -211,11 +197,12 @@ private slots:
         The new items are those between start and end inclusive, under the given parent item.
     */
     void incomingTransaction(const QModelIndex & parent, int start, int end);
-    void incomingMessage(const QModelIndex & parent, int start, int end);
     /** Encrypt the wallet */
     void encryptWallet();
     /** Backup the wallet */
     void backupWallet();
+    /** Import a private key */
+    void importPrivateKey();
     /** Change encrypted wallet passphrase */
     void changePassphrase();
     /** Ask for passphrase to unlock wallet temporarily */
@@ -236,6 +223,12 @@ private slots:
 
     /** Show progress dialog e.g. for verifychain */
     void showProgress(const QString &title, int nProgress);
+
+    /** Edit the Endox-Coin.conf file */
+    void editConfig();
+    void editConfigExt();
+    /** Open the data directory */
+    void openDataDir();
 };
 
 #endif // BITCOINGUI_H

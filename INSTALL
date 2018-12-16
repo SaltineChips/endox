@@ -1,9 +1,9 @@
-Building ENDO
+Building Endox-Coin
 
-See doc/readme-qt.rst for instructions on building ENDO QT,
+See doc/readme-qt.rst for instructions on building Endox-Coin QT,
 the intended-for-end-users, nice-graphical-interface, reference
-implementation of ENDO.
+implementation of Endox-Coin.
 
-See doc/build-*.txt for instructions on building Endod,
+See doc/build-*.txt for instructions on building Endox-Coind,
 the intended-for-services, no-graphical-interface, reference
-implementation of ENDO.
+implementation of Endox-Coin.

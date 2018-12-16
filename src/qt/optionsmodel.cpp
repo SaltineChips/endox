@@ -53,7 +53,7 @@ void OptionsModel::Init()
 
     // Display
     if (!settings.contains("nDisplayUnit"))
-        settings.setValue("nDisplayUnit", BitcoinUnits::BTC);
+        settings.setValue("nDisplayUnit", EndoxCoinUnits::ENDOX);
     nDisplayUnit = settings.value("nDisplayUnit").toInt();
     
     fUseBlackTheme = settings.value("fUseBlackTheme", false).toBool();
@@ -63,16 +63,16 @@ void OptionsModel::Init()
     fCoinControlFeatures = settings.value("fCoinControlFeatures", false).toBool();
 
     // Dark Send
-    if (!settings.contains("nDarksendRounds"))
-        settings.setValue("nDarksendRounds", 2);
-    nDarksendRounds = settings.value("nDarksendRounds").toLongLong();
-    if (!settings.contains("nAnonymizeEndoAmount"))
-        settings.setValue("nAnonymizeEndoAmount", 1000);
-    nAnonymizeEndoAmount = settings.value("nAnonymizeEndoAmount").toLongLong();
-    if (settings.contains("nDarksendRounds"))
-        SoftSetArg("-darksendrounds", settings.value("nDarksendRounds").toString().toStdString());
-    if (settings.contains("nAnonymizeEndoAmount"))
-        SoftSetArg("-anonymizeEndoamount", settings.value("nAnonymizeEndoAmount").toString().toStdString());
+    if (!settings.contains("nMNengineRounds"))
+        settings.setValue("nMNengineRounds", 2);
+    nMNengineRounds = settings.value("nMNengineRounds").toLongLong();
+    if (!settings.contains("nAnonymizeEndoxCoinAmount"))
+        settings.setValue("nAnonymizeEndoxCoinAmount", 1000);
+    nAnonymizeEndoxCoinAmount = settings.value("nAnonymizeEndoxCoinAmount").toLongLong();
+    if (settings.contains("nMNengineRounds"))
+        SoftSetArg("-mnenginerounds", settings.value("nMNengineRounds").toString().toStdString());
+    if (settings.contains("nAnonymizeEndoxCoinAmount"))
+        SoftSetArg("-anonymizeEndoxCoinamount", settings.value("nAnonymizeEndoxCoinAmount").toString().toStdString());
 
 
 
@@ -204,10 +204,10 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
             return settings.value("language");
         case CoinControlFeatures:
             return fCoinControlFeatures;
-        case DarksendRounds:
-            return QVariant(nDarksendRounds);
-        case AnonymizeEndoAmount:
-            return QVariant(nAnonymizeEndoAmount);
+        case MNengineRounds:
+            return QVariant(nMNengineRounds);
+        case AnonymizeEndoxCoinAmount:
+            return QVariant(nAnonymizeEndoxCoinAmount);
         case UseBlackTheme:
             return QVariant(fUseBlackTheme);
         default:
@@ -313,15 +313,15 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
             fUseBlackTheme = value.toBool();
             settings.setValue("fUseBlackTheme", fUseBlackTheme);
             break;
-        case DarksendRounds:
-            nDarksendRounds = value.toInt();
-            settings.setValue("nDarksendRounds", nDarksendRounds);
-            emit darksendRoundsChanged(nDarksendRounds);
+        case MNengineRounds:
+            nMNengineRounds = value.toInt();
+            settings.setValue("nMNengineRounds", nMNengineRounds);
+            emit mnengineRoundsChanged(nMNengineRounds);
             break;
-        case AnonymizeEndoAmount:
-            nAnonymizeEndoAmount = value.toInt();
-            settings.setValue("nAnonymizeEndoAmount", nAnonymizeEndoAmount);
-            emit AnonymizeEndoAmountChanged(nAnonymizeEndoAmount);
+        case AnonymizeEndoxCoinAmount:
+            nAnonymizeEndoxCoinAmount = value.toInt();
+            settings.setValue("nAnonymizeEndoxCoinAmount", nAnonymizeEndoxCoinAmount);
+            emit AnonymizeEndoxCoinAmountChanged(nAnonymizeEndoxCoinAmount);
             break;
         default:
             break;

@@ -92,7 +92,7 @@ bool CAlert::IsNull() const
 
 uint256 CAlert::GetHash() const
 {
-    return HashBmw512(this->vchMsg.begin(), this->vchMsg.end());
+    return Hash(this->vchMsg.begin(), this->vchMsg.end());
 }
 
 bool CAlert::IsInEffect() const
@@ -144,7 +144,7 @@ bool CAlert::RelayTo(CNode* pnode) const
 bool CAlert::CheckSignature() const
 {
     CPubKey key(Params().AlertKey());
-    if (!key.Verify(HashBmw512(vchMsg.begin(), vchMsg.end()), vchSig))
+    if (!key.Verify(Hash(vchMsg.begin(), vchMsg.end()), vchSig))
         return error("CAlert::CheckSignature() : verify signature failed");
 
     // Now unserialize the data
@@ -238,7 +238,7 @@ bool CAlert::ProcessAlert(bool fThread)
             {
                 // Alert text should be plain ascii coming from a trusted source, but to
                 // be safe we first strip anything not in safeChars, then add single quotes around
-                // the whole string before passing it to the ENDO:
+                // the whole string before passing it to the shell:
                 std::string singleQuote("'");
                 std::string safeStatus = SanitizeString(strStatusBar);
                 safeStatus = singleQuote+safeStatus+singleQuote;

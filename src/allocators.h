@@ -2,8 +2,8 @@
 // Copyright (c) 2009-2012 The Bitcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-#ifndef Endo_ALLOCATORS_H
-#define Endo_ALLOCATORS_H
+#ifndef ENDOX_COIN_ALLOCATORS_H
+#define ENDOX_COIN_ALLOCATORS_H
 
 #include "support/cleanse.h"
 #include <boost/thread/mutex.hpp>

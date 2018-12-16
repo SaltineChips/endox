@@ -14,8 +14,7 @@
    <string>Signatures - Sign / Verify a Message</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">color: rgb(204, 155, 68);
-background-color: rgb(244, 244, 244);</string>
+   <string notr="true"/>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -23,11 +22,8 @@ background-color: rgb(244, 244, 244);</string>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTabWidget" name="tabWidget">
-     <property name="styleSheet">
-      <string notr="true">color: #eb1f24</string>
-     </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabSignMessage">
       <attribute name="title">
@@ -55,10 +51,7 @@ background-color: rgb(244, 244, 244);</string>
          <item>
           <widget class="QValidatedLineEdit" name="addressIn_SM">
            <property name="toolTip">
-            <string>The address to sign the message with (e.g. RYkuzHsrEvv6yVtXvuBHvdp6TZzRsv42Pr)</string>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: #eb1f24</string>
+            <string>The address to sign the message with (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</string>
            </property>
            <property name="maxLength">
             <number>34</number>
@@ -112,9 +105,6 @@ background-color: rgb(244, 244, 244);</string>
          <property name="toolTip">
           <string>Enter the message you want to sign here</string>
          </property>
-         <property name="styleSheet">
-          <string notr="true">color: #eb1f24</string>
-         </property>
         </widget>
        </item>
        <item>
@@ -128,9 +118,6 @@ background-color: rgb(244, 244, 244);</string>
             <font>
              <italic>true</italic>
             </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: #eb1f24</string>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -161,7 +148,7 @@ background-color: rgb(244, 244, 244);</string>
          <item>
           <widget class="QPushButton" name="signMessageButton_SM">
            <property name="toolTip">
-            <string>Sign the message to prove you own this ENDO address</string>
+            <string>Sign the message to prove you own this Endox-Coin address</string>
            </property>
            <property name="text">
             <string>&amp;Sign Message</string>
@@ -245,9 +232,6 @@ background-color: rgb(244, 244, 244);</string>
       <layout class="QVBoxLayout" name="verticalLayout_VM">
        <item>
         <widget class="QLabel" name="infoLabel_VM">
-         <property name="styleSheet">
-          <string notr="true">color: #eb1f24</string>
-         </property>
          <property name="text">
           <string>Enter the signing address, message (ensure you copy line breaks, spaces, tabs, etc. exactly) and signature below to verify the message. Be careful not to read more into the signature than what is in the signed message itself, to avoid being tricked by a man-in-the-middle attack.</string>
          </property>
@@ -270,10 +254,7 @@ background-color: rgb(244, 244, 244);</string>
          <item>
           <widget class="QValidatedLineEdit" name="addressIn_VM">
            <property name="toolTip">
-            <string>The address the message was signed with (e.g. RYkuzHsrEvv6yVtXvuBHvdp6TZzRsv42Pr)</string>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: #eb1f24</string>
+            <string>The address the message was signed with (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</string>
            </property>
            <property name="maxLength">
             <number>34</number>
@@ -303,25 +284,17 @@ background-color: rgb(244, 244, 244);</string>
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="messageIn_VM">
-         <property name="styleSheet">
-          <string notr="true">color: #eb1f24</string>
-         </property>
-        </widget>
+        <widget class="QPlainTextEdit" name="messageIn_VM"/>
        </item>
        <item>
-        <widget class="QValidatedLineEdit" name="signatureIn_VM">
-         <property name="styleSheet">
-          <string notr="true">color: #eb1f24</string>
-         </property>
-        </widget>
+        <widget class="QValidatedLineEdit" name="signatureIn_VM"/>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2_VM">
          <item>
           <widget class="QPushButton" name="verifyMessageButton_VM">
            <property name="toolTip">
-            <string>Verify the message to ensure it was signed with the specified ENDO address</string>
+            <string>Verify the message to ensure it was signed with the specified Endox-Coin address</string>
            </property>
            <property name="text">
             <string>&amp;Verify Message</string>

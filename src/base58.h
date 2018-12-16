@@ -92,23 +92,23 @@ public:
     bool operator> (const CBase58Data& b58) const { return CompareTo(b58) >  0; }
 };
 
-/** base58-encoded ENDO addresses.
+/** base58-encoded Endox-Coin addresses.
  * Public-key-hash-addresses have version 0 (or 111 testnet).
  * The data vector contains RIPEMD160(SHA256(pubkey)), where pubkey is the serialized public key.
  * Script-hash-addresses have version 5 (or 196 testnet).
  * The data vector contains RIPEMD160(SHA256(cscript)), where cscript is the serialized redemption script.
  */
-class CEndoAddress : public CBase58Data {
+class CEndoxCoinAddress : public CBase58Data {
 public:
     bool Set(const CKeyID &id);
     bool Set(const CScriptID &id);
     bool Set(const CTxDestination &dest);
     bool IsValid() const;
 
-    CEndoAddress() {}
-    CEndoAddress(const CTxDestination &dest) { Set(dest); }
-    CEndoAddress(const std::string& strAddress) { SetString(strAddress); }
-    CEndoAddress(const char* pszAddress) { SetString(pszAddress); }
+    CEndoxCoinAddress() {}
+    CEndoxCoinAddress(const CTxDestination &dest) { Set(dest); }
+    CEndoxCoinAddress(const std::string& strAddress) { SetString(strAddress); }
+    CEndoxCoinAddress(const char* pszAddress) { SetString(pszAddress); }
 
     CTxDestination Get() const;
     bool GetKeyID(CKeyID &keyID) const;
@@ -118,7 +118,7 @@ public:
 /**
  * A base58-encoded secret key
  */
-class CEndoSecret : public CBase58Data
+class CEndoxCoinSecret : public CBase58Data
 {
 public:
     void SetKey(const CKey& vchSecret);
@@ -127,11 +127,11 @@ public:
     bool SetString(const char* pszSecret);
     bool SetString(const std::string& strSecret);
 
-    CEndoSecret(const CKey& vchSecret) { SetKey(vchSecret); }
-    CEndoSecret() {}
+    CEndoxCoinSecret(const CKey& vchSecret) { SetKey(vchSecret); }
+    CEndoxCoinSecret() {}
 };
 
-template<typename K, int Size, CChainParams::Base58Type Type> class CEndoExtKeyBase : public CBase58Data
+template<typename K, int Size, CChainParams::Base58Type Type> class CEndoxCoinExtKeyBase : public CBase58Data
 {
 public:
     void SetKey(const K &key) {
@@ -146,37 +146,14 @@ public:
         return ret;
     }
 
-    CEndoExtKeyBase(const K &key) {
+    CEndoxCoinExtKeyBase(const K &key) {
         SetKey(key);
     }
 
-    CEndoExtKeyBase() {}
+    CEndoxCoinExtKeyBase() {}
 };
 
-typedef CEndoExtKeyBase<CExtKey, 74, CChainParams::EXT_SECRET_KEY> CEndoExtKey;
-typedef CEndoExtKeyBase<CExtPubKey, 74, CChainParams::EXT_PUBLIC_KEY> CEndoExtPubKey;
-
-/** base58-encoded Bitcoin addresses.
- * Public-key-hash-addresses have version 0 (or 111 testnet).
- * The data vector contains RIPEMD160(SHA256(pubkey)), where pubkey is the serialized public key.
- * Script-hash-addresses have version 5 (or 196 testnet).
- * The data vector contains RIPEMD160(SHA256(cscript)), where cscript is the serialized redemption script.
- */
-class CBitcoinAddress : public CBase58Data {
-public:
-    bool Set(const CKeyID &id);
-    bool Set(const CScriptID &id);
-    bool Set(const CTxDestination &dest);
-    bool IsValid() const;
-
-    CBitcoinAddress() {}
-    CBitcoinAddress(const CTxDestination &dest) { Set(dest); }
-    CBitcoinAddress(const std::string& strAddress) { SetString(strAddress); }
-    CBitcoinAddress(const char* pszAddress) { SetString(pszAddress); }
-
-    CTxDestination Get() const;
-    bool GetKeyID(CKeyID &keyID) const;
-    bool IsScript() const;
-};
+typedef CEndoxCoinExtKeyBase<CExtKey, 74, CChainParams::EXT_SECRET_KEY> CEndoxCoinExtKey;
+typedef CEndoxCoinExtKeyBase<CExtPubKey, 74, CChainParams::EXT_PUBLIC_KEY> CEndoxCoinExtPubKey;
 
 #endif // BITCOIN_BASE58_H

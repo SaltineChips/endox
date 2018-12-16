@@ -4,7 +4,7 @@
 
 #include "masternode-payments.h"
 #include "masternodeman.h"
-#include "darksend.h"
+#include "mnengine.h"
 #include "util.h"
 #include "sync.h"
 #include "spork.h"
@@ -26,7 +26,7 @@ int CMasternodePayments::GetMinMasternodePaymentsProto() {
 
 void ProcessMessageMasternodePayments(CNode* pfrom, std::string& strCommand, CDataStream& vRecv)
 {
-    if(!darkSendPool.IsBlockchainSynced()) return;
+    if(!mnEnginePool.IsBlockchainSynced()) return;
 
     if (strCommand == "mnget") { //Masternode Payments Request Sync
 
@@ -52,7 +52,7 @@ void ProcessMessageMasternodePayments(CNode* pfrom, std::string& strCommand, CDa
 
         CTxDestination address1;
         ExtractDestination(winner.payee, address1);
-        CEndoAddress address2(address1);
+        CEndoxCoinAddress address2(address1);
 
         uint256 hash = winner.GetHash();
         if(mapSeenMasternodeVotes.count(hash)) {
@@ -96,7 +96,7 @@ bool CMasternodePayments::CheckSignature(CMasternodePaymentWinner& winner)
     CPubKey pubkey(ParseHex(strPubKey));
 
     std::string errorMessage = "";
-    if(!darkSendSigner.VerifyMessage(pubkey, winner.vchSig, strMessage, errorMessage)){
+    if(!mnEngineSigner.VerifyMessage(pubkey, winner.vchSig, strMessage, errorMessage)){
         return false;
     }
 
@@ -111,18 +111,18 @@ bool CMasternodePayments::Sign(CMasternodePaymentWinner& winner)
     CPubKey pubkey2;
     std::string errorMessage = "";
 
-    if(!darkSendSigner.SetKey(strMasterPrivKey, errorMessage, key2, pubkey2))
+    if(!mnEngineSigner.SetKey(strMasterPrivKey, errorMessage, key2, pubkey2))
     {
         LogPrintf("CMasternodePayments::Sign - ERROR: Invalid Masternodeprivkey: '%s'\n", errorMessage.c_str());
         return false;
     }
 
-    if(!darkSendSigner.SignMessage(strMessage, errorMessage, winner.vchSig, key2)) {
+    if(!mnEngineSigner.SignMessage(strMessage, errorMessage, winner.vchSig, key2)) {
         LogPrintf("CMasternodePayments::Sign - Sign message failed");
         return false;
     }
 
-    if(!darkSendSigner.VerifyMessage(pubkey2, winner.vchSig, strMessage, errorMessage)) {
+    if(!mnEngineSigner.VerifyMessage(pubkey2, winner.vchSig, strMessage, errorMessage)) {
         LogPrintf("CMasternodePayments::Sign - Verify message failed");
         return false;
     }
@@ -302,11 +302,11 @@ bool CMasternodePayments::ProcessBlock(int nBlockHeight)
 
     CTxDestination address1;
     ExtractDestination(newWinner.payee, address1);
-    CEndoAddress address2(address1);
+    CEndoxCoinAddress address2(address1);
 
     CTxDestination address3;
     ExtractDestination(payeeSource, address3);
-    CEndoAddress address4(address3);
+    CEndoxCoinAddress address4(address3);
 
     LogPrintf("Winner payee %s nHeight %d vin source %s. \n", address2.ToString().c_str(), newWinner.nBlockHeight, address4.ToString().c_str());
 

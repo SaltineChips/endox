@@ -14,17 +14,13 @@
    <string>Edit Address</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">color: rgb(204, 155, 68);
-background-color: rgb(244, 244, 244);</string>
+   <string notr="true"/>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
       <widget class="QLabel" name="label">
-       <property name="styleSheet">
-        <string notr="true">color: #eb1f24</string>
-       </property>
        <property name="text">
         <string>&amp;Label</string>
        </property>
@@ -38,9 +34,6 @@ background-color: rgb(244, 244, 244);</string>
        <property name="toolTip">
         <string>The label associated with this address book entry</string>
        </property>
-       <property name="styleSheet">
-        <string notr="true">color: #eb1f24</string>
-       </property>
       </widget>
      </item>
     </layout>
@@ -49,9 +42,6 @@ background-color: rgb(244, 244, 244);</string>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <widget class="QLabel" name="label_2">
-       <property name="styleSheet">
-        <string notr="true">color: #eb1f24</string>
-       </property>
        <property name="text">
         <string>&amp;Address</string>
        </property>
@@ -64,9 +54,6 @@ background-color: rgb(244, 244, 244);</string>
       <widget class="QLineEdit" name="addressEdit">
        <property name="toolTip">
         <string>The address associated with this address book entry. This can only be modified for sending addresses.</string>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: #eb1f24</string>
        </property>
       </widget>
      </item>
@@ -91,9 +78,6 @@ background-color: rgb(244, 244, 244);</string>
    </item>
    <item row="2" column="0">
     <widget class="QCheckBox" name="stealthCB">
-     <property name="styleSheet">
-      <string notr="true">color: #eb1f24</string>
-     </property>
      <property name="text">
       <string>&amp;Stealth Address</string>
      </property>
@@ -101,9 +85,6 @@ background-color: rgb(244, 244, 244);</string>
    </item>
    <item row="3" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="styleSheet">
-      <string notr="true">color: #eb1f24</string>
-     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>

@@ -14,17 +14,13 @@
    <string>Transaction details</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">color: rgb(204, 155, 68);
-background-color: rgb(244, 244, 244);</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTextEdit" name="detailText">
      <property name="toolTip">
       <string>This pane shows a detailed description of the transaction</string>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: #eb1f24</string>
      </property>
      <property name="readOnly">
       <bool>true</bool>
@@ -33,9 +29,6 @@ background-color: rgb(244, 244, 244);</string>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="styleSheet">
-      <string notr="true">color: #eb1f24</string>
-     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>

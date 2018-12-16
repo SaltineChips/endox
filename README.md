@@ -1,62 +1,62 @@
-ENDO [ENDO] integration/staging tree
+Endox-Coin [ENDOX] integration/staging tree
 =====================================
 
-http://www.endocoin.com
+http://www.endox-coincoin.com
 
-What is the ENDO [ENDO] Blockchain?
+What is the Endox-Coin [ENDOX] Blockchain?
 ---------------------------
 
-The ENDO [ENDO] Blockchain is an experimental smart contract platform protocol that enables 
+The Endox-Coin [ENDOX] Blockchain is an experimental smart contract platform protocol that enables 
 instant payments to anyone, anywhere in the world in a private, secure manner. 
-ENDO [ENDO] uses peer-to-peer blockchain technology developed by Bitcoin to operate
+Endox-Coin [ENDOX] uses peer-to-peer blockchain technology developed by EndoxCoin to operate
 with no central authority: managing transactions, execution of contracts, and 
-issuing money are carried out collectively by the network. ENDO [ENDO] is the name of 
+issuing money are carried out collectively by the network. Endox-Coin [ENDOX] is the name of 
 open source software which enables the use of this protocol.
 
 Specifications and General info
 ------------------
-ENDO uses libsecp256k1,
+Endox-Coin uses libsecp256k1,
 			  libgmp,
-			  Boost1.66,
-			  OR Boost1.58,  
-			  Openssl1.02n,
-			  Berkeley DB 6.2.32,
+			  Boost1.63,
+			  OR Boost1.57,  
+			  Openssl1.02k,
+			  Berkeley DB 6.2.23,
 			  QT5.8 to compile
 
 
 Block Spacing: 5 Minutes
 Stake Minimum Age: 15 Confirmations (PoS-v3) | 30 Minutes (PoS-v2)
 
-Port: 20029
-RPC Port: 20167
+Port: 51441
+RPC Port: 10257
 
 
 BUILD LINUX
 -----------
-1) git clone https://github.com/Endoblockchain/Endo
+1) git clone https://github.com/CryptoCoderz/ENDOX
 
-2) cd ENDO/src
+2) cd ENDOX/src
 
 3) sudo make -f makefile.unix            # Headless
 
 (optional)
 
-4) strip Endod
+4) strip Endox-Coind
 
-5) sudo cp Endod /usr/local/bin
+5) sudo cp Endox-Coind /usr/local/bin
 
 License
 -------
 
-ENDO [ENDO] is released under the terms of the MIT license. See [COPYING](COPYING) for more
+Endox-Coin [ENDOX] is released under the terms of the MIT license. See [COPYING](COPYING) for more
 information or see https://opensource.org/licenses/MIT.
 
 Development Process
 -------------------
 
 The `master` branch is regularly built and tested, but is not guaranteed to be
-completely stable. [Tags](https://github.com/CryptoCoderz/ENDO/tags) are created
-regularly to indicate new official, stable release versions of ENDO [ENDO].
+completely stable. [Tags](https://github.com/CryptoCoderz/ENDOX/tags) are created
+regularly to indicate new official, stable release versions of Endox-Coin [ENDOX].
 
 The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -64,7 +64,7 @@ The developer [mailing list](https://lists.linuxfoundation.org/mailman/listinfo/
 should be used to discuss complicated or controversial changes before working
 on a patch set.
 
-Developer Slack can be found at http://endocointeam.slack.com.
+Developer Slack can be found at http://endox-coincointeam.slack.com.
 
 Testing
 -------

@@ -100,9 +100,9 @@ Section -post SEC0001
 
     # bitcoin: URI handling disabled for 0.6.0
     #    WriteRegStr HKCR "bitcoin" "URL Protocol" ""
-    #    WriteRegStr HKCR "bitcoin" "" "URL:Bitcoin"
+    #    WriteRegStr HKCR "bitcoin" "" "URL:EndoxCoin"
     #    WriteRegStr HKCR "bitcoin\DefaultIcon" "" $INSTDIR\bitcoin-qt.exe
-    #    WriteRegStr HKCR "bitcoin\ENDO\open\command" "" '"$INSTDIR\bitcoin-qt.exe" "$$1"'
+    #    WriteRegStr HKCR "bitcoin\Endox-Coin\open\command" "" '"$INSTDIR\bitcoin-qt.exe" "$$1"'
 SectionEnd
 
 # Macro for selecting uninstaller sections
@@ -131,8 +131,8 @@ SectionEnd
 Section -un.post UNSEC0001
     DeleteRegKey HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)"
     Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Uninstall NovaCoin.lnk"
-    #Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Bitcoin.lnk"
-    #Delete /REBOOTOK "$SMSTARTUP\Bitcoin.lnk"
+    #Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\EndoxCoin.lnk"
+    #Delete /REBOOTOK "$SMSTARTUP\EndoxCoin.lnk"
     Delete /REBOOTOK $INSTDIR\uninstall.exe
     Delete /REBOOTOK $INSTDIR\debug.log
     Delete /REBOOTOK $INSTDIR\db.log

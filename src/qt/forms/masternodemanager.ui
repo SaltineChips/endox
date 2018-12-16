@@ -14,8 +14,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">color: rgb(204, 155, 68);
-background-color: rgb(244, 244, 244);</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="topLayout">
    <property name="leftMargin">
@@ -37,22 +36,16 @@ background-color: rgb(244, 244, 244);</string>
      </property>
      <item>
       <widget class="QTabWidget" name="tabWidget">
-       <property name="styleSheet">
-        <string notr="true">color: #eb1f24</string>
-       </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
-         <string>ENDO Network</string>
+         <string>Endox-Coin Network</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout">
          <item row="1" column="0">
-          <widget class="QTableWidget" name="tableWidget">
-           <property name="styleSheet">
-            <string notr="true">color: #eb1f24</string>
-           </property>
+          <widget class="QTableWidget" name="tableWidgetMasternodes">
            <property name="editTriggers">
             <set>QAbstractItemView::NoEditTriggers</set>
            </property>
@@ -75,7 +68,7 @@ background-color: rgb(244, 244, 244);</string>
            </column>
            <column>
             <property name="text">
-             <string>Rank</string>
+             <string>Protocol</string>
             </property>
            </column>
            <column>
@@ -108,7 +101,7 @@ background-color: rgb(244, 244, 244);</string>
            <item>
             <widget class="QLabel" name="label_2">
              <property name="text">
-              <string>ENDO Node Count:</string>
+              <string>Endox-Coin Node Count:</string>
              </property>
             </widget>
            </item>
@@ -216,23 +209,23 @@ background-color: rgb(244, 244, 244);</string>
               <number>0</number>
              </property>
              <item>
+              <widget class="QPushButton" name="stopButton">
+               <property name="text">
+                <string>Stop</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="stopAllButton">
+               <property name="text">
+                <string>Stop All</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="editButton">
                <property name="text">
                 <string>&amp;Edit</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="removeButton">
-               <property name="text">
-                <string>&amp;Remove</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="UpdateButton">
-               <property name="text">
-                <string>&amp;Update</string>
                </property>
               </widget>
              </item>
@@ -274,6 +267,13 @@ background-color: rgb(244, 244, 244);</string>
               <widget class="QPushButton" name="startAllButton">
                <property name="text">
                 <string>St&amp;art All</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="UpdateButton">
+               <property name="text">
+                <string>&amp;Update</string>
                </property>
               </widget>
              </item>

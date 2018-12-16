@@ -220,7 +220,7 @@ TransactionTableModel::TransactionTableModel(CWallet* wallet, WalletModel *paren
         walletModel(parent),
         priv(new TransactionTablePriv(wallet, this))
 {
-    columns << QString() <<  QString() << tr("Date") << tr("Type") << tr("Address") << BitcoinUnits::getAmountColumnTitle(walletModel->getOptionsModel()->getDisplayUnit());
+    columns << QString() <<  QString() << tr("Date") << tr("Type") << tr("Address") << EndoxCoinUnits::getAmountColumnTitle(walletModel->getOptionsModel()->getDisplayUnit());
 
     priv->refreshWallet();
 
@@ -238,7 +238,7 @@ TransactionTableModel::~TransactionTableModel()
 /** Updates the column title to "Amount (DisplayUnit)" and emits headerDataChanged() signal for table headers to react. */
 void TransactionTableModel::updateAmountColumnTitle()
 {
-	columns[Amount] = BitcoinUnits::getAmountColumnTitle(walletModel->getOptionsModel()->getDisplayUnit());
+	columns[Amount] = EndoxCoinUnits::getAmountColumnTitle(walletModel->getOptionsModel()->getDisplayUnit());
 	emit headerDataChanged(Qt::Horizontal,Amount,Amount);
 }
 
@@ -348,8 +348,8 @@ QString TransactionTableModel::formatTxType(const TransactionRecord *wtx) const
         return tr("Received with");
     case TransactionRecord::RecvFromOther:
         return tr("Received from");
-    case TransactionRecord::RecvWithDarksend:
-        return tr("Received via Darksend");
+    case TransactionRecord::RecvWithMNengine:
+        return tr("Received via MNengine");
     case TransactionRecord::SendToAddress:
     case TransactionRecord::SendToOther:
         return tr("Sent to");
@@ -357,15 +357,10 @@ QString TransactionTableModel::formatTxType(const TransactionRecord *wtx) const
         return tr("Payment to yourself");
     case TransactionRecord::Generated:
         return tr("Mined");
-
-    case TransactionRecord::DarksendDenominate:
-        return tr("Darksend Denominate");
-    case TransactionRecord::DarksendCollateralPayment:
-        return tr("Darksend Collateral Payment");
-    case TransactionRecord::DarksendMakeCollaterals:
-        return tr("Darksend Make Collateral Inputs");
-    case TransactionRecord::DarksendCreateDenominations:
-        return tr("Darksend Create Denominations");
+    case TransactionRecord::MNengineCollateralPayment:
+        return tr("MNengine Collateral Payment");
+    case TransactionRecord::MNengineMakeCollaterals:
+        return tr("MNengine Make Collateral Inputs");
     case TransactionRecord::Darksent:
         return tr("Darksent");
 
@@ -380,7 +375,7 @@ QVariant TransactionTableModel::txAddressDecoration(const TransactionRecord *wtx
     {
     case TransactionRecord::Generated:
         return QIcon(fUseBlackTheme ? ":/icons/black/tx_mined" : ":/icons/tx_mined");
-    case TransactionRecord::RecvWithDarksend:
+    case TransactionRecord::RecvWithMNengine:
     case TransactionRecord::RecvWithAddress:
     case TransactionRecord::RecvFromOther:
         return QIcon(fUseBlackTheme ? ":/icons/black/tx_input" : ":/icons/tx_input");
@@ -405,7 +400,7 @@ QString TransactionTableModel::formatTxToAddress(const TransactionRecord *wtx, b
     case TransactionRecord::RecvFromOther:
         return QString::fromStdString(wtx->address) + watchAddress;
     case TransactionRecord::RecvWithAddress:
-    case TransactionRecord::RecvWithDarksend:
+    case TransactionRecord::RecvWithMNengine:
     case TransactionRecord::SendToAddress:
     case TransactionRecord::Generated:
     case TransactionRecord::Darksent:
@@ -441,7 +436,7 @@ QVariant TransactionTableModel::addressColor(const TransactionRecord *wtx) const
 
 QString TransactionTableModel::formatTxAmount(const TransactionRecord *wtx, bool showUnconfirmed) const
 {
-    QString str = BitcoinUnits::format(walletModel->getOptionsModel()->getDisplayUnit(), wtx->credit + wtx->debit);
+    QString str = EndoxCoinUnits::format(walletModel->getOptionsModel()->getDisplayUnit(), wtx->credit + wtx->debit);
     if(showUnconfirmed)
     {
         if(!wtx->status.countsForBalance)

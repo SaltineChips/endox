@@ -14,8 +14,7 @@
    <string>Coin Control</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">color: rgb(204, 155, 68);
-background-color: rgb(244, 244, 244);</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -43,7 +42,7 @@ background-color: rgb(244, 244, 244);</string>
        <item row="0" column="0">
         <widget class="QLabel" name="labelCoinControlQuantityText">
          <property name="styleSheet">
-          <string notr="true"> color: #eb1f24</string>
+          <string notr="true">font-weight:bold;</string>
          </property>
          <property name="text">
           <string>Quantity:</string>
@@ -64,9 +63,6 @@ background-color: rgb(244, 244, 244);</string>
          <property name="contextMenuPolicy">
           <enum>Qt::ActionsContextMenu</enum>
          </property>
-         <property name="styleSheet">
-          <string notr="true">color: #eb1f24</string>
-         </property>
          <property name="text">
           <string notr="true">0</string>
          </property>
@@ -78,7 +74,7 @@ background-color: rgb(244, 244, 244);</string>
        <item row="1" column="0">
         <widget class="QLabel" name="labelCoinControlBytesText">
          <property name="styleSheet">
-          <string notr="true">font-weight:bold; color: #eb1f24</string>
+          <string notr="true">font-weight:bold;</string>
          </property>
          <property name="text">
           <string>Bytes:</string>
@@ -98,9 +94,6 @@ background-color: rgb(244, 244, 244);</string>
          </property>
          <property name="contextMenuPolicy">
           <enum>Qt::ActionsContextMenu</enum>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: #eb1f24</string>
          </property>
          <property name="text">
           <string notr="true">0</string>
@@ -129,7 +122,7 @@ background-color: rgb(244, 244, 244);</string>
        <item row="0" column="0">
         <widget class="QLabel" name="labelCoinControlAmountText">
          <property name="styleSheet">
-          <string notr="true">font-weight:bold; color: #eb1f24</string>
+          <string notr="true">font-weight:bold;</string>
          </property>
          <property name="text">
           <string>Amount:</string>
@@ -150,11 +143,8 @@ background-color: rgb(244, 244, 244);</string>
          <property name="contextMenuPolicy">
           <enum>Qt::ActionsContextMenu</enum>
          </property>
-         <property name="styleSheet">
-          <string notr="true">color: #eb1f24</string>
-         </property>
          <property name="text">
-          <string notr="true">0.00 TX</string>
+          <string notr="true">0.00 ENDOX</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -164,7 +154,7 @@ background-color: rgb(244, 244, 244);</string>
        <item row="1" column="0">
         <widget class="QLabel" name="labelCoinControlPriorityText">
          <property name="styleSheet">
-          <string notr="true">font-weight:bold; color: #eb1f24</string>
+          <string notr="true">font-weight:bold;</string>
          </property>
          <property name="text">
           <string>Priority:</string>
@@ -212,7 +202,7 @@ background-color: rgb(244, 244, 244);</string>
        <item row="0" column="0">
         <widget class="QLabel" name="labelCoinControlFeeText">
          <property name="styleSheet">
-          <string notr="true">font-weight:bold; color: #eb1f24</string>
+          <string notr="true">font-weight:bold;</string>
          </property>
          <property name="text">
           <string>Fee:</string>
@@ -233,11 +223,8 @@ background-color: rgb(244, 244, 244);</string>
          <property name="contextMenuPolicy">
           <enum>Qt::ActionsContextMenu</enum>
          </property>
-         <property name="styleSheet">
-          <string notr="true">color: #eb1f24</string>
-         </property>
          <property name="text">
-          <string notr="true">0.00 TX</string>
+          <string notr="true">0.00 ENDOX</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -250,7 +237,7 @@ background-color: rgb(244, 244, 244);</string>
           <bool>false</bool>
          </property>
          <property name="styleSheet">
-          <string notr="true">font-weight:bold; color: #eb1f24</string>
+          <string notr="true">font-weight:bold;</string>
          </property>
          <property name="text">
           <string>Low Output:</string>
@@ -273,9 +260,6 @@ background-color: rgb(244, 244, 244);</string>
          </property>
          <property name="contextMenuPolicy">
           <enum>Qt::ActionsContextMenu</enum>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: #eb1f24</string>
          </property>
          <property name="text">
           <string notr="true">no</string>
@@ -304,7 +288,7 @@ background-color: rgb(244, 244, 244);</string>
        <item row="0" column="0">
         <widget class="QLabel" name="labelCoinControlAfterFeeText">
          <property name="styleSheet">
-          <string notr="true">font-weight:bold; color: #eb1f24</string>
+          <string notr="true">font-weight:bold;</string>
          </property>
          <property name="text">
           <string>After Fee:</string>
@@ -325,11 +309,8 @@ background-color: rgb(244, 244, 244);</string>
          <property name="contextMenuPolicy">
           <enum>Qt::ActionsContextMenu</enum>
          </property>
-         <property name="styleSheet">
-          <string notr="true">color: #eb1f24</string>
-         </property>
          <property name="text">
-          <string notr="true">0.00 TX</string>
+          <string notr="true">0.00 ENDOX</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -342,7 +323,7 @@ background-color: rgb(244, 244, 244);</string>
           <bool>false</bool>
          </property>
          <property name="styleSheet">
-          <string notr="true">font-weight:bold; color: #eb1f24</string>
+          <string notr="true">font-weight:bold;</string>
          </property>
          <property name="text">
           <string>Change:</string>
@@ -366,11 +347,8 @@ background-color: rgb(244, 244, 244);</string>
          <property name="contextMenuPolicy">
           <enum>Qt::ActionsContextMenu</enum>
          </property>
-         <property name="styleSheet">
-          <string notr="true">color: #eb1f24</string>
-         </property>
          <property name="text">
-          <string notr="true">0.00 TX</string>
+          <string notr="true">0.00 ENDOX</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -404,7 +382,7 @@ background-color: rgb(244, 244, 244);</string>
         <height>41</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayoutPanel" stretch="0,0,0,0">
+      <layout class="QHBoxLayout" name="horizontalLayoutPanel" stretch="0,0,0,0,0">
        <property name="spacing">
         <number>14</number>
        </property>
@@ -416,14 +394,27 @@ background-color: rgb(244, 244, 244);</string>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="styleSheet">
-          <string notr="true">color: #eb1f24</string>
-         </property>
          <property name="text">
           <string>(un)select all</string>
          </property>
         </widget>
        </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonToggleLock">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>toggle lock state</string>
+          </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
        <item>
         <widget class="QRadioButton" name="radioTreeMode">
          <property name="sizePolicy">
@@ -431,9 +422,6 @@ background-color: rgb(244, 244, 244);</string>
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: #eb1f24</string>
          </property>
          <property name="text">
           <string>Tree mode</string>
@@ -451,14 +439,18 @@ background-color: rgb(244, 244, 244);</string>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="styleSheet">
-          <string notr="true">color: #eb1f24</string>
-         </property>
          <property name="text">
           <string>List mode</string>
          </property>
         </widget>
        </item>
+        <item>
+         <widget class="QLabel" name="labelLocked">
+          <property name="text">
+           <string>(1 locked)</string>
+          </property>
+         </widget>
+        </item>
        <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
@@ -480,9 +472,6 @@ background-color: rgb(244, 244, 244);</string>
     <widget class="CoinControlTreeWidget" name="treeWidget">
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: #eb1f24</string>
      </property>
      <property name="sortingEnabled">
       <bool>false</bool>
@@ -518,7 +507,7 @@ background-color: rgb(244, 244, 244);</string>
      </column>
      <column>
       <property name="text">
-       <string>Darksend Rounds</string>
+       <string>MNengine Rounds</string>
       </property>
      </column>
      <column>
@@ -568,9 +557,6 @@ background-color: rgb(244, 244, 244);</string>
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: #eb1f24</string>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>

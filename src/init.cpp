@@ -16,18 +16,16 @@
 #include "util.h"
 #include "ui_interface.h"
 #include "checkpoints.h"
-#include "darksend-relay.h"
+//#include "mnengine-relay.h"
 #include "activemasternode.h"
 #include "masternode-payments.h"
 #include "masternode.h"
 #include "masternodeman.h"
 #include "masternodeconfig.h"
 #include "spork.h"
-#include "smessage.h"
 
 #ifdef ENABLE_WALLET
 #include "db.h"
-#include "miner.h"
 #include "wallet.h"
 #include "walletdb.h"
 #endif
@@ -113,10 +111,9 @@ void Shutdown()
     TRY_LOCK(cs_Shutdown, lockShutdown);
     if (!lockShutdown) return;
 
-    RenameThread("ENDO-shutoff");
+    RenameThread("Endox-Coin-shutoff");
     mempool.AddTransactionsUpdated(1);
     StopRPCThreads();
-    SecureMsgShutdown();
 
 #ifdef ENABLE_WALLET
     ShutdownRPCMining();
@@ -136,7 +133,6 @@ void Shutdown()
 #ifdef ENABLE_WALLET
     if (pwalletMain)
         bitdb.Flush(true);
-    GenerateBitcoins(false, NULL, 0);
 #endif
     boost::filesystem::remove(GetPidFile());
     UnregisterAllWallets();
@@ -191,8 +187,8 @@ std::string HelpMessage()
 {
     string strUsage = _("Options:") + "\n";
     strUsage += "  -?                     " + _("This help message") + "\n";
-    strUsage += "  -conf=<file>           " + _("Specify configuration file (default: ENDO.conf)") + "\n";
-    strUsage += "  -pid=<file>            " + _("Specify pid file (default: Endod.pid)") + "\n";
+    strUsage += "  -conf=<file>           " + _("Specify configuration file (default: Endox-Coin.conf)") + "\n";
+    strUsage += "  -pid=<file>            " + _("Specify pid file (default: Endox-Coind.pid)") + "\n";
     strUsage += "  -datadir=<dir>         " + _("Specify data directory") + "\n";
     strUsage += "  -wallet=<dir>          " + _("Specify wallet file (within data directory)") + "\n";
     strUsage += "  -dbcache=<n>           " + _("Set database cache size in megabytes (default: 100)") + "\n";
@@ -201,7 +197,7 @@ std::string HelpMessage()
     strUsage += "  -proxy=<ip:port>       " + _("Connect through SOCKS5 proxy") + "\n";
     strUsage += "  -tor=<ip:port>         " + _("Use proxy to reach tor hidden services (default: same as -proxy)") + "\n";
     strUsage += "  -dns                   " + _("Allow DNS lookups for -addnode, -seednode and -connect") + "\n";
-    strUsage += "  -port=<port>           " + _("Listen for connections on <port> (default: 10255)") + "\n";
+    strUsage += "  -port=<port>           " + _("Listen for connections on <port> (default: 51441)") + "\n";
     strUsage += "  -maxconnections=<n>    " + _("Maintain at most <n> connections to peers (default: 125)") + "\n";
     strUsage += "  -addnode=<ip>          " + _("Add a node to connect to and attempt to keep the connection open") + "\n";
     strUsage += "  -connect=<ip>          " + _("Connect only to the specified node(s)") + "\n";
@@ -209,7 +205,6 @@ std::string HelpMessage()
     strUsage += "  -externalip=<ip>       " + _("Specify your own public address") + "\n";
     strUsage += "  -onlynet=<net>         " + _("Only connect to nodes in network <net> (IPv4, IPv6 or Tor)") + "\n";
     strUsage += "  -discover              " + _("Discover own IP address (default: 1 when listening and no -externalip)") + "\n";
-    strUsage += "  -irc                   " + _("Find peers using internet relay chat (default: 0)") + "\n";
     strUsage += "  -listen                " + _("Accept connections from outside (default: 1 if no -proxy or -connect)") + "\n";
     strUsage += "  -bind=<addr>           " + _("Bind to given address. Use [host]:port notation for IPv6") + "\n";
     strUsage += "  -dnsseed               " + _("Query for peer addresses via DNS lookup, if low on addresses (default: 1 unless -connect)") + "\n";
@@ -272,6 +267,7 @@ std::string HelpMessage()
     strUsage += "  -checklevel=<n>        " + _("How thorough the block verification is (0-6, default: 1)") + "\n";
     strUsage += "  -loadblock=<file>      " + _("Imports blocks from external blk000?.dat file") + "\n";
     strUsage += "  -maxorphanblocks=<n>   " + strprintf(_("Keep at most <n> unconnectable blocks in memory (default: %u)"), DEFAULT_MAX_ORPHAN_BLOCKS) + "\n";
+    strUsage += "  -backtoblock=<n>      " + _("Rollback local block chain to block height <n>") + "\n";
 
     strUsage += "\n" + _("Block creation options:") + "\n";
     strUsage += "  -blockminsize=<n>      "   + _("Set minimum block size in bytes (default: 0)") + "\n";
@@ -279,25 +275,19 @@ std::string HelpMessage()
     strUsage += "  -blockprioritysize=<n> "   + _("Set maximum size of high-priority/low-fee transactions in bytes (default: 50000)") + "\n";
     strUsage += "  -scaleblocksizeoptions=<n>"    + strprintf(_("Adaptively scale block size options (max, min, priority) (default: %d)"), DEFAULT_SCALE_BLOCK_SIZE_OPTIONS) + "\n";
 
-    strUsage += "\n" + _("SSL options: (see the Bitcoin Wiki for SSL setup instructions)") + "\n";
+    strUsage += "\n" + _("SSL options: (see the EndoxCoin Wiki for SSL setup instructions)") + "\n";
     strUsage += "  -rpcssl                                  " + _("Use OpenSSL (https) for JSON-RPC connections") + "\n";
     strUsage += "  -rpcsslcertificatechainfile=<file.cert>  " + _("Server certificate file (default: server.cert)") + "\n";
     strUsage += "  -rpcsslprivatekeyfile=<file.pem>         " + _("Server private key (default: server.pem)") + "\n";
     strUsage += "  -rpcsslciphers=<ciphers>                 " + _("Acceptable ciphers (default: TLSv1.2+HIGH:TLSv1+HIGH:!SSLv3:!SSLv2:!aNULL:!eNULL:!3DES:@STRENGTH)") + "\n";
-    strUsage += "  -litemode=<n>          " + _("Disable all Darksend and Stealth Messaging related functionality (0-1, default: 0)") + "\n";
-strUsage += "\n" + _("Masternode options:") + "\n";
+    strUsage += "  -litemode=<n>          " + _("Disable all MasterNode related functionality (0-1, default: 0)") + "\n";
+    strUsage += "\n" + _("Masternode options:") + "\n";
     strUsage += "  -masternode=<n>            " + _("Enable the client to act as a masternode (0-1, default: 0)") + "\n";
     strUsage += "  -mnconf=<file>             " + _("Specify masternode configuration file (default: masternode.conf)") + "\n";
     strUsage += "  -mnconflock=<n>            " + _("Lock masternodes from masternode configuration file (default: 1)") + "\n";
     strUsage += "  -masternodeprivkey=<n>     " + _("Set the masternode private key") + "\n";
     strUsage += "  -masternodeaddr=<n>        " + _("Set external address:port to get to this masternode (example: address:port)") + "\n";
     strUsage += "  -masternodeminprotocol=<n> " + _("Ignore masternodes less than version (example: 61401; default : 0)") + "\n";
-
-    strUsage += "\n" + _("Darksend options:") + "\n";
-    strUsage += "  -enabledarksend=<n>          " + _("Enable use of automated darksend for funds stored in this wallet (0-1, default: 0)") + "\n";
-    strUsage += "  -darksendrounds=<n>          " + _("Use N separate masternodes to anonymize funds  (2-8, default: 2)") + "\n";
-    strUsage += "  -anonymizeEndoamount=<n> " + _("Keep N ENDO anonymized (default: 0)") + "\n";
-    strUsage += "  -liquidityprovider=<n>       " + _("Provide liquidity to Darksend by infrequently mixing coins on a continual basis (0-100, default: 0, 1=very frequent, high fees, 100=very infrequent, low fees)") + "\n";
 
     strUsage += "\n" + _("InstantX options:") + "\n";
     strUsage += "  -enableinstantx=<n>    " + _("Enable instantx, show confirmations for locked transactions (bool, default: true)") + "\n";
@@ -306,13 +296,13 @@ strUsage += "\n" + _("Masternode options:") + "\n";
         "  -nosmsg                                  " + _("Disable secure messaging.") + "\n" +
         "  -debugsmsg                               " + _("Log extra debug messages.") + "\n" +
         "  -smsgscanchain                           " + _("Scan the block chain for public key addresses on startup.") + "\n";
-
+    strUsage += "  -stakethreshold=<n> " + _("This will set the output size of your stakes to never be below this number (default: 100)") + "\n";
 
     return strUsage;
 }
 
 /** Sanity checks
- *  Ensure that Bitcoin is running in a usable environment with all
+ *  Ensure that EndoxCoin is running in a usable environment with all
  *  necessary library support.
  */
 bool InitSanityCheck(void)
@@ -443,8 +433,6 @@ bool AppInit2(boost::thread_group& threadGroup)
             LogPrintf("AppInit2 : parameter interaction: -salvagewallet=1 -> setting -rescan=1\n");
     }
 
-
-
     // ********************************************************* Step 3: parameter-to-internal-flags
 
     fDebug = !mapMultiArgs["-debug"].empty();
@@ -519,7 +507,7 @@ bool AppInit2(boost::thread_group& threadGroup)
 
     // Sanity check
     if (!InitSanityCheck())
-        return InitError(_("Initialization sanity check failed. ENDO is shutting down."));
+        return InitError(_("Initialization sanity check failed. Endox-Coin is shutting down."));
 
     std::string strDataDir = GetDataDir().string();
 #ifdef ENABLE_WALLET
@@ -529,18 +517,18 @@ bool AppInit2(boost::thread_group& threadGroup)
     if (strWalletFileName != boost::filesystem::basename(strWalletFileName) + boost::filesystem::extension(strWalletFileName))
         return InitError(strprintf(_("Wallet %s resides outside data directory %s."), strWalletFileName, strDataDir));
 #endif
-    // Make sure only a single Bitcoin process is using the data directory.
+    // Make sure only a single EndoxCoin process is using the data directory.
     boost::filesystem::path pathLockFile = GetDataDir() / ".lock";
     FILE* file = fopen(pathLockFile.string().c_str(), "a"); // empty lock file; created if it doesn't exist.
     if (file) fclose(file);
     static boost::interprocess::file_lock lock(pathLockFile.string().c_str());
     if (!lock.try_lock())
-        return InitError(strprintf(_("Cannot obtain a lock on data directory %s. ENDO is probably already running."), strDataDir));
+        return InitError(strprintf(_("Cannot obtain a lock on data directory %s. Endox-Coin is probably already running."), strDataDir));
 
     if (GetBoolArg("-shrinkdebugfile", !fDebug))
         ShrinkDebugFile();
     LogPrintf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    LogPrintf("ENDO version %s (%s)\n", FormatFullVersion(), CLIENT_DATE);
+    LogPrintf("Endox-Coin version %s (%s)\n", FormatFullVersion(), CLIENT_DATE);
     LogPrintf("Using OpenSSL version %s\n", SSLeay_version(SSLEAY_VERSION));
     if (!fLogTimestamps)
         LogPrintf("Startup time: %s\n", DateTimeStrFormat("%x %H:%M:%S", GetTime()));
@@ -560,7 +548,7 @@ bool AppInit2(boost::thread_group& threadGroup)
     nMasternodeMinProtocol = GetArg("-masternodeminprotocol", MIN_POOL_PEER_PROTO_VERSION);
 
     if (fDaemon)
-        fprintf(stdout, "ENDO server starting\n"); 
+        fprintf(stdout, "Endox-Coin server starting\n"); 
 
     int64_t nStart;
 
@@ -687,6 +675,13 @@ bool AppInit2(boost::thread_group& threadGroup)
 
     RegisterNodeSignals(GetNodeSignals());
 
+    // format user agent, check total size
+    strSubVersion = FormatSubVersion(CLIENT_NAME, CLIENT_VERSION, mapMultiArgs.count("-uacomment") ? mapMultiArgs["-uacomment"] : std::vector<string>());
+    if (strSubVersion.size() > MAX_SUBVERSION_LENGTH) {
+        return InitError(strprintf("Total length of network version string %i exceeds maximum of %i characters. Reduce the number and/or size of uacomments.",
+            strSubVersion.size(), MAX_SUBVERSION_LENGTH));
+    }
+    
     if (mapArgs.count("-onlynet")) {
         std::set<enum Network> nets;
         BOOST_FOREACH(std::string snet, mapMultiArgs["-onlynet"]) {
@@ -703,6 +698,9 @@ bool AppInit2(boost::thread_group& threadGroup)
             if (!nets.count(net))
                 SetLimited(net);
         }
+    } else {
+        SetReachable(NET_IPV4);
+        SetReachable(NET_IPV6);
     }
 
     CService addrProxy;
@@ -801,32 +799,6 @@ bool AppInit2(boost::thread_group& threadGroup)
     if (!LoadBlockIndex())
         return InitError(_("Error loading block database"));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // as LoadBlockIndex can take several minutes, it's possible the user
     // requested to kill bitcoin-qt during the last operation. If so, exit.
     // As the program has not fully started yet, Shutdown() is possibly overkill.
@@ -865,6 +837,27 @@ bool AppInit2(boost::thread_group& threadGroup)
         return false;
     }
 
+    if (mapArgs.count("-backtoblock"))
+    {
+        int nNewHeight = GetArg("-backtoblock", 5000);
+        CBlockIndex* pindex = pindexBest;
+        while (pindex != NULL && pindex->nHeight > nNewHeight)
+        {
+            pindex = pindex->pprev;
+        }
+
+        if (pindex != NULL)
+        {
+            LogPrintf("Back to block index %d\n", nNewHeight);
+	        CTxDB txdbAddr("rw");
+            CBlock block;
+            block.ReadFromDisk(pindex);
+            block.SetBestChain(txdbAddr, pindex);
+        }
+        else
+            LogPrintf("Block %d not found\n", nNewHeight);
+    }
+
     // ********************************************************* Step 8: load wallet
 #ifdef ENABLE_WALLET
     if (fDisableWallet) {
@@ -888,10 +881,10 @@ bool AppInit2(boost::thread_group& threadGroup)
                 InitWarning(msg);
             }
             else if (nLoadWalletRet == DB_TOO_NEW)
-                strErrors << _("Error loading wallet.dat: Wallet requires newer version of ENDO") << "\n";
+                strErrors << _("Error loading wallet.dat: Wallet requires newer version of Endox-Coin") << "\n";
             else if (nLoadWalletRet == DB_NEED_REWRITE)
             {
-                strErrors << _("Wallet needed to be rewritten: restart ENDO to complete") << "\n";
+                strErrors << _("Wallet needed to be rewritten: restart Endox-Coin to complete") << "\n";
                 LogPrintf("%s", strErrors.str());
                 return InitError(strErrors.str());
             }
@@ -986,10 +979,6 @@ bool AppInit2(boost::thread_group& threadGroup)
     LogPrintf("Loaded %i addresses from peers.dat  %dms\n",
            addrman.size(), GetTimeMillis() - nStart);
 
-    // ********************************************************* Step 10.1: startup secure messaging
-    
-    SecureMsgStart(fNoSmsg, GetBoolArg("-smsgscanchain", false));
-
     // ********************************************************* Step 11: start node
 
     if (!CheckDiskSpace())
@@ -1016,7 +1005,7 @@ bool AppInit2(boost::thread_group& threadGroup)
 
     fMasterNode = GetBoolArg("-masternode", false);
     if(fMasterNode) {
-        LogPrintf("IS DARKSEND MASTER NODE\n");
+        LogPrintf("IS MASTER NODE\n");
         strMasterNodeAddr = GetArg("-masternodeaddr", "");
 
         LogPrintf(" addr %s\n", strMasterNodeAddr.c_str());
@@ -1035,7 +1024,7 @@ bool AppInit2(boost::thread_group& threadGroup)
             CKey key;
             CPubKey pubkey;
 
-            if(!darkSendSigner.SetKey(strMasterNodePrivKey, errorMessage, key, pubkey))
+            if(!mnEngineSigner.SetKey(strMasterNodePrivKey, errorMessage, key, pubkey))
             {
                 return InitError(_("Invalid masternodeprivkey. Please see documenation."));
             }
@@ -1060,28 +1049,11 @@ bool AppInit2(boost::thread_group& threadGroup)
         }
     }
 
-    fEnableDarksend = GetBoolArg("-enabledarksend", false);
-
-    nDarksendRounds = GetArg("-darksendrounds", 2);
-    if(nDarksendRounds > 16) nDarksendRounds = 16;
-    if(nDarksendRounds < 1) nDarksendRounds = 1;
-
-    nLiquidityProvider = GetArg("-liquidityprovider", 0); //0-100
-    if(nLiquidityProvider != 0) {
-        darkSendPool.SetMinBlockSpacing(std::min(nLiquidityProvider,100)*15);
-        fEnableDarksend = true;
-        nDarksendRounds = 99999;
-    }
-
-    nAnonymizeEndoAmount = GetArg("-anonymizeEndoamount", 0);
-    if(nAnonymizeEndoAmount > 999999) nAnonymizeEndoAmount = 999999;
-    if(nAnonymizeEndoAmount < 2) nAnonymizeEndoAmount = 2;
-
     fEnableInstantX = GetBoolArg("-enableinstantx", fEnableInstantX);
     nInstantXDepth = GetArg("-instantxdepth", nInstantXDepth);
     nInstantXDepth = std::min(std::max(nInstantXDepth, 0), 60);
 
-    //lite mode disables all Masternode and Darksend related functionality
+    //lite mode disables all Masternode related functionality
     fLiteMode = GetBoolArg("-litemode", false);
     if(fMasterNode && fLiteMode){
         return InitError("You can not start a masternode in litemode");
@@ -1089,29 +1061,10 @@ bool AppInit2(boost::thread_group& threadGroup)
 
     LogPrintf("fLiteMode %d\n", fLiteMode);
     LogPrintf("nInstantXDepth %d\n", nInstantXDepth);
-    LogPrintf("Darksend rounds %d\n", nDarksendRounds);
-    LogPrintf("Anonymize ENDO Amount %d\n", nAnonymizeEndoAmount);
 
-    /* Denominations
-       A note about convertability. Within Darksend pools, each denomination
-       is convertable to another.
-       For example:
-       1TX+1000 == (.1TX+100)*10
-       10TX+10000 == (1TX+1000)*10
-    */
-    darkSendDenominations.push_back( (1000        * COIN)+1000000 );
-    darkSendDenominations.push_back( (100         * COIN)+100000 );
-    darkSendDenominations.push_back( (10          * COIN)+10000 );
-    darkSendDenominations.push_back( (1           * COIN)+1000 );
-    darkSendDenominations.push_back( (.1          * COIN)+100 );
-    /* Disabled till we need them
-    darkSendDenominations.push_back( (.01      * COIN)+10 );
-    darkSendDenominations.push_back( (.001     * COIN)+1 );
-    */
+    mnEnginePool.InitCollateralAddress();
 
-    darkSendPool.InitCollateralAddress();
-
-    threadGroup.create_thread(boost::bind(&ThreadCheckDarkSendPool));
+    threadGroup.create_thread(boost::bind(&ThreadCheckMNenginePool));
 
 
 
@@ -1157,12 +1110,6 @@ bool AppInit2(boost::thread_group& threadGroup)
         LogPrintf("Staking disabled\n");
     else if (pwalletMain)
         threadGroup.create_thread(boost::bind(&ThreadStakeMiner, pwalletMain));
-#endif
-
-#ifdef ENABLE_WALLET
-    // Generate coins in the background
-    if (pwalletMain)
-        GenerateBitcoins(GetBoolArg("-gen", false), pwalletMain, GetArg("-genproclimit", -1));
 #endif
 
     // ********************************************************* Step 12: finished

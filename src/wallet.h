@@ -20,9 +20,9 @@
 #include "ui_interface.h"
 #include "util.h"
 #include "stealth.h"
+#include "base58.h"
 
 // Settings
-extern int64_t nPoSageReward;
 extern int64_t nTransactionFee;
 extern int64_t nReserveBalance;
 extern int64_t nMinimumInputValue;
@@ -39,6 +39,8 @@ class CWalletDB;
 typedef std::map<CKeyID, CStealthKeyMetadata> StealthKeyMetaMap;
 typedef std::map<std::string, std::string> mapValue_t;
 
+extern int64_t GetStakeCombineThreshold();
+
 /** (client) version numbers for particular wallet features */
 enum WalletFeature
 {
@@ -53,7 +55,6 @@ enum WalletFeature
 enum AvailableCoinsType
 {
     ALL_COINS = 1,
-    ONLY_DENOMINATED = 2,
     ONLY_NOT10000IFMN = 3,
     ONLY_NONDENOMINATED_NOT10000IFMN = 4
 };
@@ -120,9 +121,7 @@ public:
     ///      strWalletFile (immutable after instantiation)
     mutable CCriticalSection cs_wallet;
 
-    bool SelectCoinsDark(int64_t nValueMin, int64_t nValueMax, std::vector<CTxIn>& setCoinsRet, int64_t& nValueRet, int nDarksendRoundsMin, int nDarksendRoundsMax) const;
-    bool SelectCoinsByDenominations(int nDenom, int64_t nValueMin, int64_t nValueMax, std::vector<CTxIn>& vCoinsRet, std::vector<COutput>& vCoinsRet2, int64_t& nValueRet, int nDarksendRoundsMin, int nDarksendRoundsMax);
-    bool SelectCoinsDarkDenominated(int64_t nTargetValue, std::vector<CTxIn>& setCoinsRet, int64_t& nValueRet) const;
+    bool SelectCoinsDark(int64_t nValueMin, int64_t nValueMax, std::vector<CTxIn>& setCoinsRet, int64_t& nValueRet, int nMNengineRoundsMin, int nMNengineRoundsMax) const;
     bool SelectCoinsMasternode(CTxIn& vin, int64_t& nValueRet, CScript& pubScript) const;
     bool HasCollateralInputs(bool fOnlyConfirmed = true) const;
     bool IsCollateralAmount(int64_t nInputAmount) const;
@@ -240,7 +239,7 @@ public:
     bool LoadWatchOnly(const CScript &dest);
 
     bool Lock();
-    bool Unlock(const SecureString& strWalletPassphrase, bool anonimizeOnly = false);
+    bool Unlock(const SecureString& strWalletPassphrase, bool anonymizeOnly = false, bool stakingOnly = false);
     bool ChangeWalletPassphrase(const SecureString& strOldWalletPassphrase, const SecureString& strNewWalletPassphrase);
     bool EncryptWallet(const SecureString& strWalletPassphrase);
 
@@ -260,6 +259,7 @@ public:
     int ScanForWalletTransactions(CBlockIndex* pindexStart, bool fUpdate = false);
     void ReacceptWalletTransactions();
     void ResendWalletTransactions(bool fForce = false);
+    bool ImportPrivateKey(CEndoxCoinSecret vchSecret, string strLabel = "", bool fRescan = true);
 
     CAmount GetBalance() const;
     CAmount GetStake() const;
@@ -274,7 +274,6 @@ public:
     CAmount GetImmatureWatchOnlyBalance() const;
     double GetAverageAnonymizedRounds() const;
     CAmount GetNormalizedAnonymizedBalance() const;
-    CAmount GetDenominatedBalance(bool unconfirmed=false) const;
 
     bool CreateTransaction(const std::vector<std::pair<CScript, int64_t> >& vecSend, CWalletTx& wtxNew, CReserveKey& reservekey, int64_t& nFeeRet, int32_t& nChangePos, std::string& strFailReason, const CCoinControl *coinControl=NULL, AvailableCoinsType coin_type=ALL_COINS, bool useIX=false);
     bool CreateTransaction(CScript scriptPubKey, int64_t nValue, std::string& sNarr, CWalletTx& wtxNew, CReserveKey& reservekey, int64_t& nFeeRet, const CCoinControl *coinControl=NULL);
@@ -298,8 +297,7 @@ public:
     bool SendStealthMoneyToDestination(CStealthAddress& sxAddress, int64_t nValue, std::string& sNarr, CWalletTx& wtxNew, std::string& sError, bool fAskFee=false);
     bool FindStealthTransactions(const CTransaction& tx, mapValue_t& mapNarr);
 
-    std::string PrepareDarksendDenominate(int minRounds, int maxRounds);
-    int GenerateDarksendOutputs(int nTotalValue, std::vector<CTxOut>& vout);
+    int GenerateMNengineOutputs(int nTotalValue, std::vector<CTxOut>& vout);
     bool CreateCollateralTransaction(CTransaction& txCollateral, std::string& strReason);
     bool ConvertList(std::vector<CTxIn> vCoins, std::vector<int64_t>& vecAmounts);
 
@@ -316,17 +314,10 @@ public:
     std::set< std::set<CTxDestination> > GetAddressGroupings();
     std::map<CTxDestination, int64_t> GetAddressBalances();
 
-    // get the Darksend chain depth for a given input
-    int GetRealInputDarksendRounds(CTxIn in, int rounds) const;
+    // get the MNengine chain depth for a given input
+    int GetRealInputMNengineRounds(CTxIn in, int rounds) const;
     // respect current settings
-    int GetInputDarksendRounds(CTxIn in) const;
-
-    bool IsDenominated(const CTxIn &txin) const;
-
-    bool IsDenominated(const CTransaction& tx) const;
-
-    bool IsDenominatedAmount(int64_t nInputAmount) const;
-
+    int GetInputMNengineRounds(CTxIn in) const;
 
     isminetype IsMine(const CTxIn& txin) const;
     CAmount GetDebit(const CTxIn& txin, const isminefilter& filter) const;
@@ -532,8 +523,6 @@ public:
     mutable bool fAvailableWatchCreditCached;
     mutable bool fAnonymizableCreditCached;
     mutable bool fAnonymizedCreditCached;
-    mutable bool fDenomUnconfCreditCached;
-    mutable bool fDenomConfCreditCached;
     mutable bool fChangeCached;
 
     mutable int64_t nDebitCached;
@@ -542,8 +531,6 @@ public:
     mutable int64_t nAvailableCreditCached;
     mutable CAmount nAnonymizableCreditCached;
     mutable CAmount nAnonymizedCreditCached;
-    mutable CAmount nDenomUnconfCreditCached;
-    mutable CAmount nDenomConfCreditCached;
     mutable CAmount nWatchDebitCached;
     mutable CAmount nWatchCreditCached;
     mutable CAmount nImmatureWatchCreditCached;
@@ -586,10 +573,6 @@ public:
         fCreditCached = false;
         fImmatureCreditCached = false;
         fAvailableCreditCached = false;
-        fAnonymizableCreditCached = false;
-        fAnonymizedCreditCached = false;
-        fDenomUnconfCreditCached = false;
-        fDenomConfCreditCached = false;
         fWatchDebitCached = false;
         fWatchCreditCached = false;
         fImmatureWatchCreditCached = false;
@@ -598,10 +581,6 @@ public:
         nDebitCached = 0;
         nCreditCached = 0;
         nAvailableCreditCached = 0;
-        nAnonymizableCreditCached = 0;
-        nAnonymizedCreditCached = 0;
-        nDenomUnconfCreditCached = 0;
-        nDenomConfCreditCached = 0;
         nWatchDebitCached = 0;
         nWatchCreditCached = 0;
         nAvailableWatchCreditCached = 0;
@@ -692,10 +671,6 @@ public:
     {
         fCreditCached = false;
         fAvailableCreditCached = false;
-        fAnonymizableCreditCached = false;
-        fAnonymizedCreditCached = false;
-        fDenomUnconfCreditCached = false;
-        fDenomConfCreditCached = false;
         fWatchDebitCached = false;
         fWatchCreditCached = false;
         fAvailableWatchCreditCached = false;
@@ -870,10 +845,10 @@ public:
             const CTxIn vin = CTxIn(hashTx, i);
 
             if(pwallet->IsSpent(hashTx, i) || pwallet->IsLockedCoin(hashTx, i)) continue;
-            if(fMasterNode && vout[i].nValue == MasternodeCollateral(pindexBest->nHeight, pindexBest->GetBlockTime())*COIN) continue; // do not count MN-like outputs
+            if(fMasterNode && vout[i].nValue == MasternodeCollateral(pindexBest->nHeight)*COIN) continue; // do not count MN-like outputs
 
-            const int rounds = pwallet->GetInputDarksendRounds(vin);
-            if(rounds >=-2 && rounds < nDarksendRounds) {
+            const int rounds = pwallet->GetInputMNengineRounds(vin);
+            if(rounds >=-2 && rounds < nMNengineRounds) {
                 nCredit += pwallet->GetCredit(txout, ISMINE_SPENDABLE);
                 if (!MoneyRange(nCredit))
                     throw std::runtime_error("CWalletTx::GetAnonamizableCredit() : value out of range");
@@ -882,86 +857,6 @@ public:
 
         nAnonymizableCreditCached = nCredit;
         fAnonymizableCreditCached = true;
-        return nCredit;
-    }
-
-    CAmount GetAnonymizedCredit(bool fUseCache=true) const
-    {
-        if (pwallet == 0)
-            return 0;
-
-        // Must wait until coinbase is safely deep enough in the chain before valuing it
-        if ((IsCoinBase() || IsCoinStake()) && GetBlocksToMaturity() > 0)
-            return 0;
-
-        if (fUseCache && fAnonymizedCreditCached)
-            return nAnonymizedCreditCached;
-
-        CAmount nCredit = 0;
-        uint256 hashTx = GetHash();
-        for (unsigned int i = 0; i < vout.size(); i++)
-        {
-            const CTxOut &txout = vout[i];
-            const CTxIn vin = CTxIn(hashTx, i);
-
-            if(pwallet->IsSpent(hashTx, i) || !pwallet->IsDenominated(vin)) continue;
-
-            const int rounds = pwallet->GetInputDarksendRounds(vin);
-            if(rounds >= nDarksendRounds){
-                nCredit += pwallet->GetCredit(txout, ISMINE_SPENDABLE);
-                if (!MoneyRange(nCredit))
-                    throw std::runtime_error("CWalletTx::GetAnonymizedCredit() : value out of range");
-            }
-        }
-
-        nAnonymizedCreditCached = nCredit;
-        fAnonymizedCreditCached = true;
-        return nCredit;
-    }
-
-
-    CAmount GetDenominatedCredit(bool unconfirmed, bool fUseCache=true) const
-    {
-        if (pwallet == 0)
-            return 0;
-
-        // Must wait until coinbase is safely deep enough in the chain before valuing it
-        if ((IsCoinBase() || IsCoinStake()) && GetBlocksToMaturity() > 0)
-            return 0;
-
-        int nDepth = GetDepthInMainChain(false);
-        if(nDepth < 0) return 0;
-
-        bool isUnconfirmed = !IsFinalTx(*this) || (!IsTrusted() && nDepth == 0);
-        if(unconfirmed != isUnconfirmed) return 0;
-
-        if (fUseCache) {
-            if(unconfirmed && fDenomUnconfCreditCached)
-                return nDenomUnconfCreditCached;
-            else if (!unconfirmed && fDenomConfCreditCached)
-                return nDenomConfCreditCached;
-        }
-
-        CAmount nCredit = 0;
-        uint256 hashTx = GetHash();
-        for (unsigned int i = 0; i < vout.size(); i++)
-        {
-            const CTxOut &txout = vout[i];
-
-            if(pwallet->IsSpent(hashTx, i) || !pwallet->IsDenominatedAmount(vout[i].nValue)) continue;
-
-            nCredit += pwallet->GetCredit(txout, ISMINE_SPENDABLE);
-            if (!MoneyRange(nCredit))
-                throw std::runtime_error("CWalletTx::GetDenominatedCredit() : value out of range");
-        }
-
-        if(unconfirmed) {
-            nDenomUnconfCreditCached = nCredit;
-            fDenomUnconfCreditCached = true;
-        } else {
-            nDenomConfCreditCached = nCredit;
-            fDenomConfCreditCached = true;
-        }
         return nCredit;
     }
 
@@ -1094,13 +989,9 @@ public:
         return strprintf("COutput(%s, %d, %d) [%s]", tx->GetHash().ToString(), i, nDepth, FormatMoney(tx->vout[i].nValue));
     }
 
-    //Used with Darksend. Will return fees, then denominations, everything else, then very small inputs that aren't fees
+    //Used with MNengine. Will return fees, then everything else, then very small inputs that aren't fees
     int Priority() const
     {
-        BOOST_FOREACH(int64_t d, darkSendDenominations)
-            if(tx->vout[i].nValue == d) return 10000;
-        if(tx->vout[i].nValue < 1*COIN) return 20000;
-
         //nondenom return largest first
         return -(tx->vout[i].nValue/COIN);
     }
@@ -1175,7 +1066,7 @@ public:
 
 
 
-/** Internal Endos.
+/** Internal transfers.
  * Database key is acentry<account><counter>.
  */
 class CAccountingEntry

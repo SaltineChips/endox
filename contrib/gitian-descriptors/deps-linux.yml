@@ -1,5 +1,5 @@
 ---
-name: "ENDO-deps"
+name: "Endox-Coin-deps"
 suites:
 - "trusty"
 architectures:
@@ -135,5 +135,5 @@ script: |
   #
   #
   cd $STAGING
-  find include lib bin host | sort | zip -X@ $OUTDIR/ENDO-deps-linux${GBUILD_BITS}-gitian.zip
+  find include lib bin host | sort | zip -X@ $OUTDIR/Endox-Coin-deps-linux${GBUILD_BITS}-gitian.zip
 

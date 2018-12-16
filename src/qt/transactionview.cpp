@@ -88,10 +88,8 @@ TransactionView::TransactionView(QWidget *parent) :
     typeWidget->addItem(tr("Sent to"), TransactionFilterProxy::TYPE(TransactionRecord::SendToAddress) |
                                   TransactionFilterProxy::TYPE(TransactionRecord::SendToOther));
     typeWidget->addItem(tr("Darksent"), TransactionFilterProxy::TYPE(TransactionRecord::Darksent));
-    typeWidget->addItem(tr("Darksend Make Collateral Inputs"), TransactionFilterProxy::TYPE(TransactionRecord::DarksendMakeCollaterals));
-    typeWidget->addItem(tr("Darksend Create Denominations"), TransactionFilterProxy::TYPE(TransactionRecord::DarksendCreateDenominations));
-    typeWidget->addItem(tr("Darksend Denominate"), TransactionFilterProxy::TYPE(TransactionRecord::DarksendDenominate));
-    typeWidget->addItem(tr("Darksend Collateral Payment"), TransactionFilterProxy::TYPE(TransactionRecord::DarksendCollateralPayment));
+    typeWidget->addItem(tr("MNengine Make Collateral Inputs"), TransactionFilterProxy::TYPE(TransactionRecord::MNengineMakeCollaterals));
+    typeWidget->addItem(tr("MNengine Collateral Payment"), TransactionFilterProxy::TYPE(TransactionRecord::MNengineCollateralPayment));
     typeWidget->addItem(tr("To yourself"), TransactionFilterProxy::TYPE(TransactionRecord::SendToSelf));
     typeWidget->addItem(tr("Mined"), TransactionFilterProxy::TYPE(TransactionRecord::Generated));
     typeWidget->addItem(tr("Other"), TransactionFilterProxy::TYPE(TransactionRecord::Other));
@@ -193,7 +191,6 @@ void TransactionView::setModel(WalletModel *model)
 
         transactionView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         transactionView->setModel(transactionProxyModel);
-        transactionView->setStyleSheet("QWidget {color: #eb1f24; background-color: #ffffff; }");
         transactionView->setAlternatingRowColors(true);
         transactionView->setSelectionBehavior(QAbstractItemView::SelectRows);
         transactionView->setSelectionMode(QAbstractItemView::ExtendedSelection);
@@ -328,11 +325,11 @@ void TransactionView::changedAmount(const QString &amount)
         return;
     CAmount amount_parsed = 0;
 
-    // Replace "," by "." so BitcoinUnits::parse will not fail for users entering "," as decimal separator
+    // Replace "," by "." so EndoxCoinUnits::parse will not fail for users entering "," as decimal separator
     QString newAmount = amount;
     newAmount.replace(QString(","), QString("."));
 
-    if(BitcoinUnits::parse(model->getOptionsModel()->getDisplayUnit(), newAmount, &amount_parsed))
+    if(EndoxCoinUnits::parse(model->getOptionsModel()->getDisplayUnit(), newAmount, &amount_parsed))
     {
         transactionProxyModel->setMinAmount(amount_parsed);
     }
@@ -363,7 +360,7 @@ void TransactionView::exportClicked()
     writer.addColumn(tr("Type"), TransactionTableModel::Type, Qt::EditRole);
     writer.addColumn(tr("Label"), 0, TransactionTableModel::LabelRole);
     writer.addColumn(tr("Address"), 0, TransactionTableModel::AddressRole);
-    writer.addColumn(BitcoinUnits::getAmountColumnTitle(model->getOptionsModel()->getDisplayUnit()), 0, TransactionTableModel::FormattedAmountRole);
+    writer.addColumn(EndoxCoinUnits::getAmountColumnTitle(model->getOptionsModel()->getDisplayUnit()), 0, TransactionTableModel::FormattedAmountRole);
     writer.addColumn(tr("ID"), 0, TransactionTableModel::TxIDRole);
 
     if(!writer.write()) {
@@ -475,7 +472,7 @@ void TransactionView::computeSum()
     foreach (QModelIndex index, selection){
         amount += index.data(TransactionTableModel::AmountRole).toLongLong();
     }
-    QString strAmount(BitcoinUnits::formatWithUnit(nDisplayUnit, amount, true, BitcoinUnits::separatorAlways));
+    QString strAmount(EndoxCoinUnits::formatWithUnit(nDisplayUnit, amount, true, EndoxCoinUnits::separatorAlways));
     if (amount < 0) strAmount = "<span style='color:red;'>" + strAmount + "</span>";
     emit trxAmount(strAmount);
 }

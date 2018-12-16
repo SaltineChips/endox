@@ -14,8 +14,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">color: rgb(204, 155, 68);
-background-color: rgb(244, 244, 244);</string>
+   <string notr="true"/>
   </property>
   <property name="frameShape">
    <enum>QFrame::StyledPanel</enum>
@@ -29,9 +28,6 @@ background-color: rgb(244, 244, 244);</string>
    </property>
    <item row="3" column="0">
     <widget class="QLabel" name="label_2">
-     <property name="styleSheet">
-      <string notr="true">color: #eb1f24</string>
-     </property>
      <property name="text">
       <string>Pay &amp;To:</string>
      </property>
@@ -45,9 +41,6 @@ background-color: rgb(244, 244, 244);</string>
    </item>
    <item row="8" column="0">
     <widget class="QLabel" name="label">
-     <property name="styleSheet">
-      <string notr="true">color: #eb1f24</string>
-     </property>
      <property name="text">
       <string>A&amp;mount:</string>
      </property>
@@ -61,9 +54,6 @@ background-color: rgb(244, 244, 244);</string>
    </item>
    <item row="5" column="0">
     <widget class="QLabel" name="label_4">
-     <property name="styleSheet">
-      <string notr="true">color: #eb1f24</string>
-     </property>
      <property name="text">
       <string>&amp;Label:</string>
      </property>
@@ -82,18 +72,12 @@ background-color: rgb(244, 244, 244);</string>
        <property name="toolTip">
         <string>Enter a label for this address to add it to your address book</string>
        </property>
-       <property name="styleSheet">
-        <string notr="true">color: #eb1f24</string>
-       </property>
       </widget>
      </item>
      <item>
       <widget class="QToolButton" name="addressBookButton">
        <property name="toolTip">
         <string>Choose address from address book</string>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: #eb1f24</string>
        </property>
        <property name="text">
         <string/>
@@ -112,11 +96,7 @@ background-color: rgb(244, 244, 244);</string>
    <item row="8" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="BitcoinAmountField" name="payAmount">
-       <property name="styleSheet">
-        <string notr="true">color: #eb1f24</string>
-       </property>
-      </widget>
+      <widget class="EndoxCoinAmountField" name="payAmount"/>
      </item>
      <item>
       <widget class="QToolButton" name="deleteButton">
@@ -139,10 +119,7 @@ background-color: rgb(244, 244, 244);</string>
      <item>
       <widget class="QValidatedLineEdit" name="payTo">
        <property name="toolTip">
-        <string>The address to send the payment to (e.g. RYkuzHsrEvv6yVtXvuBHvdp6TZzRsv42Pr)</string>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: #eb1f24</string>
+        <string>The address to send the payment to (e.g. C8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</string>
        </property>
        <property name="maxLength">
         <number>80</number>
@@ -172,7 +149,7 @@ background-color: rgb(244, 244, 244);</string>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>BitcoinAmountField</class>
+   <class>EndoxCoinAmountField</class>
    <extends>QSpinBox</extends>
    <header>bitcoinamountfield.h</header>
    <container>1</container>

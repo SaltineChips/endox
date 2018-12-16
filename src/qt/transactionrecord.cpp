@@ -3,7 +3,7 @@
 #include "base58.h"
 #include "util.h"
 #include "wallet.h"
-#include "darksend.h"
+#include "mnengine.h"
 #include "instantx.h"
 
 #include <stdint.h>
@@ -53,9 +53,9 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 sub.involvesWatchAddress = mine == ISMINE_WATCH_ONLY;
                 if (ExtractDestination(txout.scriptPubKey, address) && IsMine(*wallet, address))
                 {
-                    // Received by Bitcoin Address
+                    // Received by EndoxCoin Address
                     sub.type = TransactionRecord::RecvWithAddress;
-                    sub.address = CEndoAddress(address).ToString();
+                    sub.address = CEndoxCoinAddress(address).ToString();
                 }
                 else
                 {
@@ -94,14 +94,12 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
     }
     else
     {
-        bool fAllFromMeDenom = true;
         int nFromMe = 0;
         bool involvesWatchAddress = false;
         isminetype fAllFromMe = ISMINE_SPENDABLE;
         BOOST_FOREACH(const CTxIn& txin, wtx.vin)
         {
             if(wallet->IsMine(txin)) {
-                fAllFromMeDenom = fAllFromMeDenom && wallet->IsDenominated(txin);
                 nFromMe++;
             }
             isminetype mine = wallet->IsMine(txin);
@@ -110,11 +108,9 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
         }
 
         isminetype fAllToMe = ISMINE_SPENDABLE;
-        bool fAllToMeDenom = true;
         int nToMe = 0;
         BOOST_FOREACH(const CTxOut& txout, wtx.vout) {
             if(wallet->IsMine(txout)) {
-                fAllToMeDenom = fAllToMeDenom && wallet->IsDenominatedAmount(txout.nValue);
                 nToMe++;
             }
             isminetype mine = wallet->IsMine(txout);
@@ -122,11 +118,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
             if(fAllToMe > mine) fAllToMe = mine;
         }
 
-        if(fAllFromMeDenom && fAllToMeDenom && nFromMe * nToMe) {
-            parts.append(TransactionRecord(hash, nTime, TransactionRecord::DarksendDenominate, "", -nDebit, nCredit));
-            parts.last().involvesWatchAddress = false;   // maybe pass to TransactionRecord as constructor argument
-        }
-        else if (fAllFromMe && fAllToMe)
+        if (fAllFromMe && fAllToMe)
         {
         	// Payment to self
         	// TODO: this section still not accurate but covers most cases,
@@ -144,7 +136,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 if (ExtractDestination(wtx.vout[0].scriptPubKey, address))
                 {
                     // Sent to Dash Address
-                    sub.address = CEndoAddress(address).ToString();
+                    sub.address = CEndoxCoinAddress(address).ToString();
                 }
                 else
                 {
@@ -159,9 +151,8 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                     const CTxOut& txout = wtx.vout[nOut];
                     sub.idx = parts.size();
 
-                    if(wallet->IsCollateralAmount(txout.nValue)) sub.type = TransactionRecord::DarksendMakeCollaterals;
-                    if(wallet->IsDenominatedAmount(txout.nValue)) sub.type = TransactionRecord::DarksendCreateDenominations;
-                    if(nDebit - wtx.GetValueOut() == DARKSEND_COLLATERAL) sub.type = TransactionRecord::DarksendCollateralPayment;
+                    if(wallet->IsCollateralAmount(txout.nValue)) sub.type = TransactionRecord::MNengineMakeCollaterals;
+                    if(nDebit - wtx.GetValueOut() == MNengine_COLLATERAL) sub.type = TransactionRecord::MNengineCollateralPayment;
                 }
             }
 
@@ -197,9 +188,9 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 CTxDestination address;
                 if (ExtractDestination(txout.scriptPubKey, address))
                 {
-                    // Sent to Bitcoin Address
+                    // Sent to EndoxCoin Address
                     sub.type = TransactionRecord::SendToAddress;
-                    sub.address = CEndoAddress(address).ToString();
+                    sub.address = CEndoxCoinAddress(address).ToString();
                 }
                 else
                 {

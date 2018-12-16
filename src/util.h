@@ -120,16 +120,15 @@ extern bool fMasterNode;
 extern bool fLiteMode;
 extern bool fEnableInstantX;
 extern int nInstantXDepth;
-extern int nDarksendRounds;
-extern int nAnonymizeEndoAmount;
+extern int nMNengineRounds;
+extern int nAnonymizeEndoxCoinAmount;
 extern int nLiquidityProvider;
-extern bool fEnableDarksend;
+extern bool fEnableMNengine;
 extern int64_t enforceMasternodePaymentsTime;
 extern std::string strMasterNodeAddr;
 extern int nMasternodeMinProtocol;
 extern int keysLoaded;
 extern bool fSucessfullyLoaded;
-extern std::vector<int64_t> darkSendDenominations;
 extern std::map<std::string, std::string> mapArgs;
 extern std::map<std::string, std::vector<std::string> > mapMultiArgs;
 extern bool fDebug;
@@ -264,7 +263,7 @@ std::string FormatFullVersion();
 std::string FormatSubVersion(const std::string& name, int nClientVersion, const std::vector<std::string>& comments);
 void AddTimeData(const CNetAddr& ip, int64_t nTime);
 void runCommand(std::string strCommand);
-long hex2long(const char* hexString);
+long hex2long(const char *hexString);
 
 
 
@@ -597,7 +596,7 @@ inline uint32_t ByteReverse(uint32_t value)
 //    threadGroup.create_thread(boost::bind(&LoopForever<boost::function<void()> >, "nothing", f, milliseconds));
 template <typename Callable> void LoopForever(const char* name,  Callable func, int64_t msecs)
 {
-    std::string s = strprintf("ENDO-%s", name);
+    std::string s = strprintf("Endox-Coin-%s", name);
     RenameThread(s.c_str());
     LogPrintf("%s thread start\n", name);
     try
@@ -623,7 +622,7 @@ template <typename Callable> void LoopForever(const char* name,  Callable func, 
 // .. and a wrapper that just calls func once
 template <typename Callable> void TraceThread(const char* name,  Callable func)
 {
-    std::string s = strprintf("ENDO-%s", name);
+    std::string s = strprintf("Endox-Coin-%s", name);
     RenameThread(s.c_str());
     try
     {

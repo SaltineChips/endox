@@ -105,8 +105,6 @@ static const CRPCConvertParam vRPCConvertParams[] =
 {
     { "stop", 0 },
     { "getaddednodeinfo", 0 },
-    { "setgenerate", 0 },
-    { "setgenerate", 1 },
     { "sendtoaddress", 1 },
     { "settxfee", 0 },
     { "getreceivedbyaddress", 1 },
@@ -164,6 +162,8 @@ static const CRPCConvertParam vRPCConvertParams[] =
     { "importaddress", 2 },
     { "checkkernel", 0 },
     { "checkkernel", 1 },
+    { "setban", 2 },
+    { "setban", 3 },
     { "sendtostealthaddress", 1 },
     { "searchrawtransactions", 1 },
     { "searchrawtransactions", 2 },

@@ -26,8 +26,7 @@
    <string>Passphrase Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">color: rgb(204, 155, 68);
-background-color: rgb(244, 244, 244);</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -47,9 +46,6 @@ background-color: rgb(244, 244, 244);</string>
      </property>
      <item row="0" column="0">
       <widget class="QLabel" name="passLabel1">
-       <property name="styleSheet">
-        <string notr="true">color: #eb1f24</string>
-       </property>
        <property name="text">
         <string>Enter passphrase</string>
        </property>
@@ -64,9 +60,6 @@ background-color: rgb(244, 244, 244);</string>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="passLabel2">
-       <property name="styleSheet">
-        <string notr="true">color: #eb1f24</string>
-       </property>
        <property name="text">
         <string>New passphrase</string>
        </property>
@@ -81,9 +74,6 @@ background-color: rgb(244, 244, 244);</string>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="passLabel3">
-       <property name="styleSheet">
-        <string notr="true">color: #eb1f24</string>
-       </property>
        <property name="text">
         <string>Repeat new passphrase</string>
        </property>
@@ -132,9 +122,6 @@ background-color: rgb(244, 244, 244);</string>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="styleSheet">
-      <string notr="true">color: #eb1f24</string>
-     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>

@@ -2,7 +2,7 @@
  * Qt4 bitcoin GUI.
  *
  * W.J. van der Laan 2011-2012
- * The Bitcoin Developers 2011-2012
+ * The EndoxCoin Developers 2011-2012
  */
 
 #include <QApplication>
@@ -18,6 +18,7 @@
 #include "clientmodel.h"
 #include "walletmodel.h"
 #include "editaddressdialog.h"
+#include "editconfigdialog.h"
 #include "optionsmodel.h"
 #include "transactiondescdialog.h"
 #include "addresstablemodel.h"
@@ -34,11 +35,8 @@
 #include "init.h"
 #include "ui_interface.h"
 #include "masternodemanager.h"
-#include "messagemodel.h"
-#include "messagepage.h"
-#include "miningpage.h"
 #include "blockbrowser.h"
-#include "tradingdialog.h"
+#include "importprivatekeydialog.h"
 
 #ifdef Q_OS_MAC
 #include "macdockiconhandler.h"
@@ -69,6 +67,7 @@
 #include <QScrollArea>
 #include <QScroller>
 #include <QTextDocument>
+#include <QInputDialog>
 
 #include <iostream>
 
@@ -77,7 +76,7 @@ extern CWallet* pwalletMain;
 extern int64_t nLastCoinStakeSearchInterval;
 double GetPoSKernelPS();
 
-BitcoinGUI::BitcoinGUI(QWidget *parent):
+EndoxCoinGUI::EndoxCoinGUI(QWidget *parent):
     QMainWindow(parent),
     clientModel(0),
     walletModel(0),
@@ -97,7 +96,7 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     nWeight(0)
 {
     resize(900, 520);
-    setWindowTitle(tr("Endo") + " - " + tr("Wallet"));
+    setWindowTitle(tr("Endox-Coin") + " - " + tr("Wallet"));
 #ifndef Q_OS_MAC
     qApp->setWindowIcon(QIcon(":icons/bitcoin"));
     setWindowIcon(QIcon(":icons/bitcoin"));
@@ -105,8 +104,8 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     //setUnifiedTitleAndToolBarOnMac(true);
     QApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
-    setObjectName("ENDO");
-    setStyleSheet("#ENDO {color: #eb1f24;; background-color: #ffffff}");
+    setObjectName("Endox-Coin");
+    setStyleSheet("#Endox-Coin { background-color: #ffffff; color: #44465d;}");
 
     // Accept D&D of URIs
     setAcceptDrops(true);
@@ -140,15 +139,9 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
 
     sendCoinsPage = new SendCoinsDialog(this);
 
-    tradingDialogPage = new tradingDialog(this);
-    tradingDialogPage->setObjectName("tradingDialog");
-
     signVerifyMessageDialog = new SignVerifyMessageDialog(this);
 
     masternodeManagerPage = new MasternodeManager(this);
-    messagePage = new MessagePage(this);
-
-    miningPage = new MiningPage(this);
 
     centralStackedWidget = new QStackedWidget(this);
     centralStackedWidget->setContentsMargins(0, 0, 0, 0);
@@ -158,10 +151,7 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     centralStackedWidget->addWidget(receiveCoinsPage);
     centralStackedWidget->addWidget(sendCoinsPage);
     centralStackedWidget->addWidget(masternodeManagerPage);
-    centralStackedWidget->addWidget(messagePage);
-    centralStackedWidget->addWidget(miningPage);
     centralStackedWidget->addWidget(blockBrowser);
-    centralStackedWidget->addWidget(tradingDialogPage);
 
     QWidget *centralWidget = new QWidget();
     QVBoxLayout *centralLayout = new QVBoxLayout(centralWidget);
@@ -227,7 +217,7 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
         QString curStyle = qApp->style()->metaObject()->className();
         if(curStyle == "QWindowsStyle" || curStyle == "QWindowsXPStyle")
         {
-            progressBar->setStyleSheet("QProgressBar { color: #eb1f24;background-color: #ffffff; border: 1px solid grey; border-radius: 7px; padding: 1px; text-align: center; } QProgressBar::chunk { background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FF8000, stop: 1 orange); border-radius: 7px; margin: 0px; }");
+            progressBar->setStyleSheet("QProgressBar { color: #ffffff;background-color: #e8e8e8; border: 1px solid grey; border-radius: 7px; padding: 1px; text-align: center; } QProgressBar::chunk { background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #11b5c1, stop: 1 #0c99a3); border-radius: 7px; margin: 0px; }");
         }
     }
 
@@ -235,7 +225,12 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     statusBar()->addWidget(progressBar);
     statusBar()->addPermanentWidget(frameBlocks);
     statusBar()->setObjectName("statusBar");
-    statusBar()->setStyleSheet("#statusBar { color: #eb1f24; background-color: #ffffff;  }");
+    statusBar()->setStyleSheet("#statusBar { color: #ffffff; background-color: #292c30; }");
+
+    if (!fUseBlackTheme)
+    {
+        statusBar()->setStyleSheet("#statusBar { color: #ffffff; background-color: #11b5c1; }");
+    }
 
     syncIconMovie = new QMovie(fUseBlackTheme ? ":/movies/update_spinner_black" : ":/movies/update_spinner", "mng", this);
 
@@ -243,12 +238,10 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     connect(overviewPage, SIGNAL(transactionClicked(QModelIndex)), this, SLOT(gotoHistoryPage()));
     connect(overviewPage, SIGNAL(transactionClicked(QModelIndex)), transactionView, SLOT(focusTransaction(QModelIndex)));
 
-    connect(TradingAction, SIGNAL(triggered()), tradingDialogPage, SLOT(InitTrading()));
-
     // Double-clicking on a transaction on the transaction history page shows details
     connect(transactionView, SIGNAL(doubleClicked(QModelIndex)), transactionView, SLOT(showDetails()));
 
-    rpcConsole = new RPCConsole(this);
+    rpcConsole = new RPCConsole(0);
     connect(openRPCConsoleAction, SIGNAL(triggered()), rpcConsole, SLOT(show()));
 
     // clicking on automatic backups shows details
@@ -265,16 +258,18 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     gotoOverviewPage();
 }
 
-BitcoinGUI::~BitcoinGUI()
+EndoxCoinGUI::~EndoxCoinGUI()
 {
     if(trayIcon) // Hide tray icon, as deleting will let it linger until quit (on Ubuntu)
         trayIcon->hide();
 #ifdef Q_OS_MAC
     delete appMenuBar;
 #endif
+
+    delete rpcConsole;
 }
 
-void BitcoinGUI::createActions()
+void EndoxCoinGUI::createActions()
 {
     QActionGroup *tabGroup = new QActionGroup(this);
 
@@ -291,7 +286,7 @@ void BitcoinGUI::createActions()
     tabGroup->addAction(receiveCoinsAction);
 
     sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&Send"), this);
-    sendCoinsAction->setToolTip(tr("Send coins to a ENDO address"));
+    sendCoinsAction->setToolTip(tr("Send coins to a Endox-Coin address"));
     sendCoinsAction->setCheckable(true);
     sendCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     tabGroup->addAction(sendCoinsAction);
@@ -310,40 +305,18 @@ void BitcoinGUI::createActions()
 
     masternodeManagerAction = new QAction(QIcon(":/icons/mnodes"), tr("&Masternodes"), this);
     masternodeManagerAction->setToolTip(tr("Show Master Nodes status and configure your nodes."));
-    masternodeManagerAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
     masternodeManagerAction->setCheckable(true);
     tabGroup->addAction(masternodeManagerAction);
 
-    messageAction = new QAction(QIcon(":/icons/edit"), tr("&Messages"), this);
-    messageAction->setToolTip(tr("View and Send Encrypted messages"));
-    messageAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_7));
-    messageAction->setCheckable(true);
-    tabGroup->addAction(messageAction);
-
     blockAction = new QAction(QIcon(":/icons/block"), tr("&Block Explorer"), this);
     blockAction->setToolTip(tr("Explore the BlockChain"));
-    blockAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_8));
+    blockAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
     blockAction->setCheckable(true);
     tabGroup->addAction(blockAction);
-
-    miningAction = new QAction(QIcon(":/icons/miningpg"), tr("&Mining Page"), this);
-    miningAction ->setToolTip(tr("Start Mining Endo"));
-    miningAction ->setCheckable(true);
-    miningAction ->setShortcut(QKeySequence(Qt::ALT + Qt::Key_9));
-    miningAction->setProperty("objectName","miningAction");
-    tabGroup->addAction(miningAction);
-
-    TradingAction = new QAction(QIcon(":/icons/trade"), tr("&Bittrex"), this);
-    TradingAction ->setToolTip(tr("Start Trading"));
-    TradingAction ->setCheckable(true);
-    TradingAction ->setShortcut(QKeySequence(Qt::ALT + Qt::Key_0));
-    TradingAction->setProperty("objectName","TradingAction");
-    tabGroup->addAction(TradingAction);
 
     showBackupsAction = new QAction(QIcon(":/icons/browse"), tr("Show Auto&Backups"), this);
     showBackupsAction->setStatusTip(tr("S"));
 
-    connect(TradingAction, SIGNAL(triggered()), this, SLOT(gotoTradingPage()));
     connect(blockAction, SIGNAL(triggered()), this, SLOT(gotoBlockBrowser()));
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(gotoOverviewPage()));
@@ -357,42 +330,47 @@ void BitcoinGUI::createActions()
     connect(addressBookAction, SIGNAL(triggered()), this, SLOT(gotoAddressBookPage()));
     connect(masternodeManagerAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(masternodeManagerAction, SIGNAL(triggered()), this, SLOT(gotoMasternodeManagerPage()));
-    connect(messageAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
-    connect(messageAction, SIGNAL(triggered()), this, SLOT(gotoMessagePage()));
-    connect(miningAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
-    connect(miningAction, SIGNAL(triggered()), this, SLOT(gotoMiningPage()));
 
-    quitAction = new QAction(tr("E&xit"), this);
+    quitAction = new QAction(QIcon(":icons/quit"), tr("E&xit"), this);
     quitAction->setToolTip(tr("Quit application"));
     quitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     quitAction->setMenuRole(QAction::QuitRole);
-    aboutAction = new QAction(tr("&About ENDO"), this);
-    aboutAction->setToolTip(tr("Show information about ENDO"));
+    aboutAction = new QAction(QIcon(":icons/endox-coin"), tr("&About Endox-Coin"), this);
+    aboutAction->setToolTip(tr("Show information about Endox-Coin"));
     aboutAction->setMenuRole(QAction::AboutRole);
-    aboutQtAction = new QAction(tr("About &Qt"), this);
+    aboutQtAction = new QAction(QIcon(":/qt-project.org/qmessagebox/images/qtlogo-64.png"), tr("About &Qt"), this);
     aboutQtAction->setToolTip(tr("Show information about Qt"));
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
-    optionsAction = new QAction(tr("&Options..."), this);
-    optionsAction->setToolTip(tr("Modify configuration options for ENDO"));
+    optionsAction = new QAction(QIcon(":/icons/options"), tr("&Options..."), this);
+    optionsAction->setToolTip(tr("Modify configuration options for Endox-Coin"));
     optionsAction->setMenuRole(QAction::PreferencesRole);
     toggleHideAction = new QAction(QIcon(":/icons/bitcoin"), tr("&Show / Hide"), this);
-    encryptWalletAction = new QAction(tr("&Encrypt Wallet..."), this);
+    encryptWalletAction = new QAction(QIcon(":/icons/lock_closed"), tr("&Encrypt Wallet..."), this);
     encryptWalletAction->setToolTip(tr("Encrypt or decrypt wallet"));
-    backupWalletAction = new QAction(tr("&Backup Wallet..."), this);
+    backupWalletAction = new QAction(QIcon(":/icons/filesave"), tr("&Backup Wallet..."), this);
     backupWalletAction->setToolTip(tr("Backup wallet to another location"));
-    changePassphraseAction = new QAction(tr("&Change Passphrase..."), this);
+    importPrivateKeyAction = new QAction(QIcon(":/icons/key"), tr("&Import private key..."), this);
+    importPrivateKeyAction->setToolTip(tr("Import a private key"));
+    changePassphraseAction = new QAction(QIcon(":/icons/key"), tr("&Change Passphrase..."), this);
     changePassphraseAction->setToolTip(tr("Change the passphrase used for wallet encryption"));
-    unlockWalletAction = new QAction(tr("&Unlock Wallet..."), this);
+    unlockWalletAction = new QAction(QIcon(":/icons/lock_open"),tr("&Unlock Wallet..."), this);
     unlockWalletAction->setToolTip(tr("Unlock wallet"));
-    lockWalletAction = new QAction(tr("&Lock Wallet"), this);
+    lockWalletAction = new QAction(QIcon(":/icons/lock_closed"),tr("&Lock Wallet"), this);
     lockWalletAction->setToolTip(tr("Lock wallet"));
-    signMessageAction = new QAction(tr("Sign &message..."), this);
-    verifyMessageAction = new QAction(tr("&Verify message..."), this);
+    signMessageAction = new QAction(QIcon(":/icons/edit"), tr("Sign &message..."), this);
+    verifyMessageAction = new QAction(QIcon(":/icons/transaction_0"), tr("&Verify message..."), this);
 
-    exportAction = new QAction(tr("&Export..."), this);
+    exportAction = new QAction(QIcon(":/icons/export"), tr("&Export..."), this);
     exportAction->setToolTip(tr("Export the data in the current tab to a file"));
-    openRPCConsoleAction = new QAction(tr("&Debug window"), this);
+    openRPCConsoleAction = new QAction(QIcon(":/icons/debugwindow"), tr("&Debug window"), this);
     openRPCConsoleAction->setToolTip(tr("Open debugging and diagnostic console"));
+
+    editConfigAction = new QAction(QIcon(":/icons/editconf"), tr("&Edit Endox-Coin.conf"), this);
+    editConfigAction->setToolTip(tr("Edit the configuration file for Endox-Coin"));
+    editConfigExtAction = new QAction(QIcon(":/icons/editconf"), tr("&Edit Endox-Coin.conf (external)"), this);
+    editConfigExtAction->setToolTip(tr("Edit the configuration file for Endox-Coin (external editor)"));
+    openDataDirAction = new QAction(QIcon(":/icons/folder"), tr("&Open data dir"), this);
+    openDataDirAction->setToolTip(tr("Open the directory where Endox-Coin data is stored"));
 
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutClicked()));
@@ -401,14 +379,18 @@ void BitcoinGUI::createActions()
     connect(toggleHideAction, SIGNAL(triggered()), this, SLOT(toggleHidden()));
     connect(encryptWalletAction, SIGNAL(triggered()), this, SLOT(encryptWallet()));
     connect(backupWalletAction, SIGNAL(triggered()), this, SLOT(backupWallet()));
+    connect(importPrivateKeyAction, SIGNAL(triggered()), this, SLOT(importPrivateKey()));
     connect(changePassphraseAction, SIGNAL(triggered()), this, SLOT(changePassphrase()));
     connect(unlockWalletAction, SIGNAL(triggered()), this, SLOT(unlockWallet()));
     connect(lockWalletAction, SIGNAL(triggered()), this, SLOT(lockWallet()));
     connect(signMessageAction, SIGNAL(triggered()), this, SLOT(gotoSignMessageTab()));
     connect(verifyMessageAction, SIGNAL(triggered()), this, SLOT(gotoVerifyMessageTab()));
+    connect(editConfigAction, SIGNAL(triggered()), this, SLOT(editConfig()));
+    connect(editConfigExtAction, SIGNAL(triggered()), this, SLOT(editConfigExt()));
+    connect(openDataDirAction, SIGNAL(triggered()), this, SLOT(openDataDir()));
 }
 
-void BitcoinGUI::createMenuBar()
+void EndoxCoinGUI::createMenuBar()
 {
 #ifdef Q_OS_MAC
     appMenuBar = new QMenuBar();
@@ -418,9 +400,8 @@ void BitcoinGUI::createMenuBar()
 
     // Configure the menus
     QMenu *file = appMenuBar->addMenu(tr("&File"));
-    file->setObjectName("file");
-    file->setStyleSheet("QMenu { color: #ffffff;} QMenu:hover { background-color: #eb1f24; } #file { color: #eb1f24; background-color: #ffffff; } #file:hover { background-color: #eb1f24; }");
     file->addAction(backupWalletAction);
+    file->addAction(importPrivateKeyAction);
     file->addAction(exportAction);
     file->addAction(signMessageAction);
     file->addAction(verifyMessageAction);
@@ -428,8 +409,6 @@ void BitcoinGUI::createMenuBar()
     file->addAction(quitAction);
 
     QMenu *settings = appMenuBar->addMenu(tr("&Settings"));
-    settings->setObjectName("settings");
-    settings->setStyleSheet("QMenu { color: #eb1f24;} QMenu:hover { background-color: #ffffff } #settings { color: #eb1f24; background-color: #ffffff; } #settings:hover { color:#ffffff; background-color: #eb1f24; }");
     settings->addAction(encryptWalletAction);
     settings->addAction(changePassphraseAction);
     settings->addAction(unlockWalletAction);
@@ -439,9 +418,10 @@ void BitcoinGUI::createMenuBar()
     settings->addAction(showBackupsAction);
 
     QMenu *help = appMenuBar->addMenu(tr("&Help"));
-    help->setObjectName("help");
-    help->setStyleSheet("QMenu { color: #eb1f24;} QMenu:hover { color: #ffffff; background-color: #eb1f24; } #help { color: #eb1f24; background-color: #ffffff; } #help:hover { color: #ffffff; background-color: #eb1f24; }");
     help->addAction(openRPCConsoleAction);
+    help->addAction(openDataDirAction);
+    help->addAction(editConfigAction);
+    help->addAction(editConfigExtAction);
     help->addSeparator();
     help->addAction(aboutAction);
     help->addAction(aboutQtAction);
@@ -455,7 +435,7 @@ static QWidget* makeToolBarSpacer()
     return spacer;
 }
 
-void BitcoinGUI::createToolBars()
+void EndoxCoinGUI::createToolBars()
 {
     fLiteMode = GetBoolArg("-litemode", false);
 
@@ -463,8 +443,13 @@ void BitcoinGUI::createToolBars()
     toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolbar->setContextMenuPolicy(Qt::PreventContextMenu);
     toolbar->setObjectName("tabs");
-    toolbar->setStyleSheet("QToolButton { color: #ffffff; font-weight:bold;} QToolButton:hover { color: #eb1f24; background-color: #ffffff; } QToolButton:checked { color: #eb1f24; background-color: #cccccc } QToolButton:pressed { color: #eb1f24; background-color: #e5e5e5 } #tabs { color: #ffffff; background-color: #eb1f24; }");
+    toolbar->setStyleSheet("QToolButton { color: #ffffff; font-weight:bold; } QToolButton:hover { background-color: #11b5c1; } QToolButton:checked { background-color: #11b5c1 } QToolButton:pressed { background-color: #1e2024; } #tabs { color: #ffffff; background-color: #292c30; }");
     toolbar->setIconSize(QSize(24,24));
+
+    if(!fUseBlackTheme)
+    {
+        toolbar->setStyleSheet("QToolButton { color: #ffffff; font-weight:bold; } QToolButton:hover { background-color: #009aa6; } QToolButton:checked { background-color: #006672; } QToolButton:pressed { background-color: #00808b; } #tabs { color: #ffffff; background-color: #11b5c1; }");
+    }
 
     QLabel* header = new QLabel();
     header->setMinimumSize(142, 142);
@@ -480,17 +465,12 @@ void BitcoinGUI::createToolBars()
     toolbar->addAction(historyAction);
     toolbar->addAction(addressBookAction);
     toolbar->addAction(masternodeManagerAction);
-    if (!fLiteMode){
-        toolbar->addAction(messageAction);
-    }
     toolbar->addAction(blockAction);
-    toolbar->addAction(miningAction);
-    toolbar->addAction(TradingAction);
     netLabel = new QLabel();
 
     QWidget *spacer = makeToolBarSpacer();
     netLabel->setObjectName("netLabel");
-    netLabel->setStyleSheet("#netLabel { color: #ffffff; }");
+    netLabel->setStyleSheet("#netLabel { color: #efefef; }");
     toolbar->addWidget(spacer);
     toolbar->setOrientation(Qt::Vertical);
     toolbar->setMovable(false);
@@ -502,7 +482,7 @@ void BitcoinGUI::createToolBars()
     }
 }
 
-void BitcoinGUI::setClientModel(ClientModel *clientModel)
+void EndoxCoinGUI::setClientModel(ClientModel *clientModel)
 {
     if(!fOnlyTor)
     netLabel->setText("CLEARNET");
@@ -529,7 +509,7 @@ void BitcoinGUI::setClientModel(ClientModel *clientModel)
 #endif
             if(trayIcon)
             {
-                trayIcon->setToolTip(tr("ENDO client") + QString(" ") + tr("[testnet]"));
+                trayIcon->setToolTip(tr("Endox-Coin client") + QString(" ") + tr("[testnet]"));
                 trayIcon->setIcon(QIcon(":/icons/toolbar_testnet"));
                 toggleHideAction->setIcon(QIcon(":/icons/toolbar_testnet"));
             }
@@ -556,7 +536,7 @@ void BitcoinGUI::setClientModel(ClientModel *clientModel)
     }
 }
 
-void BitcoinGUI::setWalletModel(WalletModel *walletModel)
+void EndoxCoinGUI::setWalletModel(WalletModel *walletModel)
 {
     this->walletModel = walletModel;
     if(walletModel)
@@ -573,7 +553,6 @@ void BitcoinGUI::setWalletModel(WalletModel *walletModel)
         sendCoinsPage->setModel(walletModel);
         signVerifyMessageDialog->setModel(walletModel);
         blockBrowser->setModel(walletModel);
-        tradingDialogPage->setModel(walletModel);
 
         setEncryptionStatus(walletModel->getEncryptionStatus());
         connect(walletModel, SIGNAL(encryptionStatusChanged(int)), this, SLOT(setEncryptionStatus(int)));
@@ -587,31 +566,14 @@ void BitcoinGUI::setWalletModel(WalletModel *walletModel)
     }
 }
 
-void BitcoinGUI::setMessageModel(MessageModel *messageModel)
-{
-    this->messageModel = messageModel;
-    if(messageModel)
-    {
-        // Report errors from message thread
-        connect(messageModel, SIGNAL(error(QString,QString,bool)), this, SLOT(error(QString,QString,bool)));
-
-        // Put transaction list in tabs
-        messagePage->setModel(messageModel);
-
-        // Balloon pop-up for new message
-        connect(messageModel, SIGNAL(rowsInserted(QModelIndex,int,int)),
-                this, SLOT(incomingMessage(QModelIndex,int,int)));
-    }
-}
-
-void BitcoinGUI::createTrayIcon()
+void EndoxCoinGUI::createTrayIcon()
 {
     QMenu *trayIconMenu;
 #ifndef Q_OS_MAC
     trayIcon = new QSystemTrayIcon(this);
     trayIconMenu = new QMenu(this);
     trayIcon->setContextMenu(trayIconMenu);
-    trayIcon->setToolTip(tr("ENDO client"));
+    trayIcon->setToolTip(tr("Endox-Coin client"));
     trayIcon->setIcon(QIcon(":/icons/toolbar"));
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
@@ -644,7 +606,7 @@ void BitcoinGUI::createTrayIcon()
 }
 
 #ifndef Q_OS_MAC
-void BitcoinGUI::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
+void EndoxCoinGUI::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     if(reason == QSystemTrayIcon::Trigger)
     {
@@ -654,7 +616,7 @@ void BitcoinGUI::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 }
 #endif
 
-void BitcoinGUI::optionsClicked()
+void EndoxCoinGUI::optionsClicked()
 {
     if(!clientModel || !clientModel->getOptionsModel())
         return;
@@ -663,14 +625,14 @@ void BitcoinGUI::optionsClicked()
     dlg.exec();
 }
 
-void BitcoinGUI::aboutClicked()
+void EndoxCoinGUI::aboutClicked()
 {
     AboutDialog dlg;
     dlg.setModel(clientModel);
     dlg.exec();
 }
 
-void BitcoinGUI::setNumConnections(int count)
+void EndoxCoinGUI::setNumConnections(int count)
 {
     QString icon;
     switch(count)
@@ -682,10 +644,10 @@ void BitcoinGUI::setNumConnections(int count)
     default: icon = fUseBlackTheme ? ":/icons/black/connect_4" : ":/icons/connect_4"; break;
     }
     labelConnectionsIcon->setPixmap(QIcon(icon).pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
-    labelConnectionsIcon->setToolTip(tr("%n active connection(s) to ENDO network", "", count));
+    labelConnectionsIcon->setToolTip(tr("%n active connection(s) to Endox-Coin network", "", count));
 }
 
-void BitcoinGUI::setNumBlocks(int count)
+void EndoxCoinGUI::setNumBlocks(int count)
 {
     QString tooltip;
 
@@ -736,7 +698,7 @@ void BitcoinGUI::setNumBlocks(int count)
 
         progressBarLabel->setText(tr(clientModel->isImporting() ? "Importing blocks..." : "Synchronizing with network..."));
         progressBarLabel->setVisible(true);
-        progressBarLabel->setStyleSheet("QLabel { color: #eb1f24; }");
+        progressBarLabel->setStyleSheet("QLabel { color: #ffffff; }");
         progressBar->setFormat(tr("%1 behind").arg(timeBehindText));
         progressBar->setMaximum(totalSecs);
         progressBar->setValue(totalSecs - secs);
@@ -766,9 +728,9 @@ void BitcoinGUI::setNumBlocks(int count)
     statusBar()->setVisible(true);
 }
 
-void BitcoinGUI::message(const QString &title, const QString &message, bool modal, unsigned int style)
+void EndoxCoinGUI::message(const QString &title, const QString &message, bool modal, unsigned int style)
 {
-    QString strTitle = tr("ENDO") + " - ";
+    QString strTitle = tr("Endox-Coin") + " - ";
     // Default to information icon
     int nMBoxIcon = QMessageBox::Information;
     int nNotifyIcon = Notificator::Information;
@@ -812,7 +774,7 @@ void BitcoinGUI::message(const QString &title, const QString &message, bool moda
         notificator->notify((Notificator::Class)nNotifyIcon, strTitle, message);
 }
 
-void BitcoinGUI::error(const QString &title, const QString &message, bool modal)
+void EndoxCoinGUI::error(const QString &title, const QString &message, bool modal)
 {
     // Report errors from network/worker thread
     if(modal)
@@ -823,7 +785,7 @@ void BitcoinGUI::error(const QString &title, const QString &message, bool modal)
     }
 }
 
-void BitcoinGUI::changeEvent(QEvent *e)
+void EndoxCoinGUI::changeEvent(QEvent *e)
 {
     QMainWindow::changeEvent(e);
 #ifndef Q_OS_MAC // Ignored on Mac
@@ -842,7 +804,7 @@ void BitcoinGUI::changeEvent(QEvent *e)
 #endif
 }
 
-void BitcoinGUI::closeEvent(QCloseEvent *event)
+void EndoxCoinGUI::closeEvent(QCloseEvent *event)
 {
     if(clientModel)
     {
@@ -850,6 +812,9 @@ void BitcoinGUI::closeEvent(QCloseEvent *event)
         if(!clientModel->getOptionsModel()->getMinimizeToTray() &&
            !clientModel->getOptionsModel()->getMinimizeOnClose())
         {
+            // close rpcConsole in case it was open to make some space for the shutdown window
+            rpcConsole->close();
+
             qApp->quit();
         }
 #endif
@@ -857,21 +822,21 @@ void BitcoinGUI::closeEvent(QCloseEvent *event)
     QMainWindow::closeEvent(event);
 }
 
-void BitcoinGUI::askFee(qint64 nFeeRequired, bool *payFee)
+void EndoxCoinGUI::askFee(qint64 nFeeRequired, bool *payFee)
 {
     if (!clientModel || !clientModel->getOptionsModel())
         return;
 
     QString strMessage = tr("This transaction is over the size limit. You can still send it for a fee of %1, "
         "which goes to the nodes that process your transaction and helps to support the network. "
-        "Do you want to pay the fee?").arg(BitcoinUnits::formatWithUnit(clientModel->getOptionsModel()->getDisplayUnit(), nFeeRequired));
+        "Do you want to pay the fee?").arg(EndoxCoinUnits::formatWithUnit(clientModel->getOptionsModel()->getDisplayUnit(), nFeeRequired));
     QMessageBox::StandardButton retval = QMessageBox::question(
           this, tr("Confirm transaction fee"), strMessage,
           QMessageBox::Yes|QMessageBox::Cancel, QMessageBox::Yes);
     *payFee = (retval == QMessageBox::Yes);
 }
 
-void BitcoinGUI::incomingTransaction(const QModelIndex & parent, int start, int end)
+void EndoxCoinGUI::incomingTransaction(const QModelIndex & parent, int start, int end)
 {
 	// Prevent balloon-spam when initial block download is in progress
     if(!walletModel || !clientModel || clientModel->inInitialBlockDownload() || walletModel->processingQueuedTransactions())
@@ -880,7 +845,7 @@ void BitcoinGUI::incomingTransaction(const QModelIndex & parent, int start, int 
     TransactionTableModel *ttm = walletModel->getTransactionTableModel();
 
     qint64 amount = ttm->index(start, TransactionTableModel::Amount, parent)
-                    .data(Qt::EditRole).toULongLong();    
+                    .data(Qt::EditRole).toULongLong();
     QString date = ttm->index(start, TransactionTableModel::Date, parent)
                     .data().toString();
     QString type = ttm->index(start, TransactionTableModel::Type, parent)
@@ -899,41 +864,12 @@ void BitcoinGUI::incomingTransaction(const QModelIndex & parent, int start, int 
                              "Type: %3\n"
                              "Address: %4\n")
                           .arg(date)
-                          .arg(BitcoinUnits::formatWithUnit(walletModel->getOptionsModel()->getDisplayUnit(), amount, true))
+                          .arg(EndoxCoinUnits::formatWithUnit(walletModel->getOptionsModel()->getDisplayUnit(), amount, true))
                           .arg(type)
                           .arg(address), icon);
 }
 
-void BitcoinGUI::incomingMessage(const QModelIndex & parent, int start, int end)
-{
-    if(!messageModel)
-        return;
-
-    MessageModel *mm = messageModel;
-
-    if (mm->index(start, MessageModel::TypeInt, parent).data().toInt() == MessageTableEntry::Received)
-    {
-        QString sent_datetime = mm->index(start, MessageModel::ReceivedDateTime, parent).data().toString();
-        QString from_address  = mm->index(start, MessageModel::FromAddress,      parent).data().toString();
-        QString to_address    = mm->index(start, MessageModel::ToAddress,        parent).data().toString();
-        QString message       = mm->index(start, MessageModel::Message,          parent).data().toString();
-        QTextDocument html;
-        html.setHtml(message);
-        QString messageText(html.toPlainText());
-        notificator->notify(Notificator::Information,
-                            tr("Incoming Message"),
-                            tr("Date: %1\n"
-                               "From Address: %2\n"
-                               "To Address: %3\n"
-                               "Message: %4\n")
-                              .arg(sent_datetime)
-                              .arg(from_address)
-                              .arg(to_address)
-                              .arg(messageText));
-    };
-}
-
-void BitcoinGUI::clearWidgets()
+void EndoxCoinGUI::clearWidgets()
 {
     centralStackedWidget->setCurrentWidget(centralStackedWidget->widget(0));
     for(int i = centralStackedWidget->count(); i>0; i--){
@@ -943,7 +879,7 @@ void BitcoinGUI::clearWidgets()
     }
 }
 
-void BitcoinGUI::gotoMasternodeManagerPage()
+void EndoxCoinGUI::gotoMasternodeManagerPage()
 {
     masternodeManagerAction->setChecked(true);
     centralStackedWidget->setCurrentWidget(masternodeManagerPage);
@@ -952,7 +888,7 @@ void BitcoinGUI::gotoMasternodeManagerPage()
     disconnect(exportAction, SIGNAL(triggered()), 0, 0);
 }
 
-void BitcoinGUI::gotoBlockBrowser()
+void EndoxCoinGUI::gotoBlockBrowser()
 {
     blockAction->setChecked(true);
     centralStackedWidget->setCurrentWidget(blockBrowser);
@@ -961,7 +897,7 @@ void BitcoinGUI::gotoBlockBrowser()
     disconnect(exportAction, SIGNAL(triggered()), 0, 0);
 }
 
-void BitcoinGUI::gotoOverviewPage()
+void EndoxCoinGUI::gotoOverviewPage()
 {
     overviewAction->setChecked(true);
     centralStackedWidget->setCurrentWidget(overviewPage);
@@ -970,7 +906,7 @@ void BitcoinGUI::gotoOverviewPage()
     disconnect(exportAction, SIGNAL(triggered()), 0, 0);
 }
 
-void BitcoinGUI::gotoHistoryPage()
+void EndoxCoinGUI::gotoHistoryPage()
 {
     historyAction->setChecked(true);
     centralStackedWidget->setCurrentWidget(transactionsPage);
@@ -980,7 +916,7 @@ void BitcoinGUI::gotoHistoryPage()
     connect(exportAction, SIGNAL(triggered()), transactionView, SLOT(exportClicked()));
 }
 
-void BitcoinGUI::gotoAddressBookPage()
+void EndoxCoinGUI::gotoAddressBookPage()
 {
     addressBookAction->setChecked(true);
     centralStackedWidget->setCurrentWidget(addressBookPage);
@@ -990,17 +926,7 @@ void BitcoinGUI::gotoAddressBookPage()
     connect(exportAction, SIGNAL(triggered()), addressBookPage, SLOT(exportClicked()));
 }
 
-void BitcoinGUI::gotoTradingPage()
-{
-
-     TradingAction->setChecked(true);
-     centralStackedWidget->setCurrentWidget(tradingDialogPage);
-
-  //  exportAction->setEnabled(false);
-  //  disconnect(exportAction, SIGNAL(triggered()), 0, 0);
-}
-
-void BitcoinGUI::gotoReceiveCoinsPage()
+void EndoxCoinGUI::gotoReceiveCoinsPage()
 {
     receiveCoinsAction->setChecked(true);
     centralStackedWidget->setCurrentWidget(receiveCoinsPage);
@@ -1010,7 +936,7 @@ void BitcoinGUI::gotoReceiveCoinsPage()
     connect(exportAction, SIGNAL(triggered()), receiveCoinsPage, SLOT(exportClicked()));
 }
 
-void BitcoinGUI::gotoSendCoinsPage()
+void EndoxCoinGUI::gotoSendCoinsPage()
 {
     sendCoinsAction->setChecked(true);
     centralStackedWidget->setCurrentWidget(sendCoinsPage);
@@ -1019,7 +945,7 @@ void BitcoinGUI::gotoSendCoinsPage()
     disconnect(exportAction, SIGNAL(triggered()), 0, 0);
 }
 
-void BitcoinGUI::gotoSignMessageTab(QString addr)
+void EndoxCoinGUI::gotoSignMessageTab(QString addr)
 {
     // call show() in showTab_SM()
     signVerifyMessageDialog->showTab_SM(true);
@@ -1028,7 +954,7 @@ void BitcoinGUI::gotoSignMessageTab(QString addr)
         signVerifyMessageDialog->setAddress_SM(addr);
 }
 
-void BitcoinGUI::gotoVerifyMessageTab(QString addr)
+void EndoxCoinGUI::gotoVerifyMessageTab(QString addr)
 {
     // call show() in showTab_VM()
     signVerifyMessageDialog->showTab_VM(true);
@@ -1037,33 +963,14 @@ void BitcoinGUI::gotoVerifyMessageTab(QString addr)
         signVerifyMessageDialog->setAddress_VM(addr);
 }
 
-void BitcoinGUI::gotoMessagePage()
-{
-    messageAction->setChecked(true);
-    centralStackedWidget->setCurrentWidget(messagePage);
-
-    exportAction->setEnabled(true);
-    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
-    connect(exportAction, SIGNAL(triggered()), messagePage, SLOT(exportClicked()));
-}
-
-void BitcoinGUI::gotoMiningPage()
-{
-    miningAction->setChecked(true);
-    centralStackedWidget->setCurrentWidget(miningPage);
-
-    exportAction->setEnabled(false);
-    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
-}
-
-void BitcoinGUI::dragEnterEvent(QDragEnterEvent *event)
+void EndoxCoinGUI::dragEnterEvent(QDragEnterEvent *event)
 {
     // Accept only URIs
     if(event->mimeData()->hasUrls())
         event->acceptProposedAction();
 }
 
-void BitcoinGUI::dropEvent(QDropEvent *event)
+void EndoxCoinGUI::dropEvent(QDropEvent *event)
 {
     if(event->mimeData()->hasUrls())
     {
@@ -1079,13 +986,13 @@ void BitcoinGUI::dropEvent(QDropEvent *event)
         if (nValidUrisFound)
             gotoSendCoinsPage();
         else
-            notificator->notify(Notificator::Warning, tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid ENDO address or malformed URI parameters."));
+            notificator->notify(Notificator::Warning, tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid Endox-Coin address or malformed URI parameters."));
     }
 
     event->acceptProposedAction();
 }
 
-void BitcoinGUI::handleURI(QString strURI)
+void EndoxCoinGUI::handleURI(QString strURI)
 {
     // URI has to be valid
     if (sendCoinsPage->handleURI(strURI))
@@ -1094,10 +1001,10 @@ void BitcoinGUI::handleURI(QString strURI)
         gotoSendCoinsPage();
     }
     else
-        notificator->notify(Notificator::Warning, tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid ENDO address or malformed URI parameters."));
+        notificator->notify(Notificator::Warning, tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid Endox-Coin address or malformed URI parameters."));
 }
 
-void BitcoinGUI::setEncryptionStatus(int status)
+void EndoxCoinGUI::setEncryptionStatus(int status)
 {
     if(fWalletUnlockStakingOnly)
     {
@@ -1143,7 +1050,7 @@ void BitcoinGUI::setEncryptionStatus(int status)
     }
 }
 
-void BitcoinGUI::encryptWallet()
+void EndoxCoinGUI::encryptWallet()
 {
     if(!walletModel)
         return;
@@ -1155,7 +1062,7 @@ void BitcoinGUI::encryptWallet()
     setEncryptionStatus(walletModel->getEncryptionStatus());
 }
 
-void BitcoinGUI::backupWallet()
+void EndoxCoinGUI::backupWallet()
 {
     QString saveDir = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
     QString filename = QFileDialog::getSaveFileName(this, tr("Backup Wallet"), saveDir, tr("Wallet Data (*.dat)"));
@@ -1166,14 +1073,21 @@ void BitcoinGUI::backupWallet()
     }
 }
 
-void BitcoinGUI::changePassphrase()
+void EndoxCoinGUI::importPrivateKey()
+{
+    ImportPrivateKeyDialog dlg(this);
+    dlg.setModel(walletModel->getAddressTableModel());
+    dlg.exec();
+}
+
+void EndoxCoinGUI::changePassphrase()
 {
     AskPassphraseDialog dlg(AskPassphraseDialog::ChangePass, this);
     dlg.setModel(walletModel);
     dlg.exec();
 }
 
-void BitcoinGUI::unlockWallet()
+void EndoxCoinGUI::unlockWallet()
 {
     if(!walletModel)
         return;
@@ -1188,7 +1102,7 @@ void BitcoinGUI::unlockWallet()
     }
 }
 
-void BitcoinGUI::lockWallet()
+void EndoxCoinGUI::lockWallet()
 {
     if(!walletModel)
         return;
@@ -1196,7 +1110,7 @@ void BitcoinGUI::lockWallet()
     walletModel->setWalletLocked(true);
 }
 
-void BitcoinGUI::showNormalIfMinimized(bool fToggleHidden)
+void EndoxCoinGUI::showNormalIfMinimized(bool fToggleHidden)
 {
     // activateWindow() (sometimes) helps with keyboard focus on Windows
     if (isHidden())
@@ -1218,12 +1132,12 @@ void BitcoinGUI::showNormalIfMinimized(bool fToggleHidden)
         hide();
 }
 
-void BitcoinGUI::toggleHidden()
+void EndoxCoinGUI::toggleHidden()
 {
     showNormalIfMinimized(true);
 }
 
-void BitcoinGUI::updateWeight()
+void EndoxCoinGUI::updateWeight()
 {
     if (!pwalletMain)
         return;
@@ -1239,7 +1153,7 @@ void BitcoinGUI::updateWeight()
     nWeight = pwalletMain->GetStakeWeight();
 }
 
-void BitcoinGUI::updateStakingIcon()
+void EndoxCoinGUI::updateStakingIcon()
 {
     updateWeight();
 
@@ -1290,13 +1204,13 @@ void BitcoinGUI::updateStakingIcon()
     }
 }
 
-void BitcoinGUI::detectShutdown()
+void EndoxCoinGUI::detectShutdown()
 {
     if (ShutdownRequested())
         QMetaObject::invokeMethod(QCoreApplication::instance(), "quit", Qt::QueuedConnection);
 }
 
-void BitcoinGUI::showProgress(const QString &title, int nProgress)
+void EndoxCoinGUI::showProgress(const QString &title, int nProgress)
 {
     if (nProgress == 0)
     {
@@ -1317,4 +1231,25 @@ void BitcoinGUI::showProgress(const QString &title, int nProgress)
     }
     else if (progressDialog)
         progressDialog->setValue(nProgress);
+}
+
+void EndoxCoinGUI::editConfig()
+{
+    EditConfigDialog dlg;
+    dlg.setModel(clientModel);
+    dlg.exec();
+}
+
+void EndoxCoinGUI::editConfigExt()
+{
+    filesystem::path path = GetConfigFile();
+    QString pathString = QString::fromStdString(path.string());
+    QDesktopServices::openUrl(QUrl::fromLocalFile(pathString));
+}
+
+void EndoxCoinGUI::openDataDir()
+{
+    filesystem::path path = GetDataDir();
+    QString pathString = QString::fromStdString(path.string());
+    QDesktopServices::openUrl(QUrl::fromLocalFile(pathString));
 }

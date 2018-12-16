@@ -1000,17 +1000,17 @@ bool EvalScript(vector<vector<unsigned char> >& stack, const CScript& script, co
                         break;
 
                     case OP_MUL:
-                        if (!BN_mul(&bn, &bn1, &bn2, pctx))
+                        if (!BN_mul(bn.to_bignum(), bn1.to_bignum(), bn2.to_bignum(), pctx))
                             return false;
                         break;
 
                     case OP_DIV:
-                        if (!BN_div(&bn, NULL, &bn1, &bn2, pctx))
+                        if (!BN_div(bn.to_bignum(), NULL, bn1.to_bignum(), bn2.to_bignum(), pctx))
                             return false;
                         break;
 
                     case OP_MOD:
-                        if (!BN_mod(&bn, &bn1, &bn2, pctx))
+                        if (!BN_mod(bn.to_bignum(), bn1.to_bignum(), bn2.to_bignum(), pctx))
                             return false;
                         break;
 
@@ -1097,7 +1097,7 @@ bool EvalScript(vector<vector<unsigned char> >& stack, const CScript& script, co
                     }
                     else if (opcode == OP_HASH256)
                     {
-                        uint256 hash = HashBmw512(vch.begin(), vch.end());
+                        uint256 hash = Hash(vch.begin(), vch.end());
                         memcpy(&vchHash[0], &hash, sizeof(hash));
                     }
                     popstack(stack);
@@ -2234,7 +2234,7 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, vector<vector<unsi
         // Standard tx, sender provides pubkey, receiver adds signature
         mTemplates.insert(make_pair(TX_PUBKEY, CScript() << OP_PUBKEY << OP_CHECKSIG));
 
-        // Bitcoin address tx, sender provides hash of pubkey, receiver provides signature and pubkey
+        // EndoxCoin address tx, sender provides hash of pubkey, receiver provides signature and pubkey
         mTemplates.insert(make_pair(TX_PUBKEYHASH, CScript() << OP_DUP << OP_HASH160 << OP_PUBKEYHASH << OP_EQUALVERIFY << OP_CHECKSIG));
 
         // Sender provides N pubkeys, receivers provides M signatures

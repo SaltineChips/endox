@@ -12,12 +12,21 @@
 #include "net.h"
 #include "script.h"
 #include "scrypt.h"
-#include "hashalgo/bmw/hashblock.h"
-#include "fork.h"
-#include "genesis.h"
-#include "mining.h"
+#include "hashblock.h"
 
 #include <list>
+
+#define START_MASTERNODE_PAYMENTS_TESTNET      9993058800  // OFF (NOT TOGGLED)
+#define START_MASTERNODE_PAYMENTS              9993058800  // OFF (NOT TOGGLED)
+
+#define INSTANTX_SIGNATURES_REQUIRED           2
+#define INSTANTX_SIGNATURES_TOTAL              4
+
+// Define difficulty retarget algorithms
+enum DiffMode {
+    DIFF_DEFAULT = 0, // Default to invalid 0
+    DIFF_VRX     = 1, // Retarget using Terminal-Velocity-RateX
+};
 
 class CValidationState;
 class CBlock;
@@ -31,11 +40,11 @@ class CWallet;
 /** The maximum allowed multiple for the computed block size */
 static const unsigned int MAX_BLOCK_SIZE_INCREASE_MULTIPLE = 2;
 /** The number of blocks to consider in the computation of median block size */
-static const unsigned int NUM_BLOCKS_FOR_MEDIAN_BLOCK = 125;
+static const unsigned int NUM_BLOCKS_FOR_MEDIAN_BLOCK = 25;
 /** The maximum allowed size for a serialized block, in bytes (network rule) */
-static unsigned int MAX_BLOCK_SIZE = 80000000;
+static unsigned int MAX_BLOCK_SIZE = 10512000;
 /** The minimum allowed size for a serialized block, in bytes (network rule) */
-static const unsigned int MIN_BLOCK_SIZE = 8000000;
+static const unsigned int MIN_BLOCK_SIZE = 1051200;
 /** The maximum size for mined blocks */
 static const unsigned int MAX_BLOCK_SIZE_GEN = MAX_BLOCK_SIZE/2;
 /** Default for -blockprioritysize, maximum space for zero/low-fee transactions **/
@@ -61,7 +70,7 @@ static const int64_t MIN_TX_COUNT = 0;
 /** Minimum TX value (for relaying) */
 static const int64_t MIN_TX_VALUE = 0.01 * COIN;
 /** No amount larger than this (in satoshi) is valid */
-static const int64_t MAX_SINGLE_TX = 140000000 * COIN; // 140 Million ENDO coins
+static const int64_t MAX_SINGLE_TX = 8850000000 * COIN; // 8.85 Billion Endox-Coin coins
 /** Moneyrange params */
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_SINGLE_TX); }
 /** Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp. */
@@ -72,12 +81,32 @@ static const int MAX_BLOCKS_IN_TRANSIT_PER_PEER = 128;
 static const unsigned int BLOCK_DOWNLOAD_TIMEOUT = 60;
 /** Defaults to yes, adaptively increase/decrease max/min/priority along with the re-calculated block size **/
 static const unsigned int DEFAULT_SCALE_BLOCK_SIZE_OPTIONS = 1;
+/** Block spacing preferred */
+static const int64_t BLOCK_SPACING = ((5 * 60) - 30);
+/** Block spacing maximum */
+static const int64_t BLOCK_SPACING_MAX = BLOCK_SPACING * (3 / 2);
+/** MNengine collateral */
+static const int64_t MNengine_COLLATERAL = (1 * COIN);
+/** MNengine pool values */
+static const int64_t MNengine_POOL_MAX = (999 * COIN);
 /** Future drift value */
 static const int64_t nDrift = 5 * 60;
 /** Future drift params */
 inline int64_t FutureDrift(int64_t nTime) { return nTime + nDrift; }
+/** Desired block times/spacing */
+static const int64_t GetTargetSpacing = BLOCK_SPACING;
 /** "reject" message codes **/
 static const unsigned char REJECT_INVALID = 0x10;
+/** MasterNode required collateral */
+inline int64_t MasternodeCollateral(int nHeight) { return 10000; } // 10K ENDOX required as collateral
+/** Coinbase transaction outputs can only be staked after this number of new blocks (network rule) */
+static const int nStakeMinConfirmations = 25;
+/** Coinbase transaction outputs can only be spent after this number of new blocks (network rule) */
+static const int nCoinbaseMaturity = 15; // 15-TXs | 90-Mined
+/** Minimum nCoinAge required to stake PoS */
+static const unsigned int nStakeMinAge = 2 / 60; // 30 minutes
+/** Time to elapse before new modifier is computed */
+static const unsigned int nModifierInterval = 2 * 60;
 
 extern CScript COINBASE_FLAGS;
 extern CCriticalSection cs_main;
@@ -148,6 +177,9 @@ bool SendMessages(CNode* pto, bool fSendTrickle);
 void ThreadImport(std::vector<boost::filesystem::path> vImportFiles);
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits);
+unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake);
+int64_t GetProofOfWorkReward(int nHeight, int64_t nFees);
+int64_t GetProofOfStakeReward(const CBlockIndex* pindexPrev, int64_t nCoinAge, int64_t nFees);
 bool IsInitialBlockDownload();
 bool IsConfirmedInNPrevBlocks(const CTxIndex& txindex, const CBlockIndex* pindexFrom, int nMaxDepth, int& nActualDepth);
 std::string GetWarnings(std::string strFor);
@@ -159,10 +191,10 @@ void ThreadStakeMiner(CWallet *pwallet);
 
 /** (try to) add transaction to memory pool **/
 bool AcceptToMemoryPool(CTxMemPool& pool, CTransaction &tx, bool fLimitFree,
-                        bool* pfMissingInputs, bool fRejectendoFee=false, bool ignoreFees=false);
+                        bool* pfMissingInputs, bool fRejectinsaneFee=false, bool ignoreFees=false);
 
 bool AcceptableInputs(CTxMemPool& pool, const CTransaction &txo, bool fLimitFree,
-                        bool* pfMissingInputs, bool fRejectendoFee=false, bool isDSTX=false);
+                        bool* pfMissingInputs, bool fRejectinsaneFee=false, bool isDSTX=false);
 
 
 bool FindTransactionsByDestination(const CTxDestination &dest, std::vector<uint256> &vtxhash);
@@ -177,6 +209,8 @@ bool GetNodeStateStats(NodeId nodeid, CNodeStateStats &stats);
 /** Increase a node's misbehavior score. */
 void Misbehaving(NodeId nodeid, int howmuch);
 
+
+int64_t GetMasternodePayment(int nHeight, int64_t blockValue);
 
 struct CNodeStateStats {
     int nMisbehavior;
@@ -546,7 +580,7 @@ public:
     int GetDepthInMainChain(bool enableIX=true) const { CBlockIndex *pindexRet; return GetDepthInMainChain(pindexRet, enableIX); }
     bool IsInMainChain() const { CBlockIndex *pindexRet; return GetDepthInMainChainINTERNAL(pindexRet) > 0; }
     int GetBlocksToMaturity() const;
-    bool AcceptToMemoryPool(bool fLimitFree=true, bool fRejectendoFee=true, bool ignoreFees=false);
+    bool AcceptToMemoryPool(bool fLimitFree=true, bool fRejectInsaneFee=true, bool ignoreFees=false);
     int GetTransactionLockSignatures() const;
     bool IsTransactionLockTimedOut() const;
 };
@@ -696,7 +730,15 @@ public:
 
     uint256 GetHash() const
     {
-        return HashBmw512(BEGIN(nVersion), END(nNonce));
+        if (nVersion > 6)
+            return Hash(BEGIN(nVersion), END(nNonce));
+        else
+            return GetPoWHash();
+    }
+
+    uint256 GetPoWHash() const
+    {
+     return HashBmw512(BEGIN(nVersion), END(nNonce));
     }
 
     int64_t GetBlockTime() const
@@ -837,7 +879,7 @@ public:
         }
 
         // Check the header
-        if (fReadTransactions && IsProofOfWork() && !CheckProofOfWork(GetHash(), nBits))
+        if (fReadTransactions && IsProofOfWork() && !CheckProofOfWork(GetPoWHash(), nBits))
             return error("CBlock::ReadFromDisk() : errors in block header");
 
         return true;

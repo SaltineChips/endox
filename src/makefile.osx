@@ -3,7 +3,7 @@
 # Distributed under the MIT/X11 software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-# Mac OS X makefile for ENDO
+# Mac OS X makefile for Endox-Coin
 # Originally by Laszlo Hanyecz (solar@heliacal.net)
 
 CXX=clang++
@@ -31,7 +31,7 @@ USE_IPV6:=1
 LIBS= -dead_strip
 
 ifdef STATIC
-# Build STATIC if you are redistributing the Endod binary
+# Build STATIC if you are redistributing the Endox-Coind binary
 LIBS += \
  $(DEPSDIR)/lib/db48/libdb_cxx-4.8.a \
  $(DEPSDIR)/lib/libboost_system.a \
@@ -73,7 +73,6 @@ OBJS= \
     obj/blocksizecalculator.o \
     obj/allocators.o \
     obj/version.o \
-    obj/velocity.o \
     obj/support/cleanse.o \
     obj/checkpoints.o \
     obj/netbase.o \
@@ -97,8 +96,6 @@ OBJS= \
     obj/rpcnet.o \
     obj/rpcblockchain.o \
     obj/rpcrawtransaction.o \
-    obj/rpcsmessage.o \
-    obj/rpcvelocity.o \
     obj/script.o \
     obj/scrypt.o \
     obj/sync.o \
@@ -109,17 +106,15 @@ OBJS= \
     obj/kernel.o \
     obj/pbkdf2.o \
     obj/chainparams.o \
-    obj/blockparams.o \
     obj/stealth.o \
     obj/activemasternode.o \
-    obj/darksend.o \
-    obj/darksend-relay.o \
+    obj/mnengine.o \
     obj/instantx.o \
     obj/masternodeconfig.o \
     obj/masternodeman.o \
     obj/masternode.o \
     obj/masternode-payments.o \
-    obj/rpcdarksend.o \
+    obj/rpcmnengine.o \
     obj/spork.o \
     obj/crypto/hmac_sha256.o \
     obj/crypto/hmac_sha512.o \
@@ -127,9 +122,8 @@ OBJS= \
     obj/crypto/sha1.o \
     obj/crypto/sha256.o \
     obj/crypto/sha512.o \
-    obj/smessage.o    \
-    obj/hashalgo/bmw/aes_helper.o \
-    obj/hashalgo/bmw/bmw.o
+    obj/aes_helper.o \
+    obj/bmw.o
 
 ifeq (${USE_WALLET}, 1)
     DEFS += -DENABLE_WALLET
@@ -159,13 +153,13 @@ ifneq (${USE_IPV6}, -)
 	DEFS += -DUSE_IPV6=$(USE_IPV6)
 endif
 
-all: Endod
+all: Endox-Coind
 
 # build secp256k1
 DEFS += $(addprefix -I,$(CURDIR)/secp256k1/include)
 secp256k1/src/libsecp256k1_la-secp256k1.o:
 	@echo "Building Secp256k1 ..."; cd secp256k1; chmod 755 *; ./autogen.sh; ./configure --enable-module-recovery; make; cd ..;
-Endod: secp256k1/src/libsecp256k1_la-secp256k1.o
+Endox-Coind: secp256k1/src/libsecp256k1_la-secp256k1.o
 
 # build leveldb
 LIBS += $(CURDIR)/leveldb/libleveldb.a $(CURDIR)/leveldb/libmemenv.a
@@ -198,11 +192,11 @@ obj/%.o: %.c
 	      -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	  rm -f $(@:%.o=%.d)
 
-Endod: $(OBJS:obj/%=obj/%)
+Endox-Coind: $(OBJS:obj/%=obj/%)
 	$(CXX) $(CFLAGS) -o $@ $(LIBPATHS) $^ $(LIBS)
 
 clean:
-	-rm -f Endod
+	-rm -f Endox-Coind
 	-rm -f obj/*.o
 	-rm -f obj/*.P
 	-rm -f obj/build.h

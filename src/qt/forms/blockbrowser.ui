@@ -35,8 +35,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">color: rgb(204, 155, 68);
-background-color: rgb(244, 244, 244);</string>
+   <string notr="true"/>
   </property>
   <layout class="QGridLayout">
    <property name="sizeConstraint">
@@ -59,7 +58,7 @@ background-color: rgb(244, 244, 244);</string>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <layout class="QGridLayout" name="gridLayout">
+     <layout class="QGridLayout" name="gridLayout01">
       <item row="0" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <property name="spacing">
@@ -70,13 +69,16 @@ background-color: rgb(244, 244, 244);</string>
           <property name="font">
            <font>
             <family>Open Sans,sans-serif</family>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
+           <string notr="true"/>
           </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20px; font-weight:600; color:#000000;&quot;&gt;Block Explorer &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>Block Explorer</string>
           </property>
          </widget>
         </item>
@@ -118,9 +120,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="12" column="1">
          <widget class="QPushButton" name="txButton">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>Decode Transaction</string>
           </property>
@@ -128,9 +127,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="17" column="0">
          <widget class="QLabel" name="inputLabel">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>Inputs:</string>
           </property>
@@ -141,9 +137,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="14" column="0">
          <widget class="QLabel" name="valueLabel">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>Value out:</string>
           </property>
@@ -151,9 +144,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="13" column="0">
          <widget class="QLabel" name="txLabel">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>Transaction ID:</string>
           </property>
@@ -161,9 +151,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="9" column="1">
          <widget class="QLabel" name="hardBox">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>0.00</string>
           </property>
@@ -174,9 +161,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="13" column="1">
          <widget class="QLabel" name="txID">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>000</string>
           </property>
@@ -210,9 +194,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="9" column="0">
          <widget class="QLabel" name="hardLabel">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>Block Difficulty:</string>
           </property>
@@ -226,9 +207,6 @@ background-color: rgb(244, 244, 244);</string>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="maximum">
            <number>99999999</number>
           </property>
@@ -236,9 +214,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="heightLabel_2">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>Block Height:</string>
           </property>
@@ -246,9 +221,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="8" column="1">
          <widget class="QLabel" name="timeBox">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>0</string>
           </property>
@@ -259,9 +231,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="1" column="1">
          <widget class="QPushButton" name="blockButton">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>Jump to Block</string>
           </property>
@@ -269,9 +238,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="5" column="0">
          <widget class="QLabel" name="merkleLabel">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>Block Merkle:</string>
           </property>
@@ -279,9 +245,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="hashLabel">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>Block Hash:</string>
           </property>
@@ -299,9 +262,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="3" column="1">
          <widget class="QLabel" name="heightLabel">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>0</string>
           </property>
@@ -312,9 +272,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="15" column="0">
          <widget class="QLabel" name="feesLabel">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>Fees:</string>
           </property>
@@ -322,9 +279,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="7" column="0">
          <widget class="QLabel" name="bitsLabel">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>Block nBits:</string>
           </property>
@@ -332,9 +286,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="7" column="1">
          <widget class="QLabel" name="bitsBox">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>0</string>
           </property>
@@ -351,9 +302,6 @@ background-color: rgb(244, 244, 244);</string>
             <height>0</height>
            </size>
           </property>
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>0x0</string>
           </property>
@@ -364,9 +312,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="16" column="0">
          <widget class="QLabel" name="outputLabel">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>Outputs:</string>
           </property>
@@ -390,9 +335,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="6" column="0">
          <widget class="QLabel" name="nonceLabel">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>Block nNonce:</string>
           </property>
@@ -400,9 +342,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="6" column="1">
          <widget class="QLabel" name="nonceBox">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>0</string>
           </property>
@@ -413,9 +352,6 @@ background-color: rgb(244, 244, 244);</string>
         </item>
         <item row="8" column="0">
          <widget class="QLabel" name="timeLabel">
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
-          </property>
           <property name="text">
            <string>Block Timestamp:</string>
           </property>
@@ -437,9 +373,6 @@ background-color: rgb(244, 244, 244);</string>
             <width>0</width>
             <height>0</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: #eb1f24</string>
           </property>
           <property name="text">
            <string>0x0</string>

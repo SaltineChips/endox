@@ -5,6 +5,8 @@
 
 class OptionsModel;
 class AddressTableModel;
+class BanTableModel;
+class PeerTableModel;
 class TransactionTableModel;
 class CWallet;
 
@@ -13,7 +15,7 @@ class QDateTime;
 class QTimer;
 QT_END_NAMESPACE
 
-/** Model for Bitcoin network client. */
+/** Model for EndoxCoin network client. */
 class ClientModel : public QObject
 {
     Q_OBJECT
@@ -23,6 +25,8 @@ public:
     ~ClientModel();
 
     OptionsModel *getOptionsModel();
+    PeerTableModel *getPeerTableModel();
+    BanTableModel *getBanTableModel();
 
     int getNumConnections() const;
     QString getMasternodeCountString() const;
@@ -49,8 +53,14 @@ public:
     QString clientName() const;
     QString formatClientStartupTime() const;
 
+    //! Get and set the content of the Endox-Coin.conf file
+    QString getConfigFileContent() const;
+    void setConfigFileContent(const QString &content);
+
 private:
     OptionsModel *optionsModel;
+    PeerTableModel *peerTableModel;
+    BanTableModel *banTableModel;
 
     int cachedNumBlocks;
     int numBlocksAtStartup;
@@ -80,6 +90,7 @@ public slots:
     void updateMnTimer();
     void updateNumConnections(int numConnections);
     void updateAlert(const QString &hash, int status);
+    void updateBanlist();
 };
 
 #endif // CLIENTMODEL_H

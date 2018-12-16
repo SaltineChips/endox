@@ -44,7 +44,7 @@ extern map<int64_t, uint256> mapCacheBlockHashes;
 bool GetBlockHash(uint256& hash, int nBlockHeight);
 
 //
-// The Masternode Class. For managing the darksend process. It contains the input of the 50,000 ENDO, signature to prove
+// The Masternode Class. For managing the mnengine process. It contains the input of the 10,000 ENDOX, signature to prove
 // it's the one who own that ip address and code for calculating the payment election.
 //
 class CMasternode
@@ -84,7 +84,8 @@ public:
     int nScanningErrorCount;
     int nLastScanningErrorBlockHeight;
     int64_t nLastPaid;
-
+    bool isPortOpen;
+    bool isOldNode;
 
     CMasternode();
     CMasternode(const CMasternode& other);
@@ -120,6 +121,8 @@ public:
         swap(first.nScanningErrorCount, second.nScanningErrorCount);
         swap(first.nLastScanningErrorBlockHeight, second.nLastScanningErrorBlockHeight);
         swap(first.nLastPaid, second.nLastPaid);
+        swap(first.isPortOpen, second.isPortOpen);
+        swap(first.isOldNode, second.isOldNode);
     }
 
     CMasternode& operator=(CMasternode from)
@@ -169,6 +172,8 @@ public:
                 READWRITE(nScanningErrorCount);
                 READWRITE(nLastScanningErrorBlockHeight);
                 READWRITE(nLastPaid);
+                READWRITE(isPortOpen);
+                READWRITE(isOldNode);
         }
     )
 
@@ -186,6 +191,16 @@ public:
         }
     }
 
+    void ChangePortStatus(bool status)
+    {
+        isPortOpen = status;
+    }
+
+    void ChangeNodeStatus(bool status)
+    {
+        isOldNode = status;
+    }
+    
     inline uint64_t SliceHash(uint256& hash, int slice)
     {
         uint64_t n = 0;
@@ -209,7 +224,7 @@ public:
 
     bool IsEnabled()
     {
-        return activeState == MASTERNODE_ENABLED;
+        return isPortOpen && activeState == MASTERNODE_ENABLED;
     }
 
     int GetMasternodeInputAge()

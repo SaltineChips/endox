@@ -12,9 +12,6 @@
 /* Generate a new block, without valid proof-of-work */
 CBlock* CreateNewBlock(CReserveKey& reservekey, bool fProofOfStake=false, int64_t* pFees = 0);
 
-/** Run the miner threads */
-void GenerateBitcoins(bool fGenerate, CWallet* pwallet, int nThreads);
-
 /** Modify the extranonce in a block */
 void IncrementExtraNonce(CBlock* pblock, CBlockIndex* pindexPrev, unsigned int& nExtraNonce);
 
@@ -29,11 +26,5 @@ bool CheckStake(CBlock* pblock, CWallet& wallet);
 
 /** Base sha256 mining transform */
 void SHA256Transform(void* pstate, void* pinput, const void* pinit);
-
-/** Hashrate of built-in BitcoinMiner */
-extern double dHashesPerSec;
-
-/** Hashrate value for BitcoinMiner */
-extern int64_t nHPSTimerStart;
 
 #endif // NOVACOIN_MINER_H

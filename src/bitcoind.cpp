@@ -52,12 +52,12 @@ bool AppInit(int argc, char* argv[])
         if (mapArgs.count("-?") || mapArgs.count("--help"))
         {
             // First part of help message is specific to bitcoind / RPC client
-            std::string strUsage = _("ENDO version") + " " + FormatFullVersion() + "\n\n" +
+            std::string strUsage = _("Endox-Coin version") + " " + FormatFullVersion() + "\n\n" +
                 _("Usage:") + "\n" +
-                  "  Endod [options]                     " + "\n" +
-                  "  Endod [options] <command> [params]  " + _("Send command to -server or Endod") + "\n" +
-                  "  Endod [options] help                " + _("List commands") + "\n" +
-                  "  Endod [options] help <command>      " + _("Get help for a command") + "\n";
+                  "  Endox-Coind [options]                     " + "\n" +
+                  "  Endox-Coind [options] <command> [params]  " + _("Send command to -server or Endox-Coind") + "\n" +
+                  "  Endox-Coind [options] help                " + _("List commands") + "\n" +
+                  "  Endox-Coind [options] help <command>      " + _("Get help for a command") + "\n";
 
             strUsage += "\n" + HelpMessage();
 
@@ -67,7 +67,7 @@ bool AppInit(int argc, char* argv[])
 
         // Command-line RPC
         for (int i = 1; i < argc; i++)
-            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "ENDO:"))
+            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "Endox-Coin:"))
                 fCommandLine = true;
 
         if (fCommandLine)

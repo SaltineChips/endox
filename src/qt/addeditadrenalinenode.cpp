@@ -21,6 +21,17 @@ AddEditAdrenalineNode::AddEditAdrenalineNode(QWidget *parent) :
 {
     ui->setupUi(this);
 
+
+
+
+    //Labels
+    ui->aliasLineEdit->setPlaceholderText("Enter your Masternode alias");
+    ui->addressLineEdit->setPlaceholderText("Enter your IP & port");
+    ui->privkeyLineEdit->setPlaceholderText("Enter your Masternode private key");
+    ui->txhashLineEdit->setPlaceholderText("Enter your 10,000 ENDOX TXID");
+    ui->outputindexLineEdit->setPlaceholderText("Enter your transaction output index");
+//    ui->donationaddressLineEdit->setPlaceholderText("Enter a donation recive address");
+//    ui->donationpercentageLineEdit->setPlaceholderText("Input the % for the donation");
 }
 
 AddEditAdrenalineNode::~AddEditAdrenalineNode()
@@ -41,7 +52,7 @@ void AddEditAdrenalineNode::on_okButton_clicked()
     else if(ui->addressLineEdit->text() == "")
     {
         QMessageBox msg;
-        msg.setText("Please enter an ip address and port. (123.45.67.89:10255)");
+        msg.setText("Please enter an ip address and port. (123.45.67.89:51441)");
         msg.exec();
         return;
     }
@@ -55,7 +66,7 @@ void AddEditAdrenalineNode::on_okButton_clicked()
     else if(ui->txhashLineEdit->text() == "")
     {
         QMessageBox msg;
-        msg.setText("Please enter the transaction hash for the transaction that has 50,000 coins");
+        msg.setText("Please enter the transaction hash for the transaction that has 10,000 coins");
         msg.exec();
         return;
     }

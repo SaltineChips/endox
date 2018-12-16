@@ -21,13 +21,13 @@ public:
 
     enum AddressType {
         AT_Unknown = 0, /**< User specified label */
-        AT_Normal = 1,  /**< Bitcoin address */
+        AT_Normal = 1,  /**< EndoxCoin address */
         AT_Stealth = 2  /**< Stealth address */
     };
 
     enum ColumnIndex {
         Label = 0,   /**< User specified label */
-        Address = 1,  /**< Bitcoin address */
+        Address = 1,  /**< EndoxCoin address */
 	Type = 2 /**< Address type */
     };
 
@@ -59,6 +59,10 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
     Qt::ItemFlags flags(const QModelIndex &index) const;
     /*@}*/
+
+    /* Refreshes the data
+     */
+    void refresh(bool emitSignal = true);
 
     /* Add an address to the model.
        Returns the added address on success, and an empty string otherwise.

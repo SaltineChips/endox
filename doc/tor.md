@@ -1,7 +1,7 @@
-TOR Support in ENDO
+TOR Support in Endox-Coin
 =======================
 
-It is possible to run ENDO as a Tor hidden service, and connect to such services.
+It is possible to run Endox-Coin as a Tor hidden service, and connect to such services.
 
 The following directions assume you have a Tor proxy running on port 9050. Many distributions
 default to having a SOCKS proxy listening on port 9050, but others may not.
@@ -10,10 +10,10 @@ https://www.torproject.org/docs/faq.html.en#TBBSocksPort for how to properly
 configure Tor.
 
 
-1. Run ENDO behind a Tor proxy
+1. Run Endox-Coin behind a Tor proxy
 ---------------------------------
 
-The first step is running ENDO behind a Tor proxy. This will already make all
+The first step is running Endox-Coin behind a Tor proxy. This will already make all
 outgoing connections be anonimized, but more is possible.
 
 -proxy=ip:port  Set the proxy server. If SOCKS5 is selected (default), this proxy
@@ -34,26 +34,26 @@ outgoing connections be anonimized, but more is possible.
 
 In a typical situation, this suffices to run behind a Tor proxy:
 
-  ./Endod -proxy=127.0.0.1:9050
+  ./Endox-Coind -proxy=127.0.0.1:9050
 
 
-2. Run a ENDO hidden server
+2. Run a Endox-Coin hidden server
 ------------------------------
 
 If you configure your Tor system accordingly, it is possible to make your node also
 reachable from the Tor network. Add these lines to your /etc/tor/torrc (or equivalent
 config file):
 
-  HiddenServiceDir /var/lib/tor/ENDO-service/
-  HiddenServicePort 10255 127.0.0.1:10255
+  HiddenServiceDir /var/lib/tor/Endox-Coin-service/
+  HiddenServicePort 51441 127.0.0.1:51441
 
 The directory can be different of course, but (both) port numbers should be equal to
-your Endod's P2P listen port (10255 by default).
+your Endox-Coind's P2P listen port (51441 by default).
 
 -externalip=X   You can tell litecoin about its publicly reachable address using
                 this option, and this can be a .onion address. Given the above
                 configuration, you can find your onion address in
-                /var/lib/tor/ENDO-service/hostname. Onion addresses are given
+                /var/lib/tor/Endox-Coin-service/hostname. Onion addresses are given
                 preference for your node to advertize itself with, for connections
                 coming from unroutable addresses (such as 127.0.0.1, where the
                 Tor proxy typically runs).
@@ -70,18 +70,18 @@ your Endod's P2P listen port (10255 by default).
 
 In a typical situation, where you're only reachable via Tor, this should suffice:
 
-  ./Endod -proxy=127.0.0.1:9050 -externalip=57qr3yd1nyntf5k.onion -listen
+  ./Endox-Coind -proxy=127.0.0.1:9050 -externalip=57qr3yd1nyntf5k.onion -listen
 
 (obviously, replace the Onion address with your own). If you don't care too much
 about hiding your node, and want to be reachable on IPv4 as well, additionally
 specify:
 
-  ./Endod ... -discover
+  ./Endox-Coind ... -discover
 
-and open port 10255 on your firewall (or use -upnp).
+and open port 51441 on your firewall (or use -upnp).
 
 If you only want to use Tor to reach onion addresses, but not use it as a proxy
 for normal IPv4/IPv6 communication, use:
 
-  ./Endod -tor=127.0.0.1:9050 -externalip=57qr3yd1nyntf5k.onion -discover
+  ./Endox-Coind -tor=127.0.0.1:9050 -externalip=57qr3yd1nyntf5k.onion -discover
 

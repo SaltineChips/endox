@@ -52,7 +52,7 @@ ifneq (${USE_UPNP}, -)
 	DEFS += -DSTATICLIB -DUSE_UPNP=$(USE_UPNP)
 endif
 
-LIBS += -l mingwthrd -l kernel32 -l user32 -l gdi32 -l comdlg32 -l winspool -l winmm -l Endo32 -l comctl32 -l ole32 -l oleaut32 -l uuid -l rpcrt4 -l advapi32 -l ws2_32 -l mswsock -l shlwapi
+LIBS += -l mingwthrd -l kernel32 -l user32 -l gdi32 -l comdlg32 -l winspool -l winmm -l Endox-Coin32 -l comctl32 -l ole32 -l oleaut32 -l uuid -l rpcrt4 -l advapi32 -l ws2_32 -l mswsock -l shlwapi
 
 # TODO: make the mingw builds smarter about dependencies, like the linux/osx builds are
 HEADERS = $(wildcard *.h)
@@ -62,7 +62,6 @@ OBJS= \
     obj/blocksizecalculator.o \
     obj/allocators.o \
     obj/version.o \
-    obj/velocity.o \
     obj/support/cleanse.o \
     obj/checkpoints.o \
     obj/netbase.o \
@@ -86,8 +85,6 @@ OBJS= \
     obj/rpcnet.o \
     obj/rpcblockchain.o \
     obj/rpcrawtransaction.o \
-    obj/rpcsmessage.o \
-    obj/rpcvelocity.o \
     obj/script.o \
     obj/scrypt.o \
     obj/sync.o \
@@ -98,17 +95,15 @@ OBJS= \
     obj/kernel.o \
     obj/pbkdf2.o \
     obj/chainparams.o \
-    obj/blockparams.o \
     obj/stealth.o \
     obj/activemasternode.o \
-    obj/darksend.o \
-    obj/darksend-relay.o \
+    obj/mnengine.o \
     obj/instantx.o \
     obj/masternodeconfig.o \
     obj/masternodeman.o \
     obj/masternode.o \
     obj/masternode-payments.o \
-    obj/rpcdarksend.o \
+    obj/rpcmnengine.o \
     obj/spork.o \
     obj/crypto/hmac_sha256.o \
     obj/crypto/hmac_sha512.o \
@@ -116,9 +111,8 @@ OBJS= \
     obj/crypto/sha1.o \
     obj/crypto/sha256.o \
     obj/crypto/sha512.o \
-    obj/smessage.o    \
-    obj/hashalgo/bmw/aes_helper.o \
-    obj/hashalgo/bmw/bmw.o
+    obj/aes_helper.o \
+    obj/bmw.o
 
 ifeq (${USE_WALLET}, 1)
     DEFS += -DENABLE_WALLET
@@ -132,7 +126,7 @@ ifeq (${USE_WALLET}, 1)
         obj/walletdb.o
 endif
 
-all: Endod.exe
+all: Endox-Coind.exe
 
 LIBS += $(CURDIR)/leveldb/libleveldb.a $(CURDIR)/leveldb/libmemenv.a
 DEFS += -I"$(CURDIR)/leveldb/include"
@@ -150,13 +144,13 @@ DEFS += -DHAVE_BUILD_INFO
 obj/%.o: %.cpp $(HEADERS)
 	$(CXX) -c $(CFLAGS) -o $@ $<
 
-Endod.exe: $(OBJS:obj/%=obj/%)
+Endox-Coind.exe: $(OBJS:obj/%=obj/%)
 	$(CXX) $(CFLAGS) $(LDFLAGS) -o $@ $(LIBPATHS) $^ $(LIBS) -lshlwapi
-	$(STRIP) Endod.exe
+	$(STRIP) Endox-Coind.exe
 
 clean:
 	-rm -f obj/*.o
-	-rm -f Endod.exe
+	-rm -f Endox-Coind.exe
 	-rm -f obj/build.h
 	cd leveldb && TARGET_OS=OS_WINDOWS_CROSSCOMPILE $(MAKE) clean && cd ..
 

@@ -14,14 +14,13 @@
    <string>Master Node Configuration Template</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">color: rgb(204, 155, 68);
-background-color: rgb(244, 244, 244);</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTextEdit" name="detailText">
      <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This pane shows an example ENDO.conf template with the necessary masternode settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This pane shows an example Endox-Coin.conf template with the necessary masternode settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="readOnly">
       <bool>true</bool>
@@ -30,9 +29,6 @@ background-color: rgb(244, 244, 244);</string>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="styleSheet">
-      <string notr="true">color: #eb1f24</string>
-     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>

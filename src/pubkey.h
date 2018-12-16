@@ -7,7 +7,6 @@
 #define BITCOIN_PUBKEY_H
 
 #include "hash.h"
-#include "hashalgo/bmw/hashblock.h"
 #include "serialize.h"
 #include "uint256.h"
 
@@ -136,7 +135,7 @@ public:
 
     // Get the 256-bit hash of this public key.
     uint256 GetHash() const {
-        return HashBmw512(vch, vch+size());
+        return Hash(vch, vch+size());
     }
 
     // Check syntactic correctness.

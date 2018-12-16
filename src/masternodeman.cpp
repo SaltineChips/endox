@@ -1,7 +1,7 @@
 #include "masternodeman.h"
 #include "masternode.h"
 #include "activemasternode.h"
-#include "darksend.h"
+#include "mnengine.h"
 #include "core.h"
 #include "util.h"
 #include "addrman.h"
@@ -570,13 +570,13 @@ void CMasternodeMan::ProcessMasternodeConnections()
 {
     LOCK(cs_vNodes);
 
-    if(!darkSendPool.pSubmittedToMasternode) return;
+    if(!mnEnginePool.pSubmittedToMasternode) return;
     
     BOOST_FOREACH(CNode* pnode, vNodes)
     {
-        if(darkSendPool.pSubmittedToMasternode->addr == pnode->addr) continue;
+        if(mnEnginePool.pSubmittedToMasternode->addr == pnode->addr) continue;
 
-        if(pnode->fDarkSendMaster){
+        if(pnode->fMNengineMaster){
             LogPrintf("Closing masternode connection %s \n", pnode->addr.ToString().c_str());
             pnode->CloseSocketDisconnect();
         }
@@ -589,11 +589,11 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
     //Normally would disable functionality, NEED this enabled for staking.
     //if(fLiteMode) return;
 
-    if(!darkSendPool.IsBlockchainSynced()) return;
+    if(!mnEnginePool.IsBlockchainSynced()) return;
 
     LOCK(cs_process_message);
 
-    if (strCommand == "dsee") { //DarkSend Election Entry
+    if (strCommand == "dsee") { //MNengine Election Entry
 
         CTxIn vin;
         CService addr;
@@ -659,7 +659,7 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
         }
 
         std::string errorMessage = "";
-        if(!darkSendSigner.VerifyMessage(pubkey, vchSig, strMessage, errorMessage)){
+        if(!mnEngineSigner.VerifyMessage(pubkey, vchSig, strMessage, errorMessage)){
             LogPrintf("dsee - Got bad masternode address signature\n");
             Misbehaving(pfrom->GetId(), 100);
             return;
@@ -678,6 +678,12 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
                 pmn->UpdateLastSeen();
 
                 if(pmn->sigTime < sigTime){ //take the newest entry
+                    if (!CheckNode((CAddress)addr)){
+                        pmn->isPortOpen = false;
+                    } else {
+                        pmn->isPortOpen = true;
+                        addrman.Add(CAddress(addr), pfrom->addr, 2*60*60); // use this as a peer
+                    }
                     LogPrintf("dsee - Got updated entry for %s\n", addr.ToString().c_str());
                     pmn->pubkey2 = pubkey2;
                     pmn->sigTime = sigTime;
@@ -697,7 +703,7 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
 
         // make sure the vout that was signed is related to the transaction that spawned the masternode
         //  - this is expensive, so it's only done once per masternode
-        if(!darkSendSigner.IsVinAssociatedWithPubkey(vin, pubkey)) {
+        if(!mnEngineSigner.IsVinAssociatedWithPubkey(vin, pubkey)) {
             LogPrintf("dsee - Got mismatched pubkey and vin\n");
             Misbehaving(pfrom->GetId(), 100);
             return;
@@ -706,11 +712,11 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
         LogPrint("masternode", "dsee - Got NEW masternode entry %s\n", addr.ToString().c_str());
 
         // make sure it's still unspent
-        //  - this is checked later by .check() in many places and by ThreadCheckDarkSendPool()
+        //  - this is checked later by .check() in many places and by ThreadCheckMNenginePool()
 
         CValidationState state;
         CTransaction tx = CTransaction();
-        CTxOut vout = CTxOut(DARKSEND_POOL_MAX, darkSendPool.collateralPubKey);
+        CTxOut vout = CTxOut(MNengine_POOL_MAX, mnEnginePool.collateralPubKey);
         tx.vin.push_back(vin);
         tx.vout.push_back(vout);
         bool fAcceptable = false;
@@ -729,13 +735,13 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
             }
 
             // verify that sig time is legit in past
-            // should be at least not earlier than block when 50,000 ENDO tx got MASTERNODE_MIN_CONFIRMATIONS
+            // should be at least not earlier than block when 10,000 Endox-Coin tx got MASTERNODE_MIN_CONFIRMATIONS
             uint256 hashBlock = 0;
             GetTransaction(vin.prevout.hash, tx, hashBlock);
             map<uint256, CBlockIndex*>::iterator mi = mapBlockIndex.find(hashBlock);
            if (mi != mapBlockIndex.end() && (*mi).second)
             {
-                CBlockIndex* pMNIndex = (*mi).second; // block for 50,000 ENDO tx -> 1 confirmation
+                CBlockIndex* pMNIndex = (*mi).second; // block for 10,000 Endox-Coin tx -> 1 confirmation
                 CBlockIndex* pConfIndex = FindBlockByHeight((pMNIndex->nHeight + MASTERNODE_MIN_CONFIRMATIONS - 1)); // block where tx got MASTERNODE_MIN_CONFIRMATIONS
                 if(pConfIndex->GetBlockTime() > sigTime)
                 {
@@ -782,7 +788,7 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
         }
     }
 
-    else if (strCommand == "dseep") { //DarkSend Election Entry Ping
+    else if (strCommand == "dseep") { //MNengine Election Entry Ping
 
         CTxIn vin;
         vector<unsigned char> vchSig;
@@ -813,7 +819,7 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
                 std::string strMessage = pmn->addr.ToString() + boost::lexical_cast<std::string>(sigTime) + boost::lexical_cast<std::string>(stop);
 
                 std::string errorMessage = "";
-                if(!darkSendSigner.VerifyMessage(pmn->pubkey2, vchSig, strMessage, errorMessage))
+                if(!mnEngineSigner.VerifyMessage(pmn->pubkey2, vchSig, strMessage, errorMessage))
                 {
                     LogPrintf("dseep - Got bad masternode address signature %s \n", vin.ToString().c_str());
                     //Misbehaving(pfrom->GetId(), 100);
@@ -869,7 +875,7 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
                 std::string strMessage = vin.ToString() + boost::lexical_cast<std::string>(nVote);
 
                 std::string errorMessage = "";
-                if(!darkSendSigner.VerifyMessage(pmn->pubkey2, vchSig, strMessage, errorMessage))
+                if(!mnEngineSigner.VerifyMessage(pmn->pubkey2, vchSig, strMessage, errorMessage))
                 {
                     LogPrintf("mvote - Got bad Masternode address signature %s \n", vin.ToString().c_str());
                     return;

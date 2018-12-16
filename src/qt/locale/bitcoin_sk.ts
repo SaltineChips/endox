@@ -3,22 +3,22 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+14"/>
-        <source>About ENDO</source>
-        <translation>O Endoe</translation>
+        <source>About Endox-Coin</source>
+        <translation>O Endox-Coine</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>&lt;b&gt;ENDO&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;ENDO&lt;/b&gt; verzia</translation>
+        <source>&lt;b&gt;Endox-Coin&lt;/b&gt; version</source>
+        <translation>&lt;b&gt;Endox-Coin&lt;/b&gt; verzia</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Copyright © 2009-2014 The Bitcoin developers
 Copyright © 2012-2014 The NovaCoin developers
-Copyright © 2017-2018 The Endo developers</source>
+Copyright © 2014 The Endox-Coin developers</source>
         <translation>Copyright © 2009-2014 The Bitcoin developers
 Copyright © 2012-2014 The NovaCoin developers
-Copyright © 2017-2018 The Endo developers</translation>
+Copyright © 2014 The Endox-Coin developers</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -65,8 +65,8 @@ Tento produkt obsahuje softvér vyvinutý projektom OpenSSL Project pre použiti
     </message>
     <message>
         <location line="-43"/>
-        <source>These are your ENDO addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation>Toto sú vaše ENDO adresy pre príjem platieb. Možno budete chcieť dať inú každému odosielateľovi, aby ste mohli sledovať, kto Vám platí.</translation>
+        <source>These are your Endox-Coin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <translation>Toto sú vaše Endox-Coin adresy pre príjem platieb. Možno budete chcieť dať inú každému odosielateľovi, aby ste mohli sledovať, kto Vám platí.</translation>
     </message>
     <message>
         <location line="+53"/>
@@ -80,8 +80,8 @@ Tento produkt obsahuje softvér vyvinutý projektom OpenSSL Project pre použiti
     </message>
     <message>
         <location line="+7"/>
-        <source>Sign a message to prove you own a ENDO address</source>
-        <translation>Podpísať správu ako dôkaz, že vlastníte túto ENDO adresu</translation>
+        <source>Sign a message to prove you own a Endox-Coin address</source>
+        <translation>Podpísať správu ako dôkaz, že vlastníte túto Endox-Coin adresu</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -95,8 +95,8 @@ Tento produkt obsahuje softvér vyvinutý projektom OpenSSL Project pre použiti
     </message>
     <message>
         <location line="-10"/>
-        <source>Verify a message to ensure it was signed with a specified ENDO address</source>
-        <translation>Overte správu, aby ste zabezpečili, že bola podpísaná s určitou ENDO adresou</translation>
+        <source>Verify a message to ensure it was signed with a specified Endox-Coin address</source>
+        <translation>Overte správu, aby ste zabezpečili, že bola podpísaná s určitou Endox-Coin adresou</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -263,8 +263,8 @@ Tento produkt obsahuje softvér vyvinutý projektom OpenSSL Project pre použiti
     </message>
     <message>
         <location line="+82"/>
-        <source>ENDO will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
-        <translation>ENDO sa teraz zavrie aby dokončil proces zašifrovania. Nezabudnite, že zašifrovanie vašej peňaženky nemôže plne chrániť vaše mince pred krádežou malwarom, ktorý napadol váš počítač.</translation>
+        <source>Endox-Coin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
+        <translation>Endox-Coin sa teraz zavrie aby dokončil proces zašifrovania. Nezabudnite, že zašifrovanie vašej peňaženky nemôže plne chrániť vaše mince pred krádežou malwarom, ktorý napadol váš počítač.</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -309,7 +309,7 @@ Tento produkt obsahuje softvér vyvinutý projektom OpenSSL Project pre použiti
     </message>
 </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>EndoxCoinGUI</name>
     <message>
         <location filename="../bitcoingui.cpp" line="+297"/>
         <source>Sign &amp;message...</source>
@@ -357,8 +357,8 @@ Tento produkt obsahuje softvér vyvinutý projektom OpenSSL Project pre použiti
     </message>
     <message>
         <location line="+4"/>
-        <source>Show information about ENDO</source>
-        <translation>Zobraziť informácie o ENDO</translation>
+        <source>Show information about Endox-Coin</source>
+        <translation>Zobraziť informácie o Endox-Coin</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -397,13 +397,13 @@ Tento produkt obsahuje softvér vyvinutý projektom OpenSSL Project pre použiti
     </message>
     <message>
         <location line="-55"/>
-        <source>Send coins to a ENDO address</source>
-        <translation>Poslať mince na ENDO adresu</translation>
+        <source>Send coins to a Endox-Coin address</source>
+        <translation>Poslať mince na Endox-Coin adresu</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>Modify configuration options for ENDO</source>
-        <translation>Upraviť možnosti konfigurácie pre ENDO</translation>
+        <source>Modify configuration options for Endox-Coin</source>
+        <translation>Upraviť možnosti konfigurácie pre Endox-Coin</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -443,8 +443,8 @@ Tento produkt obsahuje softvér vyvinutý projektom OpenSSL Project pre použiti
     <message>
         <location line="-214"/>
         <location line="+551"/>
-        <source>ENDO</source>
-        <translation>ENDO</translation>
+        <source>Endox-Coin</source>
+        <translation>Endox-Coin</translation>
     </message>
     <message>
         <location line="-551"/>
@@ -453,8 +453,8 @@ Tento produkt obsahuje softvér vyvinutý projektom OpenSSL Project pre použiti
     </message>
     <message>
         <location line="+193"/>
-        <source>&amp;About ENDO</source>
-        <translation>&amp;O ENDO</translation>
+        <source>&amp;About Endox-Coin</source>
+        <translation>&amp;O Endox-Coin</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -505,13 +505,13 @@ Tento produkt obsahuje softvér vyvinutý projektom OpenSSL Project pre použiti
     <message>
         <location line="+0"/>
         <location line="+58"/>
-        <source>ENDO client</source>
-        <translation>ENDO klient</translation>
+        <source>Endox-Coin client</source>
+        <translation>Endox-Coin klient</translation>
     </message>
     <message numerus="yes">
         <location line="+70"/>
-        <source>%n active connection(s) to ENDO network</source>
-        <translation><numerusform>%n aktívne spojenie s ENDO sieťov</numerusform><numerusform>%n aktívnych spojení s ENDO sieťov</numerusform><numerusform>%n aktívnych spojení s ENDO sieťou</numerusform></translation>
+        <source>%n active connection(s) to Endox-Coin network</source>
+        <translation><numerusform>%n aktívne spojenie s Endox-Coin sieťov</numerusform><numerusform>%n aktívnych spojení s Endox-Coin sieťov</numerusform><numerusform>%n aktívnych spojení s Endox-Coin sieťou</numerusform></translation>
     </message>
     <message>
         <location line="+488"/>
@@ -604,8 +604,8 @@ Adresa: %4</translation>
     <message>
         <location line="-15"/>
         <location line="+15"/>
-        <source>URI can not be parsed! This can be caused by an invalid ENDO address or malformed URI parameters.</source>
-        <translation>URI nemožno analyzovať! Toto môže byť spôsobené neplatnou ENDO adresu alebo chybnými URI parametrami.</translation>
+        <source>URI can not be parsed! This can be caused by an invalid Endox-Coin address or malformed URI parameters.</source>
+        <translation>URI nemožno analyzovať! Toto môže byť spôsobené neplatnou Endox-Coin adresu alebo chybnými URI parametrami.</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -727,8 +727,8 @@ Adresa: %4</translation>
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+104"/>
-        <source>A fatal error occurred. ENDO can no longer continue safely and will quit.</source>
-        <translation>Došlo k závažnej chybe. ENDO už nemôže pokračovať bezpečne a bude ukončený.</translation>
+        <source>A fatal error occurred. Endox-Coin can no longer continue safely and will quit.</source>
+        <translation>Došlo k závažnej chybe. Endox-Coin už nemôže pokračovať bezpečne a bude ukončený.</translation>
     </message>
 </context>
 <context>
@@ -1061,8 +1061,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location line="-5"/>
-        <source>The entered address &quot;%1&quot; is not a valid ENDO address.</source>
-        <translation>Zadaná adresa &quot;%1&quot; nie je platnou ENDO adresou.</translation>
+        <source>The entered address &quot;%1&quot; is not a valid Endox-Coin address.</source>
+        <translation>Zadaná adresa &quot;%1&quot; nie je platnou Endox-Coin adresou.</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1080,8 +1080,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     <message>
         <location filename="../guiutil.cpp" line="+426"/>
         <location line="+12"/>
-        <source>ENDO-Qt</source>
-        <translation>ENDO-Qt</translation>
+        <source>Endox-Coin-Qt</source>
+        <translation>Endox-Coin-Qt</translation>
     </message>
     <message>
         <location line="-12"/>
@@ -1153,13 +1153,13 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location line="+31"/>
-        <source>Automatically start ENDO after logging in to the system.</source>
-        <translation>Automaticky spustiť ENDO po prihlásení sa do systému.</translation>
+        <source>Automatically start Endox-Coin after logging in to the system.</source>
+        <translation>Automaticky spustiť Endox-Coin po prihlásení sa do systému.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Start ENDO on system login</source>
-        <translation>&amp;Spustiť ENDO pri prihlásení do systému</translation>
+        <source>&amp;Start Endox-Coin on system login</source>
+        <translation>&amp;Spustiť Endox-Coin pri prihlásení do systému</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -1168,8 +1168,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Automatically open the ENDO client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Automaticky otvoriť port klienta ENDO na routeri. To funguje iba vtedy, ak váš router podporuje UPnP a je povolené.</translation>
+        <source>Automatically open the Endox-Coin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Automaticky otvoriť port klienta Endox-Coin na routeri. To funguje iba vtedy, ak váš router podporuje UPnP a je povolené.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1178,8 +1178,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Connect to the ENDO network through a SOCKS proxy (e.g. when connecting through Tor).</source>
-        <translation>Pripojenie k sieti ENDO cez SOCKS proxy server (napr. pri pripojení cez Tor).</translation>
+        <source>Connect to the Endox-Coin network through a SOCKS proxy (e.g. when connecting through Tor).</source>
+        <translation>Pripojenie k sieti Endox-Coin cez SOCKS proxy server (napr. pri pripojení cez Tor).</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1253,8 +1253,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>The user interface language can be set here. This setting will take effect after restarting ENDO.</source>
-        <translation>Tu môžete nastaviť jazyk používateľského rozhrania. Toto nastavenie sa prejaví až po reštartovaní ENDO.</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting Endox-Coin.</source>
+        <translation>Tu môžete nastaviť jazyk používateľského rozhrania. Toto nastavenie sa prejaví až po reštartovaní Endox-Coin.</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -1320,8 +1320,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     <message>
         <location line="-9"/>
         <location line="+9"/>
-        <source>This setting will take effect after restarting ENDO.</source>
-        <translation>Toto nastavenie sa prejaví až po reštartovaní ENDO.</translation>
+        <source>This setting will take effect after restarting Endox-Coin.</source>
+        <translation>Toto nastavenie sa prejaví až po reštartovaní Endox-Coin.</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -1339,8 +1339,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     <message>
         <location line="+46"/>
         <location line="+247"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the ENDO network after a connection is established, but this process has not completed yet.</source>
-        <translation>Zobrazené informácie môžu byť zastaralé. Vaša peňaženka sa automaticky synchronizuje so sieťou ENDO po nadviazaní spojenia, ale tento proces nie je ešte dokončený.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Endox-Coin network after a connection is established, but this process has not completed yet.</source>
+        <translation>Zobrazené informácie môžu byť zastaralé. Vaša peňaženka sa automaticky synchronizuje so sieťou Endox-Coin po nadviazaní spojenia, ale tento proces nie je ešte dokončený.</translation>
     </message>
     <message>
         <location line="-173"/>
@@ -1413,8 +1413,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     <name>PaymentServer</name>
     <message>
         <location filename="../paymentserver.cpp" line="+107"/>
-        <source>Cannot start ENDO: click-to-pay handler</source>
-        <translation>ENDO sa nedá spustiť: click-to-pay handler</translation>
+        <source>Cannot start Endox-Coin: click-to-pay handler</source>
+        <translation>Endox-Coin sa nedá spustiť: click-to-pay handler</translation>
     </message>
 </context>
 <context>
@@ -1581,8 +1581,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the ENDO-Qt help message to get a list with possible ENDO command-line options.</source>
-        <translation>Zobraziť ENDO-Qt nápovedu k získaniu zoznamu pre možnosti  príkazového riadku ENDO.</translation>
+        <source>Show the Endox-Coin-Qt help message to get a list with possible Endox-Coin command-line options.</source>
+        <translation>Zobraziť Endox-Coin-Qt nápovedu k získaniu zoznamu pre možnosti  príkazového riadku Endox-Coin.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1601,13 +1601,13 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location line="-104"/>
-        <source>ENDO - Debug window</source>
-        <translation>ENDO - Ladiace okno</translation>
+        <source>Endox-Coin - Debug window</source>
+        <translation>Endox-Coin - Ladiace okno</translation>
     </message>
     <message>
         <location line="+25"/>
-        <source>ENDO Core</source>
-        <translation>Jadro ENDO</translation>
+        <source>Endox-Coin Core</source>
+        <translation>Jadro Endox-Coin</translation>
     </message>
     <message>
         <location line="+256"/>
@@ -1616,8 +1616,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Open the ENDO debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Otvorte ENDO súbor denníku ladenia z aktuálneho adresára dát. To môže trvať niekoľko sekúnd pre veľké súbory denníka.</translation>
+        <source>Open the Endox-Coin debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Otvorte Endox-Coin súbor denníku ladenia z aktuálneho adresára dát. To môže trvať niekoľko sekúnd pre veľké súbory denníka.</translation>
     </message>
     <message>
         <location line="+102"/>
@@ -1626,8 +1626,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="+325"/>
-        <source>Welcome to the ENDO RPC console.</source>
-        <translation>Vitajte v konzole ENDO RPC.</translation>
+        <source>Welcome to the Endox-Coin RPC console.</source>
+        <translation>Vitajte v konzole Endox-Coin RPC.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1820,8 +1820,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location filename="../sendcoinsdialog.cpp" line="-173"/>
-        <source>Enter a ENDO address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>Zadajte ENDO adresu (napr. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>Enter a Endox-Coin address (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
+        <translation>Zadajte Endox-Coin adresu (napr. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -1920,8 +1920,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location line="+247"/>
-        <source>WARNING: Invalid ENDO address</source>
-        <translation>UPOZORNENIE: Neplatná ENDO adresa</translation>
+        <source>WARNING: Invalid Endox-Coin address</source>
+        <translation>UPOZORNENIE: Neplatná Endox-Coin adresa</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -1953,8 +1953,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location line="+34"/>
-        <source>The address to send the payment to (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>Adresa pre poslanie platby (napr. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>The address to send the payment to (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
+        <translation>Adresa pre poslanie platby (napr. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</translation>
     </message>
     <message>
         <location line="+60"/>
@@ -1994,8 +1994,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a ENDO address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>Zadajte ENDO adresu (napr. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>Enter a Endox-Coin address (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
+        <translation>Zadajte Endox-Coin adresu (napr. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</translation>
     </message>
 </context>
 <context>
@@ -2018,8 +2018,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location line="+18"/>
-        <source>The address to sign the message with (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>Adresa na podpísanie správy (napr. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>The address to sign the message with (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
+        <translation>Adresa na podpísanie správy (napr. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -2055,8 +2055,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this ENDO address</source>
-        <translation>Podpísať správu ako dôkaz, že vlastníte túto ENDO adresu</translation>
+        <source>Sign the message to prove you own this Endox-Coin address</source>
+        <translation>Podpísať správu ako dôkaz, že vlastníte túto Endox-Coin adresu</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2082,13 +2082,13 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location line="+21"/>
-        <source>The address the message was signed with (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>Adresa správy bola podpísaná (napr. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>The address the message was signed with (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
+        <translation>Adresa správy bola podpísaná (napr. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</translation>
     </message>
     <message>
         <location line="+40"/>
-        <source>Verify the message to ensure it was signed with the specified ENDO address</source>
-        <translation>Overte správu, aby ste sa ubezpečili, že bola podpísaná s danou ENDO adresou</translation>
+        <source>Verify the message to ensure it was signed with the specified Endox-Coin address</source>
+        <translation>Overte správu, aby ste sa ubezpečili, že bola podpísaná s danou Endox-Coin adresou</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2098,8 +2098,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
-        <source>Enter a ENDO address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>Zadajte ENDO adresu (napr. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>Enter a Endox-Coin address (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
+        <translation>Zadajte Endox-Coin adresu (napr. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</translation>
     </message>
     <message>
         <location line="-2"/>
@@ -2108,8 +2108,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Enter ENDO signature</source>
-        <translation>Zadajte ENDO podpis</translation>
+        <source>Enter Endox-Coin signature</source>
+        <translation>Zadajte Endox-Coin podpis</translation>
     </message>
     <message>
         <location line="+82"/>
@@ -2687,8 +2687,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     <name>bitcoin-core</name>
     <message>
         <location filename="../bitcoinstrings.cpp" line="+173"/>
-        <source>ENDO version</source>
-        <translation>ENDO verzia</translation>
+        <source>Endox-Coin version</source>
+        <translation>Endox-Coin verzia</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2697,8 +2697,8 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Send command to -server or Endod</source>
-        <translation>Pošli príkaz na -server alebo Endod</translation>
+        <source>Send command to -server or Endox-Coind</source>
+        <translation>Pošli príkaz na -server alebo Endox-Coind</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2717,13 +2717,13 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Specify configuration file (default: ENDO.conf)</source>
-        <translation>Zadajte konfiguračný súbor (predvolené: ENDO.conf)</translation>
+        <source>Specify configuration file (default: Endox-Coin.conf)</source>
+        <translation>Zadajte konfiguračný súbor (predvolené: Endox-Coin.conf)</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Specify pid file (default: Endod.pid)</source>
-        <translation>Zadajte pid súbor (predvolené: Endod.pid)</translation>
+        <source>Specify pid file (default: Endox-Coind.pid)</source>
+        <translation>Zadajte pid súbor (predvolené: Endox-Coind.pid)</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -2740,24 +2740,24 @@ To znamená, že je potrebný poplatok aspoň %2.</translation>
         <source>%s, you must set a rpcpassword in the configuration file:
 %s
 It is recommended you use the following random password:
-rpcuser=Endorpc
+rpcuser=Endox-Coinrpc
 rpcpassword=%s
 (you do not need to remember this password)
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s &quot;ENDO Alert&quot; admin@foo.com
+for example: alertnotify=echo %%s | mail -s &quot;Endox-Coin Alert&quot; admin@foo.com
 </source>
         <translation>%s, musíte nastaviť rpcpassword v konfiguračnom súbore:
 %s
 Doporučuje sa použiť nasledovné náhodne heslo:
-rpcuser=Endorpc
+rpcuser=Endox-Coinrpc
 rpcpassword=%s
 (toto heslo si nemusíte pamätať)
 Užívateľské meno a heslo NESMIE byť rovnaké.
 Ak súbor neexistuje, vytvorte ho s právami &quot;môže čítať iba vlastník&quot;.
 Odporúča sa tiež nastaviť &quot;alertnotify&quot;, takže budete upozornení na problémy,
-napríklad: alertnotify=echo %%s | mail -s &quot;ENDO upozornenie&quot; admin@foo.com
+napríklad: alertnotify=echo %%s | mail -s &quot;Endox-Coin upozornenie&quot; admin@foo.com
 </translation>
     </message>
     <message>
@@ -2862,8 +2862,8 @@ napríklad: alertnotify=echo %%s | mail -s &quot;ENDO upozornenie&quot; admin@fo
     </message>
     <message>
         <location line="-103"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong ENDO will not work properly.</source>
-        <translation>Upozornenie: Skontrolujte, že dátum a čas počítača sú správne! Ak je Váš čas nesprávny ENDO nebude pracovať správne.</translation>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Endox-Coin will not work properly.</source>
+        <translation>Upozornenie: Skontrolujte, že dátum a čas počítača sú správne! Ak je Váš čas nesprávny Endox-Coin nebude pracovať správne.</translation>
     </message>
     <message>
         <location line="+132"/>
@@ -2937,8 +2937,8 @@ napríklad: alertnotify=echo %%s | mail -s &quot;ENDO upozornenie&quot; admin@fo
     </message>
     <message>
         <location line="+41"/>
-        <source>SSL options: (see the Bitcoin Wiki for SSL setup instructions)</source>
-        <translation>SSL možnosť: (pozrite Bitcoin Wiki pre návod na nastavenie SSL)</translation>
+        <source>SSL options: (see the EndoxCoin Wiki for SSL setup instructions)</source>
+        <translation>SSL možnosť: (pozrite EndoxCoin Wiki pre návod na nastavenie SSL)</translation>
     </message>
     <message>
         <location line="-81"/>
@@ -3169,8 +3169,8 @@ napríklad: alertnotify=echo %%s | mail -s &quot;ENDO upozornenie&quot; admin@fo
     </message>
     <message>
         <location line="+10"/>
-        <source>Initialization sanity check failed. ENDO is shutting down.</source>
-        <translation>Úvodné kontrolné testy zlyhali. ENDO sa teraz zatvori.</translation>
+        <source>Initialization sanity check failed. Endox-Coin is shutting down.</source>
+        <translation>Úvodné kontrolné testy zlyhali. Endox-Coin sa teraz zatvori.</translation>
     </message>
     <message>
         <location line="+50"/>
@@ -3234,13 +3234,13 @@ napríklad: alertnotify=echo %%s | mail -s &quot;ENDO upozornenie&quot; admin@fo
     </message>
     <message>
         <location line="+4"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of ENDO</source>
-        <translation>Chyba pri načítaní wallet.dat: Peňaženka vyžaduje novšiu verziu ENDO</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of Endox-Coin</source>
+        <translation>Chyba pri načítaní wallet.dat: Peňaženka vyžaduje novšiu verziu Endox-Coin</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Wallet needed to be rewritten: restart ENDO to complete</source>
-        <translation>Peňaženka potrebuje byť prepísaná: reštartujte ENDO k dokončeniu</translation>
+        <source>Wallet needed to be rewritten: restart Endox-Coin to complete</source>
+        <translation>Peňaženka potrebuje byť prepísaná: reštartujte Endox-Coin k dokončeniu</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3304,8 +3304,8 @@ napríklad: alertnotify=echo %%s | mail -s &quot;ENDO upozornenie&quot; admin@fo
     </message>
     <message>
         <location line="+125"/>
-        <source>Unable to bind to %s on this computer. ENDO is probably already running.</source>
-        <translation>Nemôžem sa pripojiť na %s na tomto počítači. ENDO je pravdepodobne už beží.</translation>
+        <source>Unable to bind to %s on this computer. Endox-Coin is probably already running.</source>
+        <translation>Nemôžem sa pripojiť na %s na tomto počítači. Endox-Coin je pravdepodobne už beží.</translation>
     </message>
     <message>
         <location line="-101"/>
@@ -3344,8 +3344,8 @@ napríklad: alertnotify=echo %%s | mail -s &quot;ENDO upozornenie&quot; admin@fo
     </message>
     <message>
         <location line="+3"/>
-        <source>Cannot obtain a lock on data directory %s. ENDO is probably already running.</source>
-        <translation>Nedá sa zamknúť dátová zložka %s. ENDO je pravdepodobne už spustený</translation>
+        <source>Cannot obtain a lock on data directory %s. Endox-Coin is probably already running.</source>
+        <translation>Nedá sa zamknúť dátová zložka %s. Endox-Coin je pravdepodobne už spustený</translation>
     </message>
     <message>
         <location line="+4"/>

@@ -3,22 +3,22 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+14"/>
-        <source>About ENDO</source>
-        <translation>Sobre ENDO</translation>
+        <source>About Endox-Coin</source>
+        <translation>Sobre Endox-Coin</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>&lt;b&gt;ENDO&lt;/b&gt; version</source>
-        <translation>versió &lt;b&gt;ENDO&lt;/b&gt;</translation>
+        <source>&lt;b&gt;Endox-Coin&lt;/b&gt; version</source>
+        <translation>versió &lt;b&gt;Endox-Coin&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Copyright © 2009-2014 The Bitcoin developers
 Copyright © 2012-2014 The NovaCoin developers
-Copyright © 2017-2018 The Endo developers</source>
+Copyright © 2014 The Endox-Coin developers</source>
         <translation>Copyright © 2009-2014 The Bitcoin developers
 Copyright © 2012-2014 The NovaCoin developers
-Copyright © 2017-2018 The Endo developers</translation>
+Copyright © 2014 The Endox-Coin developers</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -60,8 +60,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-43"/>
-        <source>These are your ENDO addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation>Aquestes són les teves adreces de ENDO per rebre els pagaments. És possible que vulgueu donar una diferent a cada remitent per a poder realitzar un seguiment de qui li está pagant.</translation>
+        <source>These are your Endox-Coin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <translation>Aquestes són les teves adreces de Endox-Coin per rebre els pagaments. És possible que vulgueu donar una diferent a cada remitent per a poder realitzar un seguiment de qui li está pagant.</translation>
     </message>
     <message>
         <location line="+53"/>
@@ -75,8 +75,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+7"/>
-        <source>Sign a message to prove you own a ENDO address</source>
-        <translation>Signar un missatge per demostrar que és propietari d&apos;una adreça ENDO</translation>
+        <source>Sign a message to prove you own a Endox-Coin address</source>
+        <translation>Signar un missatge per demostrar que és propietari d&apos;una adreça Endox-Coin</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -90,8 +90,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-10"/>
-        <source>Verify a message to ensure it was signed with a specified ENDO address</source>
-        <translation>Comproveu el missatge per assegurar-se que es va signar amb una adreça ENDO especificada.</translation>
+        <source>Verify a message to ensure it was signed with a specified Endox-Coin address</source>
+        <translation>Comproveu el missatge per assegurar-se que es va signar amb una adreça Endox-Coin especificada.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -258,8 +258,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+82"/>
-        <source>ENDO will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
-        <translation>ENDO tancarà ara per acabar el procés de xifrat. Recordeu que l&apos;encriptació del seu moneder no pot protegir completament les seves monedes de ser robades pel malware que pugui infectar al seu equip.</translation>
+        <source>Endox-Coin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
+        <translation>Endox-Coin tancarà ara per acabar el procés de xifrat. Recordeu que l&apos;encriptació del seu moneder no pot protegir completament les seves monedes de ser robades pel malware que pugui infectar al seu equip.</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -304,7 +304,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
 </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>EndoxCoinGUI</name>
     <message>
         <location filename="../bitcoingui.cpp" line="+297"/>
         <source>Sign &amp;message...</source>
@@ -352,8 +352,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+4"/>
-        <source>Show information about ENDO</source>
-        <translation>Mostra informació sobre ENDO</translation>
+        <source>Show information about Endox-Coin</source>
+        <translation>Mostra informació sobre Endox-Coin</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -392,13 +392,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-55"/>
-        <source>Send coins to a ENDO address</source>
-        <translation>Enviar monedes a una adreça ENDO</translation>
+        <source>Send coins to a Endox-Coin address</source>
+        <translation>Enviar monedes a una adreça Endox-Coin</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>Modify configuration options for ENDO</source>
-        <translation>Modificar les opcions de configuració per a ENDO</translation>
+        <source>Modify configuration options for Endox-Coin</source>
+        <translation>Modificar les opcions de configuració per a Endox-Coin</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -438,8 +438,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-214"/>
         <location line="+551"/>
-        <source>ENDO</source>
-        <translation>ENDO</translation>
+        <source>Endox-Coin</source>
+        <translation>Endox-Coin</translation>
     </message>
     <message>
         <location line="-551"/>
@@ -448,8 +448,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+193"/>
-        <source>&amp;About ENDO</source>
-        <translation>&amp;Sobre ENDO</translation>
+        <source>&amp;About Endox-Coin</source>
+        <translation>&amp;Sobre Endox-Coin</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -500,13 +500,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+0"/>
         <location line="+58"/>
-        <source>ENDO client</source>
-        <translation>Client ENDO</translation>
+        <source>Endox-Coin client</source>
+        <translation>Client Endox-Coin</translation>
     </message>
     <message numerus="yes">
         <location line="+70"/>
-        <source>%n active connection(s) to ENDO network</source>
-        <translation><numerusform>%n conexió activa a la xarxa ENDO</numerusform><numerusform>%n conexions actives a la xarxa ENDO</numerusform></translation>
+        <source>%n active connection(s) to Endox-Coin network</source>
+        <translation><numerusform>%n conexió activa a la xarxa Endox-Coin</numerusform><numerusform>%n conexions actives a la xarxa Endox-Coin</numerusform></translation>
     </message>
     <message>
         <location line="+488"/>
@@ -596,8 +596,8 @@ Address: %4
     <message>
         <location line="-15"/>
         <location line="+15"/>
-        <source>URI can not be parsed! This can be caused by an invalid ENDO address or malformed URI parameters.</source>
-        <translation>l&apos;URI no es pot analitzar! Això pot ser causat per una adreça ENDO no vàlida o paràmetres URI malformats.</translation>
+        <source>URI can not be parsed! This can be caused by an invalid Endox-Coin address or malformed URI parameters.</source>
+        <translation>l&apos;URI no es pot analitzar! Això pot ser causat per una adreça Endox-Coin no vàlida o paràmetres URI malformats.</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -719,8 +719,8 @@ Address: %4
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+104"/>
-        <source>A fatal error occurred. ENDO can no longer continue safely and will quit.</source>
-        <translation>S&apos;ha produït un error fatal. ENDO ja no pot continuar de forma segura i es tancarà.</translation>
+        <source>A fatal error occurred. Endox-Coin can no longer continue safely and will quit.</source>
+        <translation>S&apos;ha produït un error fatal. Endox-Coin ja no pot continuar de forma segura i es tancarà.</translation>
     </message>
 </context>
 <context>
@@ -1053,8 +1053,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location line="-5"/>
-        <source>The entered address &quot;%1&quot; is not a valid ENDO address.</source>
-        <translation>La direcció introduïda &quot;%1&quot; no és una adreça ENDO vàlida.</translation>
+        <source>The entered address &quot;%1&quot; is not a valid Endox-Coin address.</source>
+        <translation>La direcció introduïda &quot;%1&quot; no és una adreça Endox-Coin vàlida.</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1072,8 +1072,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     <message>
         <location filename="../guiutil.cpp" line="+426"/>
         <location line="+12"/>
-        <source>ENDO-Qt</source>
-        <translation>ENDO-Qt</translation>
+        <source>Endox-Coin-Qt</source>
+        <translation>Endox-Coin-Qt</translation>
     </message>
     <message>
         <location line="-12"/>
@@ -1145,13 +1145,13 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location line="+31"/>
-        <source>Automatically start ENDO after logging in to the system.</source>
-        <translation>Inicia automàticament ENDO després d&apos;entrar en el sistema.</translation>
+        <source>Automatically start Endox-Coin after logging in to the system.</source>
+        <translation>Inicia automàticament Endox-Coin després d&apos;entrar en el sistema.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Start ENDO on system login</source>
-        <translation>&amp;Iniciar ENDO amb l&apos;inici de sessió</translation>
+        <source>&amp;Start Endox-Coin on system login</source>
+        <translation>&amp;Iniciar Endox-Coin amb l&apos;inici de sessió</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -1160,8 +1160,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Automatically open the ENDO client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Obrir automàticament el port de client ENDO en el router. Això només funciona quan el router és compatible amb UPnP i està habilitat.</translation>
+        <source>Automatically open the Endox-Coin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Obrir automàticament el port de client Endox-Coin en el router. Això només funciona quan el router és compatible amb UPnP i està habilitat.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1170,8 +1170,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Connect to the ENDO network through a SOCKS proxy (e.g. when connecting through Tor).</source>
-        <translation>Connecteu-vos a la xarxa ENDO través d&apos;un proxy SOCKS (per exemple, quan es connecta a través de Tor).</translation>
+        <source>Connect to the Endox-Coin network through a SOCKS proxy (e.g. when connecting through Tor).</source>
+        <translation>Connecteu-vos a la xarxa Endox-Coin través d&apos;un proxy SOCKS (per exemple, quan es connecta a través de Tor).</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1245,8 +1245,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>The user interface language can be set here. This setting will take effect after restarting ENDO.</source>
-        <translation>L&apos;idioma de la interfície d&apos;usuari es pot configurar aquí. Aquesta configuració s&apos;aplicarà després de reiniciar ENDO.</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting Endox-Coin.</source>
+        <translation>L&apos;idioma de la interfície d&apos;usuari es pot configurar aquí. Aquesta configuració s&apos;aplicarà després de reiniciar Endox-Coin.</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -1312,8 +1312,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     <message>
         <location line="-9"/>
         <location line="+9"/>
-        <source>This setting will take effect after restarting ENDO.</source>
-        <translation>Aquesta configuració s&apos;aplicarà després de reiniciar ENDO.</translation>
+        <source>This setting will take effect after restarting Endox-Coin.</source>
+        <translation>Aquesta configuració s&apos;aplicarà després de reiniciar Endox-Coin.</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -1331,8 +1331,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     <message>
         <location line="+46"/>
         <location line="+247"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the ENDO network after a connection is established, but this process has not completed yet.</source>
-        <translation>La informació mostrada pot estar fora de data. El seu moneder es sincronitza automàticament amb la xarxa ENDO després d&apos;establir una connexió, però aquest procés no s&apos;ha completat encara.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Endox-Coin network after a connection is established, but this process has not completed yet.</source>
+        <translation>La informació mostrada pot estar fora de data. El seu moneder es sincronitza automàticament amb la xarxa Endox-Coin després d&apos;establir una connexió, però aquest procés no s&apos;ha completat encara.</translation>
     </message>
     <message>
         <location line="-173"/>
@@ -1405,7 +1405,7 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     <name>PaymentServer</name>
     <message>
         <location filename="../paymentserver.cpp" line="+107"/>
-        <source>Cannot start ENDO: click-to-pay handler</source>
+        <source>Cannot start Endox-Coin: click-to-pay handler</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1573,8 +1573,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the ENDO-Qt help message to get a list with possible ENDO command-line options.</source>
-        <translation>Mostra el missatge d&apos;ajuda de ENDO-Qt per obtenir una llista amb les possibles opcions de línia d&apos;ordres ENDO.</translation>
+        <source>Show the Endox-Coin-Qt help message to get a list with possible Endox-Coin command-line options.</source>
+        <translation>Mostra el missatge d&apos;ajuda de Endox-Coin-Qt per obtenir una llista amb les possibles opcions de línia d&apos;ordres Endox-Coin.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1593,13 +1593,13 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location line="-104"/>
-        <source>ENDO - Debug window</source>
-        <translation>ENDO - Finestra Depuració</translation>
+        <source>Endox-Coin - Debug window</source>
+        <translation>Endox-Coin - Finestra Depuració</translation>
     </message>
     <message>
         <location line="+25"/>
-        <source>ENDO Core</source>
-        <translation>Nucli ENDO</translation>
+        <source>Endox-Coin Core</source>
+        <translation>Nucli Endox-Coin</translation>
     </message>
     <message>
         <location line="+256"/>
@@ -1608,8 +1608,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Open the ENDO debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Obriu el fitxer de registre de depuració ENDO des del directori de dades actual. Això pot trigar uns segons en els arxius de registre de grans dimensions.</translation>
+        <source>Open the Endox-Coin debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Obriu el fitxer de registre de depuració Endox-Coin des del directori de dades actual. Això pot trigar uns segons en els arxius de registre de grans dimensions.</translation>
     </message>
     <message>
         <location line="+102"/>
@@ -1618,8 +1618,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="+325"/>
-        <source>Welcome to the ENDO RPC console.</source>
-        <translation>Benvingut a la consola RPC de ENDO.</translation>
+        <source>Welcome to the Endox-Coin RPC console.</source>
+        <translation>Benvingut a la consola RPC de Endox-Coin.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1812,8 +1812,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location filename="../sendcoinsdialog.cpp" line="-173"/>
-        <source>Enter a ENDO address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>Introdueix una adreça ENDO (p.ex. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>Enter a Endox-Coin address (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
+        <translation>Introdueix una adreça Endox-Coin (p.ex. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -1912,8 +1912,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location line="+247"/>
-        <source>WARNING: Invalid ENDO address</source>
-        <translation>ADVERTÈNCIA: Direcció ENDO invàlida</translation>
+        <source>WARNING: Invalid Endox-Coin address</source>
+        <translation>ADVERTÈNCIA: Direcció Endox-Coin invàlida</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -1945,7 +1945,7 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location line="+34"/>
-        <source>The address to send the payment to (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
+        <source>The address to send the payment to (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1986,8 +1986,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a ENDO address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>Introdueix una adreça ENDO (p.ex. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>Enter a Endox-Coin address (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
+        <translation>Introdueix una adreça Endox-Coin (p.ex. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</translation>
     </message>
 </context>
 <context>
@@ -2010,8 +2010,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location line="+18"/>
-        <source>The address to sign the message with (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>L&apos;adreça per a signar el missatge (per exemple B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>The address to sign the message with (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
+        <translation>L&apos;adreça per a signar el missatge (per exemple ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -2047,8 +2047,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this ENDO address</source>
-        <translation>Signar un missatge per demostrar que és propietari d&apos;aquesta adreça ENDO</translation>
+        <source>Sign the message to prove you own this Endox-Coin address</source>
+        <translation>Signar un missatge per demostrar que és propietari d&apos;aquesta adreça Endox-Coin</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2074,13 +2074,13 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location line="+21"/>
-        <source>The address the message was signed with (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>La direcció que va ser signada amb un missatge (per exemple B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>The address the message was signed with (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
+        <translation>La direcció que va ser signada amb un missatge (per exemple ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</translation>
     </message>
     <message>
         <location line="+40"/>
-        <source>Verify the message to ensure it was signed with the specified ENDO address</source>
-        <translation>Comproveu el missatge per assegurar-se que es va signar amb l&apos;adreça ENDO especificada.</translation>
+        <source>Verify the message to ensure it was signed with the specified Endox-Coin address</source>
+        <translation>Comproveu el missatge per assegurar-se que es va signar amb l&apos;adreça Endox-Coin especificada.</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2090,8 +2090,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
-        <source>Enter a ENDO address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>Introdueix una adreça ENDO (p.ex. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>Enter a Endox-Coin address (e.g. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</source>
+        <translation>Introdueix una adreça Endox-Coin (p.ex. ie6sxvFwLpMsp5tRHpAS6q3cZVewmqYzTg)</translation>
     </message>
     <message>
         <location line="-2"/>
@@ -2100,8 +2100,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Enter ENDO signature</source>
-        <translation>Introduïu la signatura ENDO</translation>
+        <source>Enter Endox-Coin signature</source>
+        <translation>Introduïu la signatura Endox-Coin</translation>
     </message>
     <message>
         <location line="+82"/>
@@ -2679,8 +2679,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     <name>bitcoin-core</name>
     <message>
         <location filename="../bitcoinstrings.cpp" line="+173"/>
-        <source>ENDO version</source>
-        <translation>versió ENDO</translation>
+        <source>Endox-Coin version</source>
+        <translation>versió Endox-Coin</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2689,8 +2689,8 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Send command to -server or Endod</source>
-        <translation>Enviar comandes a -server o Endod</translation>
+        <source>Send command to -server or Endox-Coind</source>
+        <translation>Enviar comandes a -server o Endox-Coind</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2709,13 +2709,13 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Specify configuration file (default: ENDO.conf)</source>
-        <translation>Especifiqueu el fitxer de configuració (per defecte: ENDO.conf)</translation>
+        <source>Specify configuration file (default: Endox-Coin.conf)</source>
+        <translation>Especifiqueu el fitxer de configuració (per defecte: Endox-Coin.conf)</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Specify pid file (default: Endod.pid)</source>
-        <translation>Especificar arxiu pid (per defecte: Endod.pid)</translation>
+        <source>Specify pid file (default: Endox-Coind.pid)</source>
+        <translation>Especificar arxiu pid (per defecte: Endox-Coind.pid)</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -2732,13 +2732,13 @@ En aquest cas es requereix una comisió d&apos;almenys 2%.</translation>
         <source>%s, you must set a rpcpassword in the configuration file:
 %s
 It is recommended you use the following random password:
-rpcuser=Endorpc
+rpcuser=Endox-Coinrpc
 rpcpassword=%s
 (you do not need to remember this password)
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s &quot;ENDO Alert&quot; admin@foo.com
+for example: alertnotify=echo %%s | mail -s &quot;Endox-Coin Alert&quot; admin@foo.com
 </source>
         <translation type="unfinished"/>
     </message>
@@ -2844,8 +2844,8 @@ for example: alertnotify=echo %%s | mail -s &quot;ENDO Alert&quot; admin@foo.com
     </message>
     <message>
         <location line="-103"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong ENDO will not work properly.</source>
-        <translation>Avís: Comproveu que la data i hora de l&apos;equip siguin correctes! Si el seu rellotge és erroni ENDO no funcionarà correctament.</translation>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Endox-Coin will not work properly.</source>
+        <translation>Avís: Comproveu que la data i hora de l&apos;equip siguin correctes! Si el seu rellotge és erroni Endox-Coin no funcionarà correctament.</translation>
     </message>
     <message>
         <location line="+132"/>
@@ -2919,8 +2919,8 @@ for example: alertnotify=echo %%s | mail -s &quot;ENDO Alert&quot; admin@foo.com
     </message>
     <message>
         <location line="+41"/>
-        <source>SSL options: (see the Bitcoin Wiki for SSL setup instructions)</source>
-        <translation>Opcions SSL: (veure la Wiki de Bitcoin per a instruccions de configuració SSL)</translation>
+        <source>SSL options: (see the EndoxCoin Wiki for SSL setup instructions)</source>
+        <translation>Opcions SSL: (veure la Wiki de EndoxCoin per a instruccions de configuració SSL)</translation>
     </message>
     <message>
         <location line="-81"/>
@@ -3152,7 +3152,7 @@ Executar una ordre quan es rep un avís rellevant (%s en cmd es substitueix per 
     </message>
     <message>
         <location line="+10"/>
-        <source>Initialization sanity check failed. ENDO is shutting down.</source>
+        <source>Initialization sanity check failed. Endox-Coin is shutting down.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -3217,13 +3217,13 @@ Executar una ordre quan es rep un avís rellevant (%s en cmd es substitueix per 
     </message>
     <message>
         <location line="+4"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of ENDO</source>
-        <translation>Error en carregar wallet.dat: El moneder requereix la versió més recent de ENDO</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of Endox-Coin</source>
+        <translation>Error en carregar wallet.dat: El moneder requereix la versió més recent de Endox-Coin</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Wallet needed to be rewritten: restart ENDO to complete</source>
-        <translation>El moneder necessita ser reescrita: reiniciar ENDO per completar</translation>
+        <source>Wallet needed to be rewritten: restart Endox-Coin to complete</source>
+        <translation>El moneder necessita ser reescrita: reiniciar Endox-Coin per completar</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3287,8 +3287,8 @@ Executar una ordre quan es rep un avís rellevant (%s en cmd es substitueix per 
     </message>
     <message>
         <location line="+125"/>
-        <source>Unable to bind to %s on this computer. ENDO is probably already running.</source>
-        <translation>No es pot enllaçar a %s en aquest equip. ENDO probablement ja estigui en funcionament.</translation>
+        <source>Unable to bind to %s on this computer. Endox-Coin is probably already running.</source>
+        <translation>No es pot enllaçar a %s en aquest equip. Endox-Coin probablement ja estigui en funcionament.</translation>
     </message>
     <message>
         <location line="-101"/>
@@ -3327,7 +3327,7 @@ Executar una ordre quan es rep un avís rellevant (%s en cmd es substitueix per 
     </message>
     <message>
         <location line="+3"/>
-        <source>Cannot obtain a lock on data directory %s. ENDO is probably already running.</source>
+        <source>Cannot obtain a lock on data directory %s. Endox-Coin is probably already running.</source>
         <translation type="unfinished"/>
     </message>
     <message>
