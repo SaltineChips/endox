@@ -72,20 +72,20 @@ public:
         genesis.nVersion = 1;
         genesis.nTime    = 1544904000; // Sat, December 15, 2018 8:00:00 PM
         genesis.nBits    = bnProofOfWorkLimit.GetCompact();
-        genesis.nNonce   = 0;
+        genesis.nNonce   = 24768;
 
         /** Genesis Block MainNet */
         /*
-            Hashed MainNet Genesis Block Output
-            block.hashMerkleRoot == 5591de6ebbe269216ca07c10e59a032ee85fae8a8048e0c62020e1e2d50cdc9d
-            block.nTime = 1544904000
-            block.nNonce = 0
-            block.GetHash = 00007e134c93ada85c3e422030a99e30ec2f42b4b5ed08ea4ef1ccd282954e92
+        Hashed MainNet Genesis Block Output
+        block.hashMerkleRoot == e7de676978b0c7cc62b0ed631929044ac04c9143c83833f4f46cf347a0ac9a94
+        block.nTime = 1544904000
+        block.nNonce = 24768
+        block.GetHash = 00006dfa0fec1755bed8d26474969c29fcc63e2e7abd6032e79e548c15094767
         */
 
         hashGenesisBlock = genesis.GetHash();
-        assert(hashGenesisBlock == uint256("0x"));
-        assert(genesis.hashMerkleRoot == uint256("0x"));
+        assert(hashGenesisBlock == uint256("0x00006dfa0fec1755bed8d26474969c29fcc63e2e7abd6032e79e548c15094767"));
+        assert(genesis.hashMerkleRoot == uint256("0xe7de676978b0c7cc62b0ed631929044ac04c9143c83833f4f46cf347a0ac9a94"));
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,32);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,53);
@@ -140,19 +140,18 @@ public:
         // Modify the testnet genesis block so the timestamp is valid for a later start.
         genesis.nTime    = 1544904000+30;
         genesis.nBits  = bnProofOfWorkLimit.GetCompact();
-        genesis.nNonce = 0;
+        genesis.nNonce = 2868;
 
         /** Genesis Block TestNet */
         /*
-            Hashed TestNet Genesis Block Output
-            block.hashMerkleRoot == 5591de6ebbe269216ca07c10e59a032ee85fae8a8048e0c62020e1e2d50cdc9d
-            block.nTime = 1539691230
-            block.nNonce = 0
-            block.GetHash = 000320a8c6fb9ffa0affdcf95b1bc5745f9a52377197293099e4e626400be786
+        Hashed TestNet Genesis Block Output
+        block.hashMerkleRoot == e7de676978b0c7cc62b0ed631929044ac04c9143c83833f4f46cf347a0ac9a94
+        block.nTime = 1544904030
+        block.nNonce = 2868
+        block.GetHash = 0002a59dd63d5fa8b515f15144ce6a7ada594e63371f652f833e555e7e3b33b7
         */
-
         hashGenesisBlock = genesis.GetHash();
-        assert(hashGenesisBlock == uint256("0x"));
+        assert(hashGenesisBlock == uint256("0x0002a59dd63d5fa8b515f15144ce6a7ada594e63371f652f833e555e7e3b33b7"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -190,14 +189,14 @@ public:
 
         /** Genesis Block RegNet */
         /*
-            Hashed RegNet Genesis Block Output
-            block.hashMerkleRoot == 5591de6ebbe269216ca07c10e59a032ee85fae8a8048e0c62020e1e2d50cdc9d
-            block.nTime = 1539691290
-            block.nNonce = 8
-            block.GetHash = f29313f5d7eadbc0bc25f8bef54c81bd08c8da3edcc6606335e324ae7a38e8b9
-        */
+        Hashed RegNet Genesis Block Output
+        block.hashMerkleRoot == e7de676978b0c7cc62b0ed631929044ac04c9143c83833f4f46cf347a0ac9a94
+        block.nTime = 1544904090
+        block.nNonce = 8
+        block.GetHash = 3762eb656c953854e41c33f6691bd723cca09817d4a6b7bae214e88e3c3c73d4
 
-        assert(hashGenesisBlock == uint256("0x"));
+        */
+        assert(hashGenesisBlock == uint256("0x3762eb656c953854e41c33f6691bd723cca09817d4a6b7bae214e88e3c3c73d4"));
 
         vSeeds.clear();  // Regtest mode doesn't have any DNS seeds.
     }
