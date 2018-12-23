@@ -217,7 +217,7 @@ EndoxCoinGUI::EndoxCoinGUI(QWidget *parent):
         QString curStyle = qApp->style()->metaObject()->className();
         if(curStyle == "QWindowsStyle" || curStyle == "QWindowsXPStyle")
         {
-            progressBar->setStyleSheet("QProgressBar { color: #ffffff;background-color: #e8e8e8; border: 1px solid grey; border-radius: 7px; padding: 1px; text-align: center; } QProgressBar::chunk { background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #11b5c1, stop: 1 #0c99a3); border-radius: 7px; margin: 0px; }");
+            progressBar->setStyleSheet("QProgressBar { color: #ffffff;background-color: #e8e8e8; border: 1px solid grey; border-radius: 7px; padding: 1px; text-align: center; } QProgressBar::chunk { background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #eb1f24, stop: 1 #0c99a3); border-radius: 7px; margin: 0px; }");
         }
     }
 
@@ -229,7 +229,7 @@ EndoxCoinGUI::EndoxCoinGUI(QWidget *parent):
 
     if (!fUseBlackTheme)
     {
-        statusBar()->setStyleSheet("#statusBar { color: #ffffff; background-color: #11b5c1; }");
+        statusBar()->setStyleSheet("#statusBar { color: #ffffff; background-color: #c42125; }");
     }
 
     syncIconMovie = new QMovie(fUseBlackTheme ? ":/movies/update_spinner_black" : ":/movies/update_spinner", "mng", this);
@@ -443,12 +443,12 @@ void EndoxCoinGUI::createToolBars()
     toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolbar->setContextMenuPolicy(Qt::PreventContextMenu);
     toolbar->setObjectName("tabs");
-    toolbar->setStyleSheet("QToolButton { color: #ffffff; font-weight:bold; } QToolButton:hover { background-color: #11b5c1; } QToolButton:checked { background-color: #11b5c1 } QToolButton:pressed { background-color: #1e2024; } #tabs { color: #ffffff; background-color: #292c30; }");
+    toolbar->setStyleSheet("QToolButton { color: #ffffff; font-weight:bold; } QToolButton:hover { background-color: #dd1419; } QToolButton:checked { background-color: #ae1013 } QToolButton:pressed { background-color: #c51216; } #tabs { color: #ffffff; background-color: #292c30; }");
     toolbar->setIconSize(QSize(24,24));
 
     if(!fUseBlackTheme)
     {
-        toolbar->setStyleSheet("QToolButton { color: #ffffff; font-weight:bold; } QToolButton:hover { background-color: #009aa6; } QToolButton:checked { background-color: #006672; } QToolButton:pressed { background-color: #00808b; } #tabs { color: #ffffff; background-color: #11b5c1; }");
+        toolbar->setStyleSheet("QToolButton { color: #ffffff; font-weight:bold; } QToolButton:hover { background-color: #dd1419; } QToolButton:checked { background-color: #ae1013; } QToolButton:pressed { background-color: #c51216; } #tabs { color: #ffffff; background-color: #eb1f24; }");
     }
 
     QLabel* header = new QLabel();
