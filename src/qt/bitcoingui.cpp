@@ -1,8 +1,8 @@
 /*
- * Qt4 bitcoin GUI.
+ * Qt5 bitcoin GUI.
  *
  * W.J. van der Laan 2011-2012
- * The EndoxCoin Developers 2011-2012
+ * The EndoxCoin Developers 2018-2019
  */
 
 #include <QApplication>
