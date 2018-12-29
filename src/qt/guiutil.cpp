@@ -737,7 +737,7 @@ void SetBlackThemeQSS(QApplication& app)
                       "QPlainTextEdit { background: rgb(63,67,72); color: rgb(255,255,255); }"
                       "QMenuBar       { background: rgb(41,44,48); color: rgb(194,194,194); }"
                       "QMenu          { background: rgb(30,32,36); color: rgb(222,222,222); }"
-                      "QMenu::item:selected { background-color: rgb(17,181,193); }"
+                      "QMenu::item:selected { background-color: rgb(18,19,20); }"
                       "QLabel         { color: rgb(194,194,194); }"
                       "QScrollBar     { color: rgb(255,255,255); }"
                       "QCheckBox      { color: rgb(194,194,194); }"
@@ -752,8 +752,8 @@ void SetBlackThemeQSS(QApplication& app)
                       "QProgressBar   { color: rgb(194,194,194); border-color: rgb(255,255,255); border-width: 3px; border-style: solid; }"
                       "QProgressBar::chunk { background: rgb(255,255,255); color: rgb(194,194,194); }"
                       "QTreeView::item { background: rgb(41,44,48); color: rgb(212,213,213); }"
-                      "QTreeView::item:selected { background-color: rgb(48,140,198); }"
-                      "QTableView     { background: rgb(66,71,78); color: rgb(212,213,213); gridline-color: rgb(157,160,165); }"
+                      "QTreeView::item:selected { background-color: rgb(18,19,20); }"
+                      "QTableView     { background: rgb(18,19,20); color: rgb(212,213,213); gridline-color: rgb(157,160,165); }"
                       "QHeaderView::section { background: rgb(29,34,39); color: rgb(255,255,255); }"
                       "QToolBar       { background: rgb(30,32,36); border: none; }");
 }

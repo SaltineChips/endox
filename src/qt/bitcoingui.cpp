@@ -1,8 +1,8 @@
 /*
- * Qt4 bitcoin GUI.
+ * Qt5 bitcoin GUI.
  *
  * W.J. van der Laan 2011-2012
- * The EndoxCoin Developers 2011-2012
+ * The EndoxCoin Developers 2018-2019
  */
 
 #include <QApplication>
@@ -105,7 +105,7 @@ EndoxCoinGUI::EndoxCoinGUI(QWidget *parent):
     QApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
     setObjectName("Endox-Coin");
-    setStyleSheet("#Endox-Coin { background-color: #ffffff; color: #44465d;}");
+    setStyleSheet("#Endox-Coin { background-color: #ffffff; color: #4c5259;}");
 
     // Accept D&D of URIs
     setAcceptDrops(true);
@@ -217,7 +217,7 @@ EndoxCoinGUI::EndoxCoinGUI(QWidget *parent):
         QString curStyle = qApp->style()->metaObject()->className();
         if(curStyle == "QWindowsStyle" || curStyle == "QWindowsXPStyle")
         {
-            progressBar->setStyleSheet("QProgressBar { color: #ffffff;background-color: #e8e8e8; border: 1px solid grey; border-radius: 7px; padding: 1px; text-align: center; } QProgressBar::chunk { background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #11b5c1, stop: 1 #0c99a3); border-radius: 7px; margin: 0px; }");
+            progressBar->setStyleSheet("QProgressBar { color: #ffffff;background-color: #e8e8e8; border: 1px solid grey; border-radius: 7px; padding: 1px; text-align: center; } QProgressBar::chunk { background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #eb1f24, stop: 1 #4c5259); border-radius: 7px; margin: 0px; }");
         }
     }
 
@@ -225,11 +225,11 @@ EndoxCoinGUI::EndoxCoinGUI(QWidget *parent):
     statusBar()->addWidget(progressBar);
     statusBar()->addPermanentWidget(frameBlocks);
     statusBar()->setObjectName("statusBar");
-    statusBar()->setStyleSheet("#statusBar { color: #ffffff; background-color: #292c30; }");
+    statusBar()->setStyleSheet("#statusBar { color: #ae1013; background-color: #1d1f22; }");
 
     if (!fUseBlackTheme)
     {
-        statusBar()->setStyleSheet("#statusBar { color: #ffffff; background-color: #11b5c1; }");
+        statusBar()->setStyleSheet("#statusBar { color: #ae1013; background-color: #c42125; }");
     }
 
     syncIconMovie = new QMovie(fUseBlackTheme ? ":/movies/update_spinner_black" : ":/movies/update_spinner", "mng", this);
@@ -443,12 +443,12 @@ void EndoxCoinGUI::createToolBars()
     toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolbar->setContextMenuPolicy(Qt::PreventContextMenu);
     toolbar->setObjectName("tabs");
-    toolbar->setStyleSheet("QToolButton { color: #ffffff; font-weight:bold; } QToolButton:hover { background-color: #11b5c1; } QToolButton:checked { background-color: #11b5c1 } QToolButton:pressed { background-color: #1e2024; } #tabs { color: #ffffff; background-color: #292c30; }");
+    toolbar->setStyleSheet("QToolButton { color: #ffffff; font-weight:bold; } QToolButton:hover { background-color: #dd1419; } QToolButton:checked { background-color: #ae1013 } QToolButton:pressed { background-color: #c51216; } #tabs { color: #ffffff; background-color: #292c30; }");
     toolbar->setIconSize(QSize(24,24));
 
     if(!fUseBlackTheme)
     {
-        toolbar->setStyleSheet("QToolButton { color: #ffffff; font-weight:bold; } QToolButton:hover { background-color: #009aa6; } QToolButton:checked { background-color: #006672; } QToolButton:pressed { background-color: #00808b; } #tabs { color: #ffffff; background-color: #11b5c1; }");
+        toolbar->setStyleSheet("QToolButton { color: #ffffff; font-weight:bold; } QToolButton:hover { background-color: #dd1419; } QToolButton:checked { background-color: #ae1013; } QToolButton:pressed { background-color: #c51216; } #tabs { color: #ffffff; background-color: #eb1f24; }");
     }
 
     QLabel* header = new QLabel();
@@ -470,7 +470,7 @@ void EndoxCoinGUI::createToolBars()
 
     QWidget *spacer = makeToolBarSpacer();
     netLabel->setObjectName("netLabel");
-    netLabel->setStyleSheet("#netLabel { color: #efefef; }");
+    netLabel->setStyleSheet("#netLabel { color: #4c5259; }");
     toolbar->addWidget(spacer);
     toolbar->setOrientation(Qt::Vertical);
     toolbar->setMovable(false);
