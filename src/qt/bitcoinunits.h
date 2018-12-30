@@ -52,7 +52,7 @@ public:
      */
     enum Unit
     {
-        EDX,
+        ENDOX,
         mIVC,
         uIVC
     };

@@ -17,13 +17,11 @@ static const unsigned int nModifierInterval = 2 * 60;
 /** Genesis block subsidy */
 static const int64_t nGenesisBlockReward = 1 * COIN;
 /** Reserve block subsidy */
-static const int64_t nBlockRewardReserve = 160000000 * COIN; // 1.80790960452% Reserved for Development
-/** Starting PoW block subsidy */
-static const int64_t nBlockPoWReward = 500 * COIN;
-/** Starting PoS block subsidy */
-static const int64_t nBlockPoSReward = 500 * COIN;
-/** PoW/PoS Superblock modifier */
-static const int64_t nSuperModifier = 2;
+static const int64_t nBlockRewardReserve = 900000 * COIN; // 1.9% Reserved for Development
+/** Standard block subsidy */
+static const int64_t nBlockStandardReward = 920 * COIN;
+/** Superblock block subsidy */
+static const int64_t nBlockSuperReward = 1240 * COIN;
 /** Block spacing preferred */
 static const int64_t BLOCK_SPACING = ((5 * 60) - 30);
 /** Block spacing minimum */
@@ -37,7 +35,7 @@ static const int64_t MNengine_COLLATERAL = (1 * COIN);
 /** MNengine pool values */
 static const int64_t MNengine_POOL_MAX = (999 * COIN);
 /** MasterNode required collateral */
-inline int64_t MasternodeCollateral(int nHeight) { return 10000; } // 10K EDX required as collateral
+inline int64_t MasternodeCollateral(int nHeight) { return 50000; } // 50K EDX required as collateral
 /** Coinbase transaction outputs can only be staked after this number of new blocks (network rule) */
 static const int nStakeMinConfirmations = 25;
 /** Coinbase transaction outputs can only be spent after this number of new blocks (network rule) */

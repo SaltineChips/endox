@@ -1,16 +1,16 @@
-Endox-Coin [EDX] integration/staging tree
+Endox-Coin [ENDOX] integration/staging tree
 =====================================
 
 http://www.endox-coincoin.com
 
-What is the Endox-Coin [EDX] Blockchain?
+What is the Endox-Coin [ENDOX] Blockchain?
 ---------------------------
 
-The Endox-Coin [EDX] Blockchain is an experimental smart contract platform protocol that enables 
+The Endox-Coin [ENDOX] Blockchain is an experimental smart contract platform protocol that enables 
 instant payments to anyone, anywhere in the world in a private, secure manner. 
-Endox-Coin [EDX] uses peer-to-peer blockchain technology developed by EndoxCoin to operate
+Endox-Coin [ENDOX] uses peer-to-peer blockchain technology developed by EndoxCoin to operate
 with no central authority: managing transactions, execution of contracts, and 
-issuing money are carried out collectively by the network. Endox-Coin [EDX] is the name of 
+issuing money are carried out collectively by the network. Endox-Coin [ENDOX] is the name of 
 open source software which enables the use of this protocol.
 
 Specifications and General info
@@ -33,9 +33,9 @@ RPC Port: 10257
 
 BUILD LINUX
 -----------
-1) git clone https://github.com/CryptoCoderz/EDX
+1) git clone https://github.com/CryptoCoderz/ENDOX
 
-2) cd EDX/src
+2) cd ENDOX/src
 
 3) sudo make -f makefile.unix            # Headless
 
@@ -48,15 +48,15 @@ BUILD LINUX
 License
 -------
 
-Endox-Coin [EDX] is released under the terms of the MIT license. See [COPYING](COPYING) for more
+Endox-Coin [ENDOX] is released under the terms of the MIT license. See [COPYING](COPYING) for more
 information or see https://opensource.org/licenses/MIT.
 
 Development Process
 -------------------
 
 The `master` branch is regularly built and tested, but is not guaranteed to be
-completely stable. [Tags](https://github.com/CryptoCoderz/EDX/tags) are created
-regularly to indicate new official, stable release versions of Endox-Coin [EDX].
+completely stable. [Tags](https://github.com/CryptoCoderz/ENDOX/tags) are created
+regularly to indicate new official, stable release versions of Endox-Coin [ENDOX].
 
 The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md).
 

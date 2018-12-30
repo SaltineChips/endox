@@ -369,18 +369,20 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
 // Coin base subsidy
 //
 //
-// TODO: Update calculations...
-//
-// Reward calculations for 5-years of EDX emissions
-// 100% Remaining EDX   : 153,000,000
+// Reward calculations for 75-years of EDX emissions
+// 100% Remaining EDX   : 8,760,000,000
 // ----------------------------------
-// 25% for Superblocks  :  38,250,000
-// 75% for Normalblocks : 114,750,000
+// 100% for Calculations: 320 blocks per day, ~80 Superblocks, ~240 Normalblocks @ 25% chance Superblock
+// 25% for Superblocks  : (((80 * 1240)*365)*75) 2,715,600,000 EDX
+// 75% for Normalblocks : (((240 * 920)*365)*75) = 6,570,000,000 EDX
 // ----------------------------------
-// (COINS LEFT)       (BLOCKS | 5-Years of minting)
-// Singular Payout Example: 153000000 / (((((1 * 60 * 60) / (3 * 60)) * 24) * 365) * 5) = 174.6575 EDX per block
-// Superblock Payout: 38250000 / (((((1 * 60 * 60) / (3 * 60)) * 24) * 365) * 5) = 43.6643 EDX added for Superblock
-// Regular Payout: 114750000 / (((((1 * 60 * 60) / (3 * 60)) * 24) * 365) * 5) = 130.9931 EDX per block
+// (COINS LEFT)       (BLOCKS | 75-Years of minting)
+// Singular Payout Example: 8760000000 / ((((1 * 60 * 60) / (4.5 * 60) * 24) * 365) * 75) = 1000.00 EDX per block
+// Superblock Payout: ~80 blocks per day = 1240.00 EDX per Superblock
+// Regular Payout: ~240 blocks per day = 920.00 EDX per block
+// Daily coins (Regular + Superblock): (80 * 1240) + (240 * 920) = 320,000 per day == 1,000.00 EDX per block avg
+// Yearly coins (Regular + Superblock): ((80 * 1240)*365) + ((240 * 920)*365) = 116,800,000 per year == 1,000.00 EDX per block avg
+// Total coins (Regular + Superblock): (((80 * 1240)*365)*75) + (((240 * 920)*365)*75) = 8,760,000,000 == 100% Remaining EDX
 
 int static generateMTRandom(unsigned int s, int range)
 {
@@ -407,7 +409,7 @@ int randreward()
 //
 int64_t GetProofOfWorkReward(int nHeight, int64_t nFees)
 {
-    int64_t nSubsidy = nBlockPoWReward;
+    int64_t nSubsidy = nBlockStandardReward;
 
     if(nHeight > nReservePhaseStart) {
       if(nHeight < nReservePhaseEnd) {
@@ -416,10 +418,10 @@ int64_t GetProofOfWorkReward(int nHeight, int64_t nFees)
     }
 
     // TODO: Update superblock chances and emissions
-    int chance = 170000;
+    int chance = 250000;
 
-    if(randreward() <= chance && nHeight > nReservePhaseEnd) // 17% Chance of superblock
-        nSubsidy *= nSuperModifier; // x2
+    if(randreward() <= chance && nHeight > nReservePhaseEnd) // 25% Chance of superblock
+        nSubsidy = nBlockSuperReward;
 
     // hardCap v2.1
     else if(pindexBest->nMoneySupply > MAX_SINGLE_TX)
@@ -437,12 +439,12 @@ int64_t GetProofOfWorkReward(int nHeight, int64_t nFees)
 //
 int64_t GetProofOfStakeReward(const CBlockIndex* pindexPrev, int64_t nCoinAge, int64_t nFees)
 {
-    int64_t nSubsidy = 320 * COIN;
+    int64_t nSubsidy = nBlockStandardReward;
 
     int chance = 250000;
 
     if(randreward() <= chance) // 25% Chance of superblock
-        nSubsidy = 400 * COIN;
+        nSubsidy = nBlockSuperReward;
 
     // hardCap v2.1
     else if(pindexBest->nMoneySupply > MAX_SINGLE_TX)
@@ -470,9 +472,8 @@ int64_t GetMasternodePayment(int nHeight, int64_t blockValue)
 //
 int64_t GetDevOpsPayment(int nHeight, int64_t blockValue)
 {
-    // TODO: Update DevOps payment amount...
     int64_t ret2 = 0;
-    ret2 = (blockValue * 5) / 100; // 5%
+    ret2 = (blockValue * 7) / 100; // 7%
 
     return ret2;
 }
