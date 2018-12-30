@@ -2,7 +2,7 @@
 #include "masternode.h"
 #include "activemasternode.h"
 #include "mnengine.h"
-#include "core.h"
+#include "chain.h"
 #include "util.h"
 #include "addrman.h"
 #include <boost/lexical_cast.hpp>

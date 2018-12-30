@@ -6,7 +6,7 @@
 #define BITCOIN_NET_H
 
 #include "compat.h"
-#include "core.h"
+#include "chain.h"
 #include "hash.h"
 #include "limitedmap.h"
 #include "mruset.h"

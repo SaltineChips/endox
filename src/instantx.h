@@ -9,7 +9,7 @@
 #include "sync.h"
 #include "net.h"
 #include "key.h"
-#include "core.h"
+#include "chain.h"
 #include "util.h"
 #include "script.h"
 #include "base58.h"

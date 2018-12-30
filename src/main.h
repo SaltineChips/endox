@@ -5,14 +5,14 @@
 #ifndef BITCOIN_MAIN_H
 #define BITCOIN_MAIN_H
 
-#include "core.h"
+#include "chain.h"
 #include "bignum.h"
 #include "sync.h"
 #include "txmempool.h"
 #include "net.h"
 #include "script.h"
 #include "scrypt.h"
-#include "hashalgo/bmw/bmw512.h"
+#include "crypto/bmw/bmw512.h"
 #include "fork.h"
 #include "genesis.h"
 #include "mining.h"

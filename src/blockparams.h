@@ -8,7 +8,7 @@
 #define BITCOIN_BLOCKPARAMS_H
 
 #include "net.h"
-#include "core.h"
+#include "chain.h"
 #include "bignum.h"
 
 #define START_MASTERNODE_PAYMENTS_TESTNET      9993058800  // OFF (NOT TOGGLED)

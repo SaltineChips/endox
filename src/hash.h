@@ -11,8 +11,8 @@
 #include <openssl/sha.h>
 #include <openssl/ripemd.h>
 
-#include "crypto/ripemd160.h"
-#include "crypto/sha256.h"
+#include "crypto/common/ripemd160.h"
+#include "crypto/common/sha256.h"
 
 #include <vector>
 

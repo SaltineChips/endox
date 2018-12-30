@@ -26,6 +26,8 @@ static const int64_t nBlockPoSReward = 500 * COIN;
 static const int64_t nSuperModifier = 2;
 /** Block spacing preferred */
 static const int64_t BLOCK_SPACING = ((5 * 60) - 30);
+/** Block spacing minimum */
+static const int64_t BLOCK_SPACING_MIN = BLOCK_SPACING * (1 / 2);
 /** Block spacing maximum */
 static const int64_t BLOCK_SPACING_MAX = BLOCK_SPACING * (3 / 2);
 /** Desired block times/spacing */
