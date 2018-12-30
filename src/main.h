@@ -12,21 +12,12 @@
 #include "net.h"
 #include "script.h"
 #include "scrypt.h"
-#include "hashblock.h"
+#include "hashalgo/bmw/bmw512.h"
+#include "fork.h"
+#include "genesis.h"
+#include "mining.h"
 
 #include <list>
-
-#define START_MASTERNODE_PAYMENTS_TESTNET      9993058800  // OFF (NOT TOGGLED)
-#define START_MASTERNODE_PAYMENTS              1548205860  // ON (TOGGLED)
-
-#define INSTANTX_SIGNATURES_REQUIRED           2
-#define INSTANTX_SIGNATURES_TOTAL              4
-
-// Define difficulty retarget algorithms
-enum DiffMode {
-    DIFF_DEFAULT = 0, // Default to invalid 0
-    DIFF_VRX     = 1, // Retarget using Terminal-Velocity-RateX
-};
 
 class CValidationState;
 class CBlock;
@@ -81,32 +72,12 @@ static const int MAX_BLOCKS_IN_TRANSIT_PER_PEER = 128;
 static const unsigned int BLOCK_DOWNLOAD_TIMEOUT = 60;
 /** Defaults to yes, adaptively increase/decrease max/min/priority along with the re-calculated block size **/
 static const unsigned int DEFAULT_SCALE_BLOCK_SIZE_OPTIONS = 1;
-/** Block spacing preferred */
-static const int64_t BLOCK_SPACING = ((5 * 60) - 30);
-/** Block spacing maximum */
-static const int64_t BLOCK_SPACING_MAX = BLOCK_SPACING * (3 / 2);
-/** MNengine collateral */
-static const int64_t MNengine_COLLATERAL = (1 * COIN);
-/** MNengine pool values */
-static const int64_t MNengine_POOL_MAX = (999 * COIN);
 /** Future drift value */
 static const int64_t nDrift = 5 * 60;
 /** Future drift params */
 inline int64_t FutureDrift(int64_t nTime) { return nTime + nDrift; }
-/** Desired block times/spacing */
-static const int64_t GetTargetSpacing = BLOCK_SPACING;
 /** "reject" message codes **/
 static const unsigned char REJECT_INVALID = 0x10;
-/** MasterNode required collateral */
-inline int64_t MasternodeCollateral(int nHeight) { return 10000; } // 10K ENDOX required as collateral
-/** Coinbase transaction outputs can only be staked after this number of new blocks (network rule) */
-static const int nStakeMinConfirmations = 25;
-/** Coinbase transaction outputs can only be spent after this number of new blocks (network rule) */
-static const int nCoinbaseMaturity = 15; // 15-TXs | 90-Mined
-/** Minimum nCoinAge required to stake PoS */
-static const unsigned int nStakeMinAge = 2 / 60; // 30 minutes
-/** Time to elapse before new modifier is computed */
-static const unsigned int nModifierInterval = 2 * 60;
 
 extern CScript COINBASE_FLAGS;
 extern CCriticalSection cs_main;
@@ -731,14 +702,14 @@ public:
     uint256 GetHash() const
     {
         if (nVersion > 6)
-            return Hash(BEGIN(nVersion), END(nNonce));
+            return Hash_bmw512(BEGIN(nVersion), END(nNonce));
         else
             return GetPoWHash();
     }
 
     uint256 GetPoWHash() const
     {
-     return HashBmw512(BEGIN(nVersion), END(nNonce));
+     return Hash_bmw512(BEGIN(nVersion), END(nNonce));
     }
 
     int64_t GetBlockTime() const

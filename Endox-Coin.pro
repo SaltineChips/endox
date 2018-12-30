@@ -223,11 +223,15 @@ HEADERS += src/qt/bitcoingui.h \
     src/addrman.h \
     src/base58.h \
     src/bignum.h \
+    src/blockparams.h \
     src/chainparams.h \
     src/chainparamsseeds.h \
     src/checkpoints.h \
     src/compat.h \
     src/coincontrol.h \
+    src/fork.h \
+    src/genesis.h \
+    src/mining.h \
     src/sync.h \
     src/util.h \
     src/hash.h \
@@ -280,6 +284,7 @@ HEADERS += src/qt/bitcoingui.h \
     src/rpcclient.h \
     src/rpcprotocol.h \
     src/rpcserver.h \
+    src/rpcvelocity.h \
     src/limitedmap.h \
     src/qt/overviewpage.h \
     src/qt/csvmodelwriter.h \
@@ -295,6 +300,7 @@ HEADERS += src/qt/bitcoingui.h \
     src/ui_interface.h \
     src/qt/rpcconsole.h \
     src/version.h \
+    src/velocity.h \
     src/netbase.h \
     src/clientversion.h \
     src/threadsafety.h \
@@ -309,13 +315,13 @@ HEADERS += src/qt/bitcoingui.h \
     src/masternodeman.h \
     src/masternode-payments.h \
     src/spork.h \
-    src/crypto/common.h \
-    src/crypto/hmac_sha256.h \
-    src/crypto/hmac_sha512.h \
-    src/crypto/ripemd160.h \
-    src/crypto/sha1.h \
-    src/crypto/sha256.h \
-    src/crypto/sha512.h \
+    src/crypto/common/common.h \
+    src/crypto/common/hmac_sha256.h \
+    src/crypto/common/hmac_sha512.h \
+    src/crypto/common/ripemd160.h \
+    src/crypto/common/sha1.h \
+    src/crypto/common/sha256.h \
+    src/crypto/common/sha512.h \
     src/qt/masternodemanager.h \
     src/qt/addeditadrenalinenode.h \
     src/qt/adrenalinenodeconfigdialog.h \
@@ -323,8 +329,9 @@ HEADERS += src/qt/bitcoingui.h \
     src/qt/blockbrowser.h \
     src/qt/plugins/mrichtexteditor/mrichtextedit.h \
     src/qt/qvalidatedtextedit.h \
-    src/sph_bmw.h \
-    src/sph_types.h \
+    src/crypto/common/sph_bmw.h \
+    src/crypto/common/sph_types.h \
+    src/crypto/bmw/bmw512.h \
     src/limitedmap.h
 
 SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
@@ -346,8 +353,10 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/blocksizecalculator.cpp \
     src/allocators.cpp \
     src/base58.cpp \
+    src/blockparams.cpp \
     src/chainparams.cpp \
     src/version.cpp \
+    src/velocity.cpp \
     src/sync.cpp \
     src/txmempool.cpp \
     src/util.cpp \
@@ -391,6 +400,7 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/rpcmisc.cpp \
     src/rpcnet.cpp \
     src/rpcmining.cpp \
+    src/rpcvelocity.cpp \
     src/rpcwallet.cpp \
     src/rpcblockchain.cpp \
     src/rpcrawtransaction.cpp \
@@ -421,12 +431,12 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/masternode-payments.cpp \
     src/spork.cpp \
     src/masternodeconfig.cpp \
-    src/crypto/hmac_sha256.cpp \
-    src/crypto/hmac_sha512.cpp \
-    src/crypto/ripemd160.cpp \
-    src/crypto/sha1.cpp \
-    src/crypto/sha256.cpp \
-    src/crypto/sha512.cpp \
+    src/crypto/common/hmac_sha256.cpp \
+    src/crypto/common/hmac_sha512.cpp \
+    src/crypto/common/ripemd160.cpp \
+    src/crypto/common/sha1.cpp \
+    src/crypto/common/sha256.cpp \
+    src/crypto/common/sha512.cpp \
     src/qt/masternodemanager.cpp \
     src/qt/addeditadrenalinenode.cpp \
     src/qt/adrenalinenodeconfigdialog.cpp \
@@ -434,7 +444,8 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/qt/blockbrowser.cpp \
     src/qt/qvalidatedtextedit.cpp \
     src/qt/plugins/mrichtexteditor/mrichtextedit.cpp \
-    src/bmw.c
+    src/crypto/common/aes_helper.c \
+    src/crypto/common/bmw.c
 
 RESOURCES += \
     src/qt/bitcoin.qrc

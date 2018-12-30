@@ -135,7 +135,7 @@ public:
 
     // Get the 256-bit hash of this public key.
     uint256 GetHash() const {
-        return Hash(vch, vch+size());
+        return Hash_bmw512(vch, vch+size());
     }
 
     // Check syntactic correctness.

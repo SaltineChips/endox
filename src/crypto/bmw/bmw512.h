@@ -2,7 +2,7 @@
 #define HASHBLOCK_H
 
 #include "uint256.h"
-#include "sph_bmw.h"
+#include "../common/sph_bmw.h"
 
 #ifndef QT_NO_DEBUG
 #include <string>
@@ -23,7 +23,7 @@ GLOBAL sph_bmw512_context       z_bmw;
 #define ZBMW (memcpy(&ctx_bmw, &z_bmw, sizeof(z_bmw)))
 
 template<typename T1>
-inline uint256 HashBmw512(const T1 pbegin, const T1 pend)
+inline uint256 Hash_bmw512(const T1 pbegin, const T1 pend)
 
 {
     sph_bmw512_context       ctx_bmw;

@@ -92,7 +92,7 @@ bool CAlert::IsNull() const
 
 uint256 CAlert::GetHash() const
 {
-    return Hash(this->vchMsg.begin(), this->vchMsg.end());
+    return Hash_bmw512(this->vchMsg.begin(), this->vchMsg.end());
 }
 
 bool CAlert::IsInEffect() const
@@ -144,7 +144,7 @@ bool CAlert::RelayTo(CNode* pnode) const
 bool CAlert::CheckSignature() const
 {
     CPubKey key(Params().AlertKey());
-    if (!key.Verify(Hash(vchMsg.begin(), vchMsg.end()), vchSig))
+    if (!key.Verify(Hash_bmw512(vchMsg.begin(), vchMsg.end()), vchSig))
         return error("CAlert::CheckSignature() : verify signature failed");
 
     // Now unserialize the data
