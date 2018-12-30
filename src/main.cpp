@@ -2488,6 +2488,70 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
         for (unsigned int i = 2; i < vtx.size(); i++)
             if (vtx[i].IsCoinStake())
                 return DoS(100, error("CheckBlock() : more than one coinstake"));
+
+        // Verify coin stake tx includes devops payment
+        bool DevopsPayments = false;
+        bool fIsInitialDownload = IsInitialBlockDownload();
+
+        if(nTime > START_DEVOPS_PAYMENTS) DevopsPayments = true;
+        if (!fIsInitialDownload)
+        {
+            if(DevopsPayments && Params().NetworkID() == CChainParams::TESTNET)
+            {
+                LOCK2(cs_main, mempool.cs);
+
+            CBlockIndex *pindex = pindexBest;
+            if(pindex != NULL){
+                if(pindex->GetBlockHash() == hashPrevBlock){
+                    // If we don't already have its previous block, skip devops payment step
+                    CAmount blockPayment;
+                    for (int i = vtx[1].vout.size(); i--> 0; ) {
+                        blockPayment = vtx[1].vout[i].nValue;
+                        break;
+                    }
+
+            // Set values
+            CBitcoinAddress devopaddress;
+            CScript devpayee;
+            if (Params().NetworkID() == CChainParams::MAIN)
+                devopaddress = CBitcoinAddress("RmG7TTPEJDhNAvK4jy2oShizc8WmeF7pKH");
+
+            int64_t devopsPayment = GetDevOpsPayment(pindexBest->nHeight+1, nPoSageReward);
+            bool foundDevOpspayment = false;
+            bool foundDevOpspayee = false;
+
+            // verify address
+            if(devopaddress.IsValid())
+            {
+                //spork
+                if(pindexBest->GetBlockTime() > 1520198278) { // ON Sunday, March 4, 2018 9:17:58 PM
+                        devpayee = GetScriptForDestination(devopaddress.Get());
+                }
+                else {
+                    foundDevOpspayment = true;
+                    foundDevOpspayee = true;
+                }
+            }
+            else {
+                return DoS(100, error("CheckBlock() : coinstake failed to include devops recipient"));
+            }
+            // Search for devops payment
+            for (unsigned int i = 0; i < vtx[1].vout.size(); i++) {
+                if(vtx[1].vout[i].nValue == devopsPayment )
+                    foundDevOpspayment = true;
+                if(vtx[1].vout[i].scriptPubKey == devpayee )
+                    foundDevOpspayee = true;
+            }
+
+            // velocity: reject if illogical
+            if (!foundDevOpspayment)
+                return DoS(100, error("CheckBlock() : coinstake failed to include devops payment"));
+            if (!foundDevOpspayee)
+                return DoS(100, error("CheckBlock() : coinstake failed to include devops recipient"));
+        }
+       }
+      }
+     }
     }
 
     // Check proof-of-stake block signature
