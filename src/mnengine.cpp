@@ -410,7 +410,7 @@ void CMNenginePool::ChargeRandomFees(){
                 with using it to stop abuse. Otherwise it could serve as an attack vector and
                 allow endless transaction that would bloat Endox-Coin and make it unusable. To
                 stop these kinds of attacks 1 in 50 successful transactions are charged. This
-                adds up to a cost of 0.002 ENDOX per transaction on average.
+                adds up to a cost of 0.002 EDX per transaction on average.
             */
             if(r <= 10)
             {

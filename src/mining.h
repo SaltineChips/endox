@@ -37,7 +37,7 @@ static const int64_t MNengine_COLLATERAL = (1 * COIN);
 /** MNengine pool values */
 static const int64_t MNengine_POOL_MAX = (999 * COIN);
 /** MasterNode required collateral */
-inline int64_t MasternodeCollateral(int nHeight) { return 10000; } // 10K ENDOX required as collateral
+inline int64_t MasternodeCollateral(int nHeight) { return 10000; } // 10K EDX required as collateral
 /** Coinbase transaction outputs can only be staked after this number of new blocks (network rule) */
 static const int nStakeMinConfirmations = 25;
 /** Coinbase transaction outputs can only be spent after this number of new blocks (network rule) */

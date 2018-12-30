@@ -152,6 +152,7 @@ public:
         block.nNonce = 2868
         block.GetHash = 0002a59dd63d5fa8b515f15144ce6a7ada594e63371f652f833e555e7e3b33b7
         */
+
         hashGenesisBlock = genesis.GetHash();
         assert(hashGenesisBlock == hashTestNetGenesisBlock);
 

@@ -371,16 +371,16 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
 //
 // TODO: Update calculations...
 //
-// Reward calculations for 5-years of ENDOX emissions
-// 100% Remaining ENDOX   : 153,000,000
+// Reward calculations for 5-years of EDX emissions
+// 100% Remaining EDX   : 153,000,000
 // ----------------------------------
 // 25% for Superblocks  :  38,250,000
 // 75% for Normalblocks : 114,750,000
 // ----------------------------------
 // (COINS LEFT)       (BLOCKS | 5-Years of minting)
-// Singular Payout Example: 153000000 / (((((1 * 60 * 60) / (3 * 60)) * 24) * 365) * 5) = 174.6575 ENDOX per block
-// Superblock Payout: 38250000 / (((((1 * 60 * 60) / (3 * 60)) * 24) * 365) * 5) = 43.6643 ENDOX added for Superblock
-// Regular Payout: 114750000 / (((((1 * 60 * 60) / (3 * 60)) * 24) * 365) * 5) = 130.9931 ENDOX per block
+// Singular Payout Example: 153000000 / (((((1 * 60 * 60) / (3 * 60)) * 24) * 365) * 5) = 174.6575 EDX per block
+// Superblock Payout: 38250000 / (((((1 * 60 * 60) / (3 * 60)) * 24) * 365) * 5) = 43.6643 EDX added for Superblock
+// Regular Payout: 114750000 / (((((1 * 60 * 60) / (3 * 60)) * 24) * 365) * 5) = 130.9931 EDX per block
 
 int static generateMTRandom(unsigned int s, int range)
 {

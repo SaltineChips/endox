@@ -1103,13 +1103,13 @@ void PrintExceptionContinue(std::exception* pex, const char* pszThread)
 boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\ENDOX
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\ENDOX
-    // Mac: ~/Library/Application Support/ENDOX
-    // Unix: ~/.ENDOX
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\EDX
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\EDX
+    // Mac: ~/Library/Application Support/EDX
+    // Unix: ~/.EDX
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "ENDOX";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "EDX";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -1121,10 +1121,10 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     fs::create_directory(pathRet);
-    return pathRet / "ENDOX";
+    return pathRet / "EDX";
 #else
     // Unix
-    return pathRet / ".ENDOX";
+    return pathRet / ".EDX";
 #endif
 #endif
 }
