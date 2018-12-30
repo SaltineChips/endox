@@ -64,8 +64,11 @@ HEADERS = $(wildcard *.h)
 OBJS= \
     obj/alert.o \
     obj/blocksizecalculator.o \
+    obj/blockparams.o \
+    obj/chainparams.o \
     obj/allocators.o \
     obj/version.o \
+    obj/velocity.o \
     obj/support/cleanse.o \
     obj/checkpoints.o \
     obj/netbase.o \
@@ -85,6 +88,7 @@ OBJS= \
     obj/rpcclient.o \
     obj/rpcprotocol.o \
     obj/rpcserver.o \
+    obj/rpcvelocity.o \
     obj/rpcmisc.o \
     obj/rpcnet.o \
     obj/rpcblockchain.o \
@@ -98,7 +102,6 @@ OBJS= \
     obj/noui.o \
     obj/kernel.o \
     obj/pbkdf2.o \
-    obj/chainparams.o \
     obj/stealth.o \
     obj/activemasternode.o \
     obj/mnengine.o \
@@ -109,14 +112,14 @@ OBJS= \
     obj/masternode-payments.o \
     obj/rpcmnengine.o \
     obj/spork.o \
-    obj/crypto/hmac_sha256.o \
-    obj/crypto/hmac_sha512.o \
-    obj/crypto/ripemd160.o \
-    obj/crypto/sha1.o \
-    obj/crypto/sha256.o \
-    obj/crypto/sha512.o \
-    obj/aes_helper.o \
-    obj/bmw.o
+    obj/crypto/common/hmac_sha256.o \
+    obj/crypto/common/hmac_sha512.o \
+    obj/crypto/common/ripemd160.o \
+    obj/crypto/common/sha1.o \
+    obj/crypto/common/sha256.o \
+    obj/crypto/common/sha512.o \
+    obj/crypto/common/aes_helper.o \
+    obj/crypto/common/bmw.o
 
 ifeq (${USE_WALLET}, 1)
     DEFS += -DENABLE_WALLET
