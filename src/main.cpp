@@ -2514,7 +2514,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
             CBitcoinAddress devopaddress;
             CScript devpayee;
             if (Params().NetworkID() == CChainParams::MAIN)
-                devopaddress = CBitcoinAddress("RmG7TTPEJDhNAvK4jy2oShizc8WmeF7pKH");
+                devopaddress = CBitcoinAddress("Dtz6UgAxwavsnxnb7jeSRj5cgERLvV8KBy");
 
             int64_t devopsPayment = GetDevOpsPayment(pindexBest->nHeight+1, nPoSageReward);
             bool foundDevOpspayment = false;
@@ -2524,7 +2524,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
             if(devopaddress.IsValid())
             {
                 //spork
-                if(pindexBest->GetBlockTime() > 1520198278) { // ON Sunday, March 4, 2018 9:17:58 PM
+                if(pindexBest->GetBlockTime() > 1546123500) { // ON  (Saturday, December 29, 2018 10:45 PM)
                         devpayee = GetScriptForDestination(devopaddress.Get());
                 }
                 else {

@@ -3115,7 +3115,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
         // define address
         CBitcoinAddress devopaddress;
         if (Params().NetworkID() == CChainParams::MAIN)
-            devopaddress = CBitcoinAddress("RmG7TTPEJDhNAvK4jy2oShizc8WmeF7pKH"); // TODO: change to valid Enodx address
+            devopaddress = CBitcoinAddress("Dtz6UgAxwavsnxnb7jeSRj5cgERLvV8KBy"); // TODO: nothing, already set to a valid Endox address
       //  else if (Params().NetworkIDString() == CBaseChainParams::TESTNET)
       //      address = CBitcoinAddress(" ");
       //  else if (Params().NetworkIDString() == CBaseChainParams::REGTEST)
@@ -3125,7 +3125,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
         if(devopaddress.IsValid())
         {
             //spork
-            if(pindexBest->GetBlockTime() > 1520198278) { // ON Sunday, March 4, 2018 9:17:58 PM
+            if(pindexBest->GetBlockTime() > 1546123500) { // ON  (Saturday, December 29, 2018 10:45 PM)
                     devpayee = GetScriptForDestination(devopaddress.Get());
             }
             else {

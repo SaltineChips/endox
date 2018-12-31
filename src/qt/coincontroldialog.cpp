@@ -4,7 +4,7 @@
 #include "addresstablemodel.h"
 #include "bitcoinunits.h"
 #include "base58.h"
-#include "core.h"
+#include "chain.h"
 #include "guiutil.h"
 #include "init.h"
 #include "optionsmodel.h"

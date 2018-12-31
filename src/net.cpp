@@ -7,7 +7,7 @@
 #include "main.h"
 #include "addrman.h"
 #include "chainparams.h"
-#include "core.h"
+#include "chain.h"
 #include "ui_interface.h"
 #include "mnengine.h"
 #include "wallet.h"

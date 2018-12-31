@@ -5,7 +5,7 @@
 #ifndef MNengine_H
 #define MNengine_H
 
-#include "core.h"
+#include "chain.h"
 #include "main.h"
 #include "sync.h"
 #include "activemasternode.h"

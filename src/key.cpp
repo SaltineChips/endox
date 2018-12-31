@@ -4,8 +4,8 @@
 
 #include "key.h"
 
-#include "crypto/common.h"
-#include "crypto/hmac_sha512.h"
+#include "crypto/common/common.h"
+#include "crypto/common/hmac_sha512.h"
 #include "pubkey.h"
 
 #include <secp256k1.h>

@@ -1,7 +1,7 @@
 #include "masternode.h"
 #include "masternodeman.h"
 #include "mnengine.h"
-#include "core.h"
+#include "chain.h"
 #include "main.h"
 #include "sync.h"
 #include "util.h"

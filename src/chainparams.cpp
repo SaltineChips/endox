@@ -8,6 +8,8 @@
 #include "chainparams.h"
 #include "main.h"
 #include "util.h"
+// TODO: Verify the requirement of below link
+// #include "base58.h"
 
 #include <boost/assign/list_of.hpp>
 
@@ -99,7 +101,7 @@ public:
         convertSeed6(vFixedSeeds, pnSeed6_main, ARRAYLEN(pnSeed6_main));
 
         nPoolMaxTransactions = 9;
-        strMNenginePoolDummyAddress = "iGrwXgFQbhiSBsxVSSCeQmty2qzCt4uS7Q"; // TODO: change with public key of Endox Wallet
+        strMNenginePoolDummyAddress = "E9XUxMPUvNLfgAGqNpk4FnvzbPgdMfWzs3";
         nEndPoWBlock = 0x7fffffff;
         nStartPoSBlock = 125;
     }
@@ -150,6 +152,7 @@ public:
         block.nNonce = 2868
         block.GetHash = 0002a59dd63d5fa8b515f15144ce6a7ada594e63371f652f833e555e7e3b33b7
         */
+
         hashGenesisBlock = genesis.GetHash();
         assert(hashGenesisBlock == hashTestNetGenesisBlock);
 
