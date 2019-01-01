@@ -53,7 +53,7 @@ void OptionsModel::Init()
 
     // Display
     if (!settings.contains("nDisplayUnit"))
-        settings.setValue("nDisplayUnit", EndoxCoinUnits::ENDOX);
+        settings.setValue("nDisplayUnit", EndoxCoinUnits::EDX);
     nDisplayUnit = settings.value("nDisplayUnit").toInt();
     
     fUseBlackTheme = settings.value("fUseBlackTheme", false).toBool();

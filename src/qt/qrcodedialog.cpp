@@ -44,7 +44,7 @@ void QRCodeDialog::setModel(OptionsModel *model)
     if (model)
         connect(model, SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit()));
 
-    // update the display unit, to not use the default ("ENDOX")
+    // update the display unit, to not use the default ("EDX")
     updateDisplayUnit();
 }
 
@@ -92,8 +92,8 @@ QString QRCodeDialog::getURI()
     {
         if (ui->lnReqAmount->validate())
         {
-            // even if we allow a non ENDOX unit input in lnReqAmount, we generate the URI with ENDOX as unit (as defined in BIP21)
-            ret += QString("?amount=%1").arg(EndoxCoinUnits::format(EndoxCoinUnits::ENDOX, ui->lnReqAmount->value()));
+            // even if we allow a non EDX unit input in lnReqAmount, we generate the URI with EDX as unit (as defined in BIP21)
+            ret += QString("?amount=%1").arg(EndoxCoinUnits::format(EndoxCoinUnits::EDX, ui->lnReqAmount->value()));
             paramCount++;
         }
         else

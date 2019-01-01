@@ -18,7 +18,7 @@ EndoxCoinUnits::EndoxCoinUnits(QObject *parent):
 QList<EndoxCoinUnits::Unit> EndoxCoinUnits::availableUnits()
 {
     QList<EndoxCoinUnits::Unit> unitlist;
-    unitlist.append(ENDOX);
+    unitlist.append(EDX);
     unitlist.append(mIVC);
     unitlist.append(uIVC);
     return unitlist;
@@ -28,7 +28,7 @@ bool EndoxCoinUnits::valid(int unit)
 {
     switch(unit)
     {
-    case ENDOX:
+    case EDX:
     case mIVC:
     case uIVC:
         return true;
@@ -41,7 +41,7 @@ QString EndoxCoinUnits::name(int unit)
 {
     switch(unit)
     {
-    case ENDOX: return QString("ENDOX");
+    case EDX: return QString("EDX");
     case mIVC: return QString("mIVC");
     case uIVC: return QString::fromUtf8("μIVC");
     default: return QString("???");
@@ -52,7 +52,7 @@ QString EndoxCoinUnits::description(int unit)
 {
     switch(unit)
     {
-    case ENDOX: return QString("Endox-Coins");
+    case EDX: return QString("Endox-Coins");
     case mIVC: return QString("Milli-Endox-Coins (1 / 1,000)");
     case uIVC: return QString("Micro-Endox-Coins (1 / 1,000,000)");
     default: return QString("???");
@@ -63,7 +63,7 @@ qint64 EndoxCoinUnits::factor(int unit)
 {
     switch(unit)
     {
-    case ENDOX:  return 100000000;
+    case EDX:  return 100000000;
     case mIVC: return 100000;
     case uIVC: return 100;
     default:   return 100000000;
@@ -74,7 +74,7 @@ int EndoxCoinUnits::amountDigits(int unit)
 {
     switch(unit)
     {
-    case ENDOX: return 8; // 21,000,000 (# digits, without commas)
+    case EDX: return 8; // 21,000,000 (# digits, without commas)
     case mIVC: return 11; // 21,000,000,000
     case uIVC: return 14; // 21,000,000,000,000
     default: return 0;
@@ -85,7 +85,7 @@ int EndoxCoinUnits::decimals(int unit)
 {
     switch(unit)
     {
-    case ENDOX: return 8;
+    case EDX: return 8;
     case mIVC: return 5;
     case uIVC: return 2;
     default: return 0;
