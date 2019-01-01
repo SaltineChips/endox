@@ -642,7 +642,7 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
     }
 
     // actually update labels
-    int nDisplayUnit = EndoxCoinUnits::ENDOX;
+    int nDisplayUnit = EndoxCoinUnits::EDX;
     if (model && model->getOptionsModel())
         nDisplayUnit = model->getOptionsModel()->getDisplayUnit();
 

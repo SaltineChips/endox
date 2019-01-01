@@ -138,7 +138,7 @@ bool parseEndoxCoinURI(const QUrl &uri, SendCoinsRecipient *out)
         {
             if(!i->second.isEmpty())
             {
-                if(!EndoxCoinUnits::parse(EndoxCoinUnits::ENDOX, i->second, &rv.amount))
+                if(!EndoxCoinUnits::parse(EndoxCoinUnits::EDX, i->second, &rv.amount))
                 {
                     return false;
                 }

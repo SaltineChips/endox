@@ -9,7 +9,7 @@
 #include "clientversion.h"
 
 //
-// Bootup the masternode, look for a 10,000 ENDOX input and register on the network
+// Bootup the masternode, look for a 10,000 EDX input and register on the network
 //
 void CActiveMasternode::ManageStatus()
 {
