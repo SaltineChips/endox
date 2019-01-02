@@ -2489,69 +2489,90 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
             if (vtx[i].IsCoinStake())
                 return DoS(100, error("CheckBlock() : more than one coinstake"));
 
-        // Verify coin stake tx includes devops payment
-        bool DevopsPayments = false;
-        bool fIsInitialDownload = IsInitialBlockDownload();
+        // Verify coin stake tx includes devops payment -
+        // first check for start of devops payments
+        bool bDevOpsPayment = false;
 
-        if(nTime > START_DEVOPS_PAYMENTS) DevopsPayments = true;
+        if ( Params().NetworkID() == CChainParams::TESTNET ){
+            if (GetTime() > START_DEVOPS_PAYMENTS_TESTNET ){
+                bDevOpsPayment = true;
+            }
+        }else{
+            if (GetTime() > START_DEVOPS_PAYMENTS){
+                bDevOpsPayment = true;
+            }
+        }
+        // stop devops payments (for testing)
+        if ( Params().NetworkID() == CChainParams::TESTNET ){
+            if (GetTime() > STOP_DEVOPS_PAYMENTS_TESTNET ){
+                bDevOpsPayment = false;
+            }
+        }else{
+            if (GetTime() > STOP_DEVOPS_PAYMENTS){
+                bDevOpsPayment = false;
+            }
+        }
+
+        bool fIsInitialDownload = IsInitialBlockDownload();
         if (!fIsInitialDownload)
         {
-            if(DevopsPayments && Params().NetworkID() == CChainParams::TESTNET)
+            if(bDevOpsPayment && Params().NetworkID() == CChainParams::TESTNET)
             {
                 LOCK2(cs_main, mempool.cs);
 
-            CBlockIndex *pindex = pindexBest;
-            if(pindex != NULL){
-                if(pindex->GetBlockHash() == hashPrevBlock){
-                    // If we don't already have its previous block, skip devops payment step
-                    CAmount blockPayment;
-                    for (int i = vtx[1].vout.size(); i--> 0; ) {
-                        blockPayment = vtx[1].vout[i].nValue;
-                        break;
+                CBlockIndex *pindex = pindexBest;
+                if(pindex != NULL){
+                    if(pindex->GetBlockHash() == hashPrevBlock){
+                        // If we don't already have its previous block, skip devops payment step
+                        // TODO: elaborate on payment catch, currently unused and throws warning
+                        CAmount blockPayment;
+                        for (int i = vtx[1].vout.size(); i--> 0; ) {
+                            blockPayment = vtx[1].vout[i].nValue;
+                            break;
+                        }
+
+                        // Set values
+                        CBitcoinAddress devopaddress;
+                        CScript devpayee;
+                        if (Params().NetworkID() == CChainParams::MAIN)
+                            devopaddress = CBitcoinAddress("Dtz6UgAxwavsnxnb7jeSRj5cgERLvV8KBy");
+
+                        int64_t devopsPayment = GetDevOpsPayment(pindexBest->nHeight+1, nPoSageReward);
+                        bool foundDevOpspayment = false;
+                        bool foundDevOpspayee = false;
+
+                        // verify address
+                        if(devopaddress.IsValid())
+                        {
+                            //spork
+                            if(pindexBest->GetBlockTime() > 1546123500) { // ON  (Saturday, December 29, 2018 10:45 PM)
+                                devpayee = GetScriptForDestination(devopaddress.Get());
+                            }
+                            else {
+                                foundDevOpspayment = true;
+                                foundDevOpspayee = true;
+                            }
+                        }
+                        else {
+                            return DoS(100, error("CheckBlock() : coinstake failed to include devops recipient"));
+                        }
+                        // Search for devops payment
+                        for (unsigned int i = 0; i < vtx[1].vout.size(); i++) {
+                            if(vtx[1].vout[i].nValue == devopsPayment )
+                                foundDevOpspayment = true;
+                            if(vtx[1].vout[i].scriptPubKey == devpayee )
+                                foundDevOpspayee = true;
+                        }
+
+                        // velocity: reject if illogical
+                        if (!foundDevOpspayment)
+                            return DoS(100, error("CheckBlock() : coinstake failed to include devops payment"));
+                        if (!foundDevOpspayee)
+                            return DoS(100, error("CheckBlock() : coinstake failed to include devops recipient"));
                     }
-
-            // Set values
-            CBitcoinAddress devopaddress;
-            CScript devpayee;
-            if (Params().NetworkID() == CChainParams::MAIN)
-                devopaddress = CBitcoinAddress("Dtz6UgAxwavsnxnb7jeSRj5cgERLvV8KBy");
-
-            int64_t devopsPayment = GetDevOpsPayment(pindexBest->nHeight+1, nPoSageReward);
-            bool foundDevOpspayment = false;
-            bool foundDevOpspayee = false;
-
-            // verify address
-            if(devopaddress.IsValid())
-            {
-                //spork
-                if(pindexBest->GetBlockTime() > 1546123500) { // ON  (Saturday, December 29, 2018 10:45 PM)
-                        devpayee = GetScriptForDestination(devopaddress.Get());
-                }
-                else {
-                    foundDevOpspayment = true;
-                    foundDevOpspayee = true;
                 }
             }
-            else {
-                return DoS(100, error("CheckBlock() : coinstake failed to include devops recipient"));
-            }
-            // Search for devops payment
-            for (unsigned int i = 0; i < vtx[1].vout.size(); i++) {
-                if(vtx[1].vout[i].nValue == devopsPayment )
-                    foundDevOpspayment = true;
-                if(vtx[1].vout[i].scriptPubKey == devpayee )
-                    foundDevOpspayee = true;
-            }
-
-            // velocity: reject if illogical
-            if (!foundDevOpspayment)
-                return DoS(100, error("CheckBlock() : coinstake failed to include devops payment"));
-            if (!foundDevOpspayee)
-                return DoS(100, error("CheckBlock() : coinstake failed to include devops recipient"));
         }
-       }
-      }
-     }
     }
 
     // Check proof-of-stake block signature

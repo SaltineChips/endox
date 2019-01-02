@@ -8,7 +8,6 @@
 #define BITCOIN_MINING_H
 
 #include "bignum.h"
-#include "fork.h"
 
 /** Minimum nCoinAge required to stake PoS */
 static const unsigned int nStakeMinAge = 2 / 60; // 30 minutes
@@ -23,11 +22,11 @@ static const int64_t nBlockStandardReward = 920 * COIN;
 /** Superblock block subsidy */
 static const int64_t nBlockSuperReward = 1240 * COIN;
 /** Block spacing preferred */
-static const int64_t BLOCK_SPACING = (4 * 60) + 30;
+static const int64_t BLOCK_SPACING = 270;
 /** Block spacing minimum */
-static const int64_t BLOCK_SPACING_MIN = (2 * 60) + 15;
+static const int64_t BLOCK_SPACING_MIN = 135;
 /** Block spacing maximum */
-static const int64_t BLOCK_SPACING_MAX = (6 * 60) + 45;
+static const int64_t BLOCK_SPACING_MAX = 405;
 /** Desired block times/spacing */
 static const int64_t GetTargetSpacing = BLOCK_SPACING;
 /** MNengine collateral */
