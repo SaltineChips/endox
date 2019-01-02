@@ -309,7 +309,7 @@ unsigned int VRX_Retarget(const CBlockIndex* pindexLast, bool fProofOfStake)
     const CBigNum bnVelocity = fProofOfStake ? Params().ProofOfStakeLimit() : Params().ProofOfWorkLimit();
 
     // Check for blocks to index | Allowing for initial chain start
-    if (pindexLast->nHeight < scanheight+125)
+    if (pindexLast->nHeight < scanheight+5)
         return bnVelocity.GetCompact(); // can't index prevblock
 
     // Differentiate PoW/PoS prev block
