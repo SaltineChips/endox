@@ -23,11 +23,11 @@ static const int64_t nBlockStandardReward = 920 * COIN;
 /** Superblock block subsidy */
 static const int64_t nBlockSuperReward = 1240 * COIN;
 /** Block spacing preferred */
-static const int64_t BLOCK_SPACING = ((5 * 60) - 30);
+static const int64_t BLOCK_SPACING = (4 * 60) + 30;
 /** Block spacing minimum */
-static const int64_t BLOCK_SPACING_MIN = BLOCK_SPACING * (1 / 2);
+static const int64_t BLOCK_SPACING_MIN = (2 * 60) + 15;
 /** Block spacing maximum */
-static const int64_t BLOCK_SPACING_MAX = BLOCK_SPACING * (3 / 2);
+static const int64_t BLOCK_SPACING_MAX = (6 * 60) + 45;
 /** Desired block times/spacing */
 static const int64_t GetTargetSpacing = BLOCK_SPACING;
 /** MNengine collateral */

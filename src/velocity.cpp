@@ -73,57 +73,58 @@ bool Velocity(CBlockIndex* prevBlock, CBlock* block)
     OLDstamp = prevBlock->GetBlockTime();
     CURvalstamp = prevBlock->GetBlockTime() + VELOCITY_MIN_RATE[i];
     OLDvalstamp = prevBlock->pprev->GetBlockTime() + VELOCITY_MIN_RATE[i];
- // TODO: Rework and activate below section for future releases
- // Factor in TXs for Velocity constraints only if there are TXs to do so with
- if(VELOCITY_FACTOR[i] == true && TXvalue > 0)
- {
-    // Set Velocity logic value
-    if(TXlogic > 0)
+    // TODO: Rework and activate below section for future releases
+    // Factor in TXs for Velocity constraints only if there are TXs to do so with
+    if(VELOCITY_FACTOR[i] == true && TXvalue > 0)
     {
-       HaveCoins = true;
-    }
-    // Check for and enforce minimum TXs per block (Minimum TXs are disabled for Espers)
-    if(VELOCITY_MIN_TX[i] > 0 && TXcount < VELOCITY_MIN_TX[i])
-    {
-       LogPrintf("DENIED: Not enough TXs in block\n");
-       return false;
-    }
-    // Authenticate submitted block's TXs
-    if(VELOCITY_MIN_VALUE[i] > 0 || VELOCITY_MIN_FEE[i] > 0)
-    {
-       // Make sure we accept only blocks that sent an amount
-       // NOT being more than available coins to send
-       if(VELOCITY_MIN_FEE[i] > 0 && TXinput > 0)
-       {
-          if(HaveCoins == false)
-          {
-             LogPrintf("DENIED: Balance has insuficient funds for attempted TX with Velocity\n");
-             return false;
-          }
-       }
-
-          if(VELOCITY_MIN_VALUE[i] > 0 && TXvalue < VELOCITY_MIN_VALUE[i])
-          {
-             LogPrintf("DENIED: Invalid TX value found by Velocity\n");
-             return false;
-          }
-          if(VELOCITY_MIN_FEE[i] > 0 && TXinput > 0)
-          {
-             if(TXfee < VELOCITY_MIN_FEE[i])
-             {
-                LogPrintf("DENIED: Invalid network fee found by Velocity\n");
+        // Set Velocity logic value
+        if(TXlogic > 0)
+        {
+            HaveCoins = true;
+        }
+        // Check for and enforce minimum TXs per block (Minimum TXs are disabled for Espers)
+        if(VELOCITY_MIN_TX[i] > 0 && TXcount < VELOCITY_MIN_TX[i])
+        {
+            LogPrintf("DENIED: Not enough TXs in block\n");
+            return false;
+        }
+        // Authenticate submitted block's TXs
+        if(VELOCITY_MIN_VALUE[i] > 0 || VELOCITY_MIN_FEE[i] > 0)
+        {
+            // Make sure we accept only blocks that sent an amount
+            // NOT being more than available coins to send
+        if(VELOCITY_MIN_FEE[i] > 0 && TXinput > 0)
+        {
+            if(HaveCoins == false)
+            {
+                LogPrintf("DENIED: Balance has insuficient funds for attempted TX with Velocity\n");
                 return false;
-             }
-          }
-     }
-  }
+            }
+        }
+
+            if(VELOCITY_MIN_VALUE[i] > 0 && TXvalue < VELOCITY_MIN_VALUE[i])
+            {
+                LogPrintf("DENIED: Invalid TX value found by Velocity\n");
+                return false;
+            }
+            if(VELOCITY_MIN_FEE[i] > 0 && TXinput > 0)
+            {
+                if(TXfee < VELOCITY_MIN_FEE[i])
+                {
+                    LogPrintf("DENIED: Invalid network fee found by Velocity\n");
+                    return false;
+                }
+            }
+        }
+    }
+
     // Verify minimum Velocity rate
-    if( VELOCITY_RATE[i] > 0 && TXrate > VELOCITY_RATE[i] )
+    if( VELOCITY_RATE[i] > 0 && TXrate >= VELOCITY_MIN_RATE[i] )
     {
         LogPrintf("CHECK_PASSED: block spacing has met Velocity constraints\n");
     }
     // Rates that are too rapid are rejected without exception
-    else if( VELOCITY_MIN_RATE[i] > 0 && TXrate < VELOCITY_MIN_RATE[i] )
+    else if( VELOCITY_RATE[i] > 0 && TXrate < VELOCITY_MIN_RATE[i] )
     {
         LogPrintf("DENIED: Minimum block spacing not met for Velocity\n");
         return false;
