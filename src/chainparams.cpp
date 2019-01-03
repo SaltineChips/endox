@@ -103,7 +103,7 @@ public:
         nPoolMaxTransactions = 9;
         strMNenginePoolDummyAddress = "E9XUxMPUvNLfgAGqNpk4FnvzbPgdMfWzs3";
         nEndPoWBlock = 0x7fffffff;
-        nStartPoSBlock = 125;
+        nStartPoSBlock = 0;
     }
 
     virtual const CBlock& GenesisBlock() const { return genesis; }

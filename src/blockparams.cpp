@@ -309,7 +309,7 @@ unsigned int VRX_Retarget(const CBlockIndex* pindexLast, bool fProofOfStake)
     const CBigNum bnVelocity = fProofOfStake ? Params().ProofOfStakeLimit() : Params().ProofOfWorkLimit();
 
     // Check for blocks to index | Allowing for initial chain start
-    if (pindexLast->nHeight < scanheight+5)
+    if (pindexLast->nHeight < scanheight+124)
         return bnVelocity.GetCompact(); // can't index prevblock
 
     // Differentiate PoW/PoS prev block
@@ -411,17 +411,17 @@ int64_t GetProofOfWorkReward(int nHeight, int64_t nFees)
 {
     int64_t nSubsidy = nBlockStandardReward;
 
-    if(nHeight > nReservePhaseStart) {
-      if(nHeight < nReservePhaseEnd) {
-        nSubsidy = nBlockRewardReserve;
-      }
-    }
-
-    // TODO: Update superblock chances and emissions
     int chance = 250000;
 
-    if(randreward() <= chance && nHeight > nReservePhaseEnd) // 25% Chance of superblock
+    if(randreward() <= chance) // 25% Chance of superblock
         nSubsidy = nBlockSuperReward;
+
+    if(nHeight > nReservePhaseStart) {
+        if(pindexBest->nMoneySupply < (nBlockRewardReserve * 100))
+        {
+            nSubsidy = nBlockRewardReserve;
+        }
+    }
 
     // hardCap v2.1
     else if(pindexBest->nMoneySupply > MAX_SINGLE_TX)
@@ -445,6 +445,13 @@ int64_t GetProofOfStakeReward(const CBlockIndex* pindexPrev, int64_t nCoinAge, i
 
     if(randreward() <= chance) // 25% Chance of superblock
         nSubsidy = nBlockSuperReward;
+
+    if(pindexPrev->nHeight+1 > nReservePhaseStart) {
+        if(pindexBest->nMoneySupply < (nBlockRewardReserve * 100))
+        {
+            nSubsidy = nBlockRewardReserve;
+        }
+    }
 
     // hardCap v2.1
     else if(pindexBest->nMoneySupply > MAX_SINGLE_TX)
