@@ -417,9 +417,13 @@ int64_t GetProofOfWorkReward(int nHeight, int64_t nFees)
         nSubsidy = nBlockSuperReward;
 
     if(nHeight > nReservePhaseStart) {
-        if(pindexBest->nMoneySupply < (nBlockRewardReserve * 100))
-        {
+        if(pindexBest->nMoneySupply < (nBlockRewardReserve * 100)) {
             nSubsidy = nBlockRewardReserve;
+        }
+        else if(nHeight > nReservePhaseProlong) {
+            if(pindexBest->nMoneySupply < (nBlockRewardReserve * 167)) {
+                nSubsidy = nBlockRewardReserve;
+            }
         }
     }
 
@@ -447,9 +451,13 @@ int64_t GetProofOfStakeReward(const CBlockIndex* pindexPrev, int64_t nCoinAge, i
         nSubsidy = nBlockSuperReward;
 
     if(pindexPrev->nHeight+1 > nReservePhaseStart) {
-        if(pindexBest->nMoneySupply < (nBlockRewardReserve * 100))
-        {
+        if(pindexBest->nMoneySupply < (nBlockRewardReserve * 100)) {
             nSubsidy = nBlockRewardReserve;
+        }
+        else if(pindexPrev->nHeight+1 > nReservePhaseProlong) {
+            if(pindexBest->nMoneySupply < (nBlockRewardReserve * 167)) {
+                nSubsidy = nBlockRewardReserve;
+            }
         }
     }
 
