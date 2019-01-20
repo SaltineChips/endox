@@ -7,7 +7,7 @@
 
 #include <QAbstractListModel>
 
-extern bool fUseBlackTheme;
+extern bool fUseDarkTheme;
 
 QT_BEGIN_NAMESPACE
 class QNetworkProxy;
@@ -40,7 +40,7 @@ public:
         DisplayUnit,            // EndoxCoinUnits::Unit
         Language,               // QString
         CoinControlFeatures,    // bool
-        UseBlackTheme,     // bool
+        UseDarkTheme,     // bool
         MNengineRounds,    // int
         AnonymizeEndoxCoinAmount, //int
         OptionIDRowCount,
