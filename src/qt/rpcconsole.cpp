@@ -13,6 +13,8 @@
 #include "rpcserver.h"
 #include "rpcclient.h"
 
+#include "optionsmodel.h"
+
 #include <QClipboard>
 #include <QTime>
 #include <QThread>
@@ -38,10 +40,10 @@ const struct {
     const char *url;
     const char *source;
 } ICON_MAPPING[] = {
-    {"cmd-request", ":/icons/tx_input"},
-    {"cmd-reply", ":/icons/tx_output"},
-    {"cmd-error", ":/icons/tx_output"},
-    {"misc", ":/icons/tx_inout"},
+    {"cmd-request", fUseDarkTheme ? ":/icons/dark/tx_input" : ":/icons/tx_input"},
+    {"cmd-reply", fUseDarkTheme ? ":/icons/dark/tx_output" : ":/icons/tx_output"},
+    {"cmd-error", fUseDarkTheme ? ":/icons/dark/tx_output" : ":/icons/tx_output"},
+    {"misc", fUseDarkTheme ? ":/icons/dark/tx_inout" : ":/icons/tx_inout"},
     {NULL, NULL}
 };
 
@@ -210,8 +212,8 @@ RPCConsole::RPCConsole(QWidget *parent) :
     ui->setupUi(this);
 
 #ifndef Q_OS_MAC
-    ui->openDebugLogfileButton->setIcon(QIcon(":/icons/export"));
-    ui->showCLOptionsButton->setIcon(QIcon(":/icons/options"));
+    ui->openDebugLogfileButton->setIcon(QIcon(fUseDarkTheme ? ":/icons/dark/export" : ":/icons/export"));
+    ui->showCLOptionsButton->setIcon(QIcon(fUseDarkTheme ? ":/icons/dark/options" : ":/icons/options"));
 #endif
 
     // Install event filter for up and down arrow
@@ -430,9 +432,9 @@ void RPCConsole::clear()
                 "table { }"
                 "td.time { color: #808080; padding-top: 3px; } "
                 "td.message { font-family: Monospace; font-size: 12px; } "
-                "td.cmd-request { color: #00C0C0; } "
+                "td.cmd-request { color: #545454; } "
                 "td.cmd-error { color: red; } "
-                "b { color: #00C0C0; } "
+                "b { color: #545454; } "
                 );
 
     message(CMD_REPLY, (tr("Welcome to the Endox-Coin RPC console.") + "<br>" +
