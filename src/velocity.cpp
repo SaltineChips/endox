@@ -48,7 +48,6 @@ bool Velocity(CBlockIndex* prevBlock, CBlock* block)
     int64_t TXvalue = 0;
     int64_t TXinput = 0;
     int64_t TXfee = 0;
-    int64_t TXnondevfee = 0;
     int64_t TXdevfee = 0;
     int64_t TXnetfee = 0;
     int64_t TXcount = 0;
@@ -61,6 +60,8 @@ bool Velocity(CBlockIndex* prevBlock, CBlock* block)
     int64_t TXstampC = 0;
     int64_t TXstampO = 0;
     int64_t devopsPayment = 0;
+    int64_t SYScrntstamp = 0;
+    int64_t SYSbaseStamp = 0;
     int nHeight = prevBlock->nHeight+1;
     int i = VelocityI(nHeight);
     int HaveCoins = false;
@@ -73,10 +74,23 @@ bool Velocity(CBlockIndex* prevBlock, CBlock* block)
     OLDstamp = prevBlock->GetBlockTime();
     CURvalstamp = prevBlock->GetBlockTime() + VELOCITY_MIN_RATE[i];
     OLDvalstamp = prevBlock->pprev->GetBlockTime() + VELOCITY_MIN_RATE[i];
+    SYScrntstamp = GetAdjustedTime() + VELOCITY_MIN_RATE[i];
+    SYSbaseStamp = GetTime() + VELOCITY_MIN_RATE[i];
+
     // TODO: Rework and activate below section for future releases
     // Factor in TXs for Velocity constraints only if there are TXs to do so with
     if(VELOCITY_FACTOR[i] == true && TXvalue > 0)
     {
+        // Set factor values
+        BOOST_FOREACH(const CTransaction& tx, block->vtx)
+        {
+            TXvalue = tx.GetValueOut();
+            TXinput = tx.GetValueIn(mapInputs);
+            TXfee = TXinput - TXvalue;
+            TXcount = block->vtx.size();
+            // TXlogic = GetPrevAccountBalance - TXinput;
+            // TXrate = block->GetBlockTime() - prevBlock->GetBlockTime();
+        }
         // Set Velocity logic value
         if(TXlogic > 0)
         {
@@ -93,15 +107,14 @@ bool Velocity(CBlockIndex* prevBlock, CBlock* block)
         {
             // Make sure we accept only blocks that sent an amount
             // NOT being more than available coins to send
-        if(VELOCITY_MIN_FEE[i] > 0 && TXinput > 0)
-        {
-            if(HaveCoins == false)
+            if(VELOCITY_MIN_FEE[i] > 0 && TXinput > 0)
             {
-                LogPrintf("DENIED: Balance has insuficient funds for attempted TX with Velocity\n");
-                return false;
+                if(HaveCoins == false)
+                {
+                    LogPrintf("DENIED: Balance has insuficient funds for attempted TX with Velocity\n");
+                    return false;
+                }
             }
-        }
-
             if(VELOCITY_MIN_VALUE[i] > 0 && TXvalue < VELOCITY_MIN_VALUE[i])
             {
                 LogPrintf("DENIED: Invalid TX value found by Velocity\n");
@@ -129,8 +142,16 @@ bool Velocity(CBlockIndex* prevBlock, CBlock* block)
         LogPrintf("DENIED: Minimum block spacing not met for Velocity\n");
         return false;
     }
-    // Validate timestamp is logical
+
+    // Validate timestamp is logical based on previous block history
     else if(CURstamp < CURvalstamp || OLDstamp < OLDvalstamp || TXstampC < CURvalstamp || TXstampO < OLDvalstamp)
+    {
+        LogPrintf("DENIED: Block timestamp is not logical\n");
+        return false;
+    }
+
+    // Validate timestamp is logical based on system time
+    if(CURstamp > SYSbaseStamp || CURstamp > SYScrntstamp || TXstampC > SYSbaseStamp || TXstampC > SYScrntstamp)
     {
         LogPrintf("DENIED: Block timestamp is not logical\n");
         return false;
@@ -151,16 +172,16 @@ bool Velocity(CBlockIndex* prevBlock, CBlock* block)
                 TXinput = tx.GetValueIn(mapInputs);
                 TXfee = TXinput - TXvalue;
                 if(TXfee > devopsPayment){
-                    TXnondevfee = TXfee - devopsPayment;
+                    TXnetfee = TXfee - devopsPayment;
                 }
                 else{
-                    TXnondevfee = devopsPayment - TXfee;
+                    TXnetfee = devopsPayment - TXfee;
                 }
-                if(TXfee > TXnondevfee){
-                    TXdevfee = TXfee - TXnondevfee;
+                if(TXfee > TXnetfee){
+                    TXdevfee = TXfee - TXnetfee;
                 }
                 else{
-                    TXdevfee = TXnondevfee - TXfee;
+                    TXdevfee = TXnetfee - TXfee;
                 }
 
             }
