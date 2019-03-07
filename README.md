@@ -8,7 +8,8 @@ What is the Endox-Coin [EDX] Blockchain?
 *TODO: Update documentation regarding implemented tech as this section is out of date and much progress and upgrades have been made to mentioned sections...*
 
 ### Overview
-Endox is a blockchain project with the goal of offering secured messaging, Darksend, masternodes and an overall pleasing experience to the user.
+This blockchain was devised and created through the community for the community (replacing upon community request the old EndoV2 that this is swapping from) 
+The goal of this project is to become it's own Operating System for all platforms (As secure and user-friendly as Linux but as beautiful and graceful as Macintosh OS) 
 
 ### Blockchain Technology
 The Endox [EDX] Blockchain is an experimental smart contract platform protocol that enables 
