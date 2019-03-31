@@ -53,8 +53,8 @@ public:
     enum Unit
     {
         EDX,
-        mIVC,
-        uIVC
+        mEDX,
+        uEDX
     };
 
     enum SeparatorStyle
