@@ -154,7 +154,7 @@ Value getstakinginfo(const Array& params, bool fHelp)
     obj.push_back(Pair("expectedtime", nExpectedTime));
 
     obj.push_back(Pair("stakethreshold", GetStakeCombineThreshold() / COIN));
-    
+
     return obj;
 }
 
@@ -668,6 +668,43 @@ Value getblocktemplate(const Array& params, bool fHelp)
     result.push_back(Pair("curtime", (int64_t)pblock->nTime));
     result.push_back(Pair("bits", strprintf("%08x", pblock->nBits)));
     result.push_back(Pair("height", (int64_t)(pindexPrev->nHeight+1)));
+    result.push_back(Pair("votes", aVotes));
+    
+    // Check for payment upgrade fork
+    if (pindexBest->GetBlockTime() > 0)
+    {
+        if (pindexBest->GetBlockTime() > nPaymentUpdate_1) // Sunday, June 16, 2019 9:56:07 AM
+        {
+            // Set Masternode / DevOps payments
+            int64_t masternodePayment = GetMasternodePayment(pindexPrev->nHeight+1, (int64_t)pblock->vtx[0].vout[0].nValue);
+            int64_t devopsPayment = GetDevOpsPayment(pindexPrev->nHeight+1, (int64_t)pblock->vtx[0].vout[0].nValue);
+
+            // Include DevOps payments
+            CAmount devopsSplit = devopsPayment;
+            Object devopsReward;
+            devopsReward.push_back(Pair("devopspayee", Params().DevOpsAddress()));
+            devopsReward.push_back(Pair("amount", (int64_t)devopsSplit));
+            result.push_back(Pair("devopsreward", devopsReward));
+            result.push_back(Pair("devops_reward_enforced", true));
+
+            // Include Masternode payments
+            CAmount masternodeSplit = masternodePayment;
+            CMasternode* winningNode = mnodeman.GetCurrentMasterNode(1);
+
+            if (winningNode) {
+                CScript payee = GetScriptForDestination(winningNode->pubkey.GetID());
+                CTxDestination address1;
+                ExtractDestination(payee, address1);
+                CBitcoinAddress address2(address1);
+                result.push_back(Pair("payee", address2.ToString().c_str()));
+            } else {
+                result.push_back(Pair("payee", Params().DevOpsAddress().c_str()));
+            }
+            result.push_back(Pair("payee_amount", (int64_t)masternodeSplit));
+            result.push_back(Pair("masternode_payments", true));
+            result.push_back(Pair("enforce_masternode_payments", true));
+        }
+    }
 
     return result;
 }

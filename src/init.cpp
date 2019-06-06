@@ -547,6 +547,9 @@ bool AppInit2(boost::thread_group& threadGroup)
     //ignore masternodes below protocol version
     nMasternodeMinProtocol = GetArg("-masternodeminprotocol", MIN_POOL_PEER_PROTO_VERSION);
 
+    //log startup time for advanced Masternode checks delay (required for proper sync)
+    nMasterNodeChecksDelayBaseTime = GetTime();
+
     if (fDaemon)
         fprintf(stdout, "Endox-Coin server starting\n"); 
 

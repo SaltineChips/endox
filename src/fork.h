@@ -10,6 +10,10 @@
 
 /** Reserve Phase start block */ 
 static const int64_t nReservePhaseStart = 1;
+/** Masternode/Devops Payment Update 1 **/
+static const int64_t nPaymentUpdate_1 = 1560678967; // Sunday, June 16, 2019 9:56:07 AM
+/** Masternode/Devops Payment Update 2 **/
+static const int64_t nPaymentUpdate_2 = 9993058800; // OFF
 /** Reserve Phase prolong block */
 static const int64_t nReservePhaseProlong = 290;
 /** Velocity toggle block */

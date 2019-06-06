@@ -15,6 +15,8 @@
 #include "txdb.h"
 #include "velocity.h"
 #include "main.h"
+#include "mnengine.h"
+#include "masternodeman.h"
 
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int_distribution.hpp>
@@ -75,7 +77,7 @@ uint64_t cntTime = 0;
 uint64_t prvTime = 0;
 uint64_t difTimePoS = 0;
 uint64_t difTimePoW = 0;
-
+string loggedpayee = "";
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -311,6 +313,17 @@ unsigned int VRX_Retarget(const CBlockIndex* pindexLast, bool fProofOfStake)
     // Check for blocks to index | Allowing for initial chain start
     if (pindexLast->nHeight < scanheight+124)
         return bnVelocity.GetCompact(); // can't index prevblock
+
+    // Live fork toggle diff reset
+    if(pindexLast->GetBlockTime() > 0)
+    {
+        if(pindexLast->GetBlockTime() > nPaymentUpdate_1) // Monday, May 20, 2019 12:00:00 AM
+        {
+            if(pindexLast->GetBlockTime() < nPaymentUpdate_1+480) {
+                return bnVelocity.GetCompact(); // diff reset
+            }
+        }
+    }
 
     // Differentiate PoW/PoS prev block
     BlockVelocityType = GetLastBlockIndex(pindexLast, fProofOfStake);
