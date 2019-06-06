@@ -417,6 +417,7 @@ CBlock* CreateNewBlock(CReserveKey& reservekey, bool fProofOfStake, int64_t* pFe
                     {
                         LogPrintf("CreateNewBlock(): Failed to detect dev address to pay\n");
                     }
+
                     if(bMasterNodePayment) {
                         //spork
                         if(!masternodePayments.GetBlockPayee(pindexPrev->nHeight+1, mn_payee, vin)){
@@ -430,8 +431,10 @@ CBlock* CreateNewBlock(CReserveKey& reservekey, bool fProofOfStake, int64_t* pFe
                     } else {
                         hasPayment = false;
                     }
+
                     CAmount masternodePayment = GetMasternodePayment(nHeight, blockReward);
                     CAmount devopsPayment = GetDevOpsPayment(nHeight, blockReward);
+
                     if (hasPayment) {
                         pblock->vtx[0].vout.resize(3);
                         pblock->vtx[0].vout[1].scriptPubKey = mn_payee;
