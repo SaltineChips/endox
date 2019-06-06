@@ -7,6 +7,8 @@
 #include "blockparams.h"
 #include "chainparams.h"
 #include "main.h"
+#include "masternodeman.h"
+#include "masternode-payments.h"
 #include "db.h"
 #include "txdb.h"
 #include "init.h"
@@ -653,6 +655,8 @@ Value getblocktemplate(const Array& params, bool fHelp)
         aMutable.push_back("version/force");
     }
 
+    Array aVotes;
+
     Object result;
     result.push_back(Pair("version", pblock->nVersion));
     result.push_back(Pair("previousblockhash", pblock->hashPrevBlock.GetHex()));
@@ -669,7 +673,7 @@ Value getblocktemplate(const Array& params, bool fHelp)
     result.push_back(Pair("bits", strprintf("%08x", pblock->nBits)));
     result.push_back(Pair("height", (int64_t)(pindexPrev->nHeight+1)));
     result.push_back(Pair("votes", aVotes));
-    
+
     // Check for payment upgrade fork
     if (pindexBest->GetBlockTime() > 0)
     {
