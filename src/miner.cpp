@@ -465,7 +465,7 @@ CBlock* CreateNewBlock(CReserveKey& reservekey, bool fProofOfStake, int64_t* pFe
         pblock->hashPrevBlock  = pindexPrev->GetBlockHash();
         pblock->nTime          = max(pindexPrev->GetPastTimeLimit()+1, pblock->GetMaxTransactionTime());
         }
-        if (!fProofOfStake){
+        if (!fProofOfStake) {
             pblock->UpdateTime(pindexPrev);
         pblock->nNonce         = 0;
     }
@@ -476,7 +476,7 @@ CBlock* CreateNewBlock(CReserveKey& reservekey, bool fProofOfStake, int64_t* pFe
 
 void IncrementExtraNonce(CBlock* pblock, CBlockIndex* pindexPrev, unsigned int& nExtraNonce)
 {
-    // Update nExtraNonce
+    // Update nExtraNonce TODO Make Pull Request to Digital Note [XDN] ~ Jerimiah
     static uint256 hashPrevBlock;
     if (hashPrevBlock != pblock->hashPrevBlock)
     {
