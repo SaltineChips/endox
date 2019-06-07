@@ -458,13 +458,14 @@ CBlock* CreateNewBlock(CReserveKey& reservekey, bool fProofOfStake, int64_t* pFe
             } //
         }
 
-        if (pFees)
+        if (pFees) {
             *pFees = nFees;
 
         // Fill in header
         pblock->hashPrevBlock  = pindexPrev->GetBlockHash();
         pblock->nTime          = max(pindexPrev->GetPastTimeLimit()+1, pblock->GetMaxTransactionTime());
-        if (!fProofOfStake)
+        }
+        if (!fProofOfStake){
             pblock->UpdateTime(pindexPrev);
         pblock->nNonce         = 0;
     }
