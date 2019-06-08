@@ -3053,7 +3053,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     // define address
     CBitcoinAddress devopaddress;
     if (Params().NetworkID() == CChainParams::MAIN)
-        devopaddress = CBitcoinAddress("dSCXLHTZJJqTej8ZRszZxbLrS6dDGVJhw7"); // TODO: nothing, already set to a valid DigitalNote address
+        devopaddress = CBitcoinAddress("E65nSdTLiZ7YY2xnwXzbYJxekZRjv24qtL");
     else if (Params().NetworkID() == CChainParams::TESTNET)
         devopaddress = CBitcoinAddress("");
     else if (Params().NetworkID() == CChainParams::REGTEST)
@@ -3146,7 +3146,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
         // define address
         CBitcoinAddress devopaddress;
         if (Params().NetworkID() == CChainParams::MAIN)
-            devopaddress = CBitcoinAddress("Dtz6UgAxwavsnxnb7jeSRj5cgERLvV8KBy"); // TODO: nothing, already set to a valid Endox address
+            devopaddress = CBitcoinAddress("E65nSdTLiZ7YY2xnwXzbYJxekZRjv24qtL");
         else if (Params().NetworkID() == CChainParams::TESTNET)
             devopaddress = CBitcoinAddress("");
         else if (Params().NetworkID() == CChainParams::REGTEST)
