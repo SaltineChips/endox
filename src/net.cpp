@@ -19,7 +19,7 @@
 #endif
 
 #ifdef USE_UPNP
-#include <miniupnpc-1.9/miniupnpc.h>
+#include <miniupnpc-1.9/miniupnpc.h> //Might Have To Be changed Depending On Boost Version
 #include <miniupnpc-1.9/miniwget.h>
 #include <miniupnpc-1.9/upnpcommands.h>
 #include <miniupnpc-1.9/upnperrors.h>
@@ -34,7 +34,7 @@
 #define MSG_NOSIGNAL 0
 #endif
 using namespace std;
-using namespace boost;
+using namespace boost; //Might Have To Be changed Depending On Boost Version
 
 static const int MAX_OUTBOUND_CONNECTIONS = 12;
 
