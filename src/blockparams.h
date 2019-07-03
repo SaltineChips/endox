@@ -1,7 +1,7 @@
 // Copyright (c) 2016-2019 The CryptoCoderz Team / Espers
 // Copyright (c) 2018-2019 The CryptoCoderz Team / INSaNe project
 // Copyright (c) 2018-2019 The Rubix project
-// Copyright (c) 2018-2019 The Endox project
+// Copyright (c) 2018 - 2019 The Endox Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #ifndef BITCOIN_BLOCKPARAMS_H
@@ -10,6 +10,7 @@
 #include "net.h"
 #include "chain.h"
 #include "bignum.h"
+#include "base58.h"
 
 #define START_MASTERNODE_PAYMENTS_TESTNET      9993058800  // OFF (NOT TOGGLED)
 #define START_MASTERNODE_PAYMENTS              1548205860  // ON  (Wednesday, January 23, 2019 1:11 AM)
@@ -30,12 +31,13 @@ enum DiffMode {
     DIFF_VRX     = 1, // Retarget using Terminal-Velocity-RateX
 };
 
-void VRXswngPoSdebug();
-void VRXswngPoWdebug();
+void VRXswngdebug();
 void VRXdebug();
 void GNTdebug();
 void VRX_BaseEngine(const CBlockIndex* pindexLast, bool fProofOfStake);
+void VRX_Simulate_Retarget();
 void VRX_ThreadCurve(const CBlockIndex* pindexLast, bool fProofOfStake);
+void VRX_Dry_Run(const CBlockIndex* pindexLast);
 unsigned int VRX_Retarget(const CBlockIndex* pindexLast, bool fProofOfStake);
 unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake);
 int64_t GetProofOfWorkReward(int nHeight, int64_t nFees);
