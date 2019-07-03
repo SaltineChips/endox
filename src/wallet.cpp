@@ -2626,7 +2626,7 @@ bool CWallet::SendStealthMoneyToDestination(CStealthAddress& sxAddress, int64_t 
 
     std::vector<unsigned char> vchNarr;
 
-    // -- Parse EndoxCoin address
+    // -- Parse Endox-Coin address
     CScript scriptPubKey;
     scriptPubKey.SetDestination(addrTo.Get());
 
@@ -2886,7 +2886,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
 
     txNew.vin.clear();
     txNew.vout.clear();
-    
+
     // OLD IMPLEMENTATION COMMNETED OUT
     //
     // Determine our payment script for devops
@@ -3052,12 +3052,13 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
 
     // define address
     CBitcoinAddress devopaddress;
-    if (Params().NetworkID() == CChainParams::MAIN)
-        devopaddress = CBitcoinAddress("E65nSdTLiZ7YY2xnwXzbYJxekZRjv24qtL");
-    else if (Params().NetworkID() == CChainParams::TESTNET)
+    if (Params().NetworkID() == CChainParams::MAIN) {
+        devopaddress = CBitcoinAddress("Dtz6UgAxwavsnxnb7jeSRj5cgERLvV8KBy");
+    } else if (Params().NetworkID() == CChainParams::TESTNET) {
         devopaddress = CBitcoinAddress("");
-    else if (Params().NetworkID() == CChainParams::REGTEST)
+    } else if (Params().NetworkID() == CChainParams::REGTEST) {
         devopaddress = CBitcoinAddress("");
+    }
 
     // Masternode Payments
     int payments = 1;
@@ -3143,15 +3144,6 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
 
     bool hasdevopsPay = true;
     if(bDevOpsPayment) {
-        // define address
-        CBitcoinAddress devopaddress;
-        if (Params().NetworkID() == CChainParams::MAIN)
-            devopaddress = CBitcoinAddress("E65nSdTLiZ7YY2xnwXzbYJxekZRjv24qtL");
-        else if (Params().NetworkID() == CChainParams::TESTNET)
-            devopaddress = CBitcoinAddress("");
-        else if (Params().NetworkID() == CChainParams::REGTEST)
-            devopaddress = CBitcoinAddress("");
-
         // verify address
         if(devopaddress.IsValid())
         {
@@ -3167,7 +3159,6 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
         {
             return error("CreateCoinStake: Failed to detect dev address to pay\n");
         }
-
     }
     else {
         hasdevopsPay = false;
@@ -3391,7 +3382,7 @@ string CWallet::SendMoneyToDestination(const CTxDestination& address, int64_t nV
     if (nValue + nTransactionFee > GetBalance())
         return _("Insufficient funds");
 
-    // Parse EndoxCoin address
+    // Parse Endox-Coin address
     CScript scriptPubKey;
     scriptPubKey.SetDestination(address);
 

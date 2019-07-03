@@ -297,7 +297,7 @@ std::string HelpMessage()
         "  -debugsmsg                               " + _("Log extra debug messages.") + "\n" +
         "  -smsgscanchain                           " + _("Scan the block chain for public key addresses on startup.") + "\n";
     strUsage += "  -stakethreshold=<n> " + _("This will set the output size of your stakes to never be below this number (default: 100)") + "\n";
-        strUsage += "  -liveforktoggle=<n> " + _("Toggle experimental features via block height testing fork, (example: -command=<fork_height>)") + "\n";
+    strUsage += "  -liveforktoggle=<n> " + _("Toggle experimental features via block height testing fork, (example: -command=<fork_height>)") + "\n";
 
     return strUsage;
 }
@@ -991,7 +991,7 @@ bool AppInit2(boost::thread_group& threadGroup)
     if (!strErrors.str().empty())
         return InitError(strErrors.str());
 
-        // Check toggle switch for experimental feature testing fork
+    // Check toggle switch for experimental feature testing fork
     uiInterface.InitMessage(_("Checking experimental feature toggle..."));
     strLiveForkToggle = GetArg("-liveforktoggle", "");
     LogPrintf("Checking for experimental testing feature fork toggle...\n");
@@ -1010,9 +1010,7 @@ bool AppInit2(boost::thread_group& threadGroup)
         {
             LogPrintf("Continuing with fork toggle set for block: %s | Happy testing!\n", strLiveForkToggle.c_str());
         }
-
-    }
-    else {
+    } else {
         nLiveForkToggle = 0;
         LogPrintf("No experimental testing feature fork toggle detected... skipping...\n");
     }

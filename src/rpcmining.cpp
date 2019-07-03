@@ -656,7 +656,6 @@ Value getblocktemplate(const Array& params, bool fHelp)
     }
 
     Array aVotes;
-
     Object result;
 
     // Define coinbase payment
@@ -666,12 +665,10 @@ Value getblocktemplate(const Array& params, bool fHelp)
     result.push_back(Pair("version", pblock->nVersion));
     result.push_back(Pair("previousblockhash", pblock->hashPrevBlock.GetHex()));
     result.push_back(Pair("transactions", transactions));
-
     // Check for payment upgrade fork
     if (pindexBest->GetBlockTime() > 0)
     {
-        if (pindexBest->GetBlockTime() > nPaymentUpdate_1) // Sunday, June 16, 2019 9:56:07 AM
-        {
+        if (pindexBest->GetBlockTime() > nLiveForkToggle){// TODO: Verify Upgrade
             // Set Masternode / DevOps payments
             int64_t masternodePayment = GetMasternodePayment(pindexPrev->nHeight+1, networkPayment);
             int64_t devopsPayment = GetDevOpsPayment(pindexPrev->nHeight+1, networkPayment);
@@ -713,7 +710,7 @@ Value getblocktemplate(const Array& params, bool fHelp)
     result.push_back(Pair("bits", strprintf("%08x", pblock->nBits)));
     result.push_back(Pair("height", (int64_t)(pindexPrev->nHeight+1)));
     result.push_back(Pair("votes", aVotes));
-    
+
     return result;
 }
 
