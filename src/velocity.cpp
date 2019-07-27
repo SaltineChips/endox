@@ -10,6 +10,7 @@
 #include "velocity.h"
 #include "rpcserver.h"
 #include "wallet.h"
+#include "blockparams.h"
 
 /* VelocityI(int nHeight) ? i : -1
    Returns i or -1 if not found */
@@ -82,7 +83,7 @@ bool Velocity(CBlockIndex* prevBlock, CBlock* block)
         {
             HaveCoins = true;
         }
-        // Check for and enforce minimum TXs per block (Minimum TXs are disabled for Espers)
+        // Check for and enforce minimum TXs per block (Minimum TXs are disabled for Endox)
         if(VELOCITY_MIN_TX[i] > 0 && TXcount < VELOCITY_MIN_TX[i])
         {
             LogPrintf("DENIED: Not enough TXs in block\n");
@@ -129,7 +130,35 @@ bool Velocity(CBlockIndex* prevBlock, CBlock* block)
         LogPrintf("DENIED: Minimum block spacing not met for Velocity\n");
         return false;
     }
+<<<<<<< Updated upstream
     // Validate timestamp is logical
+=======
+    // Verify minimum Nbit rate
+    if(BLOCK_BIT_MIN < GetTerminalnBitAverage )
+    {
+        LogPrintf("CHECK_PASSED: Minimum nBit Value has met System Constraints\n");
+    }
+    // nBit restraints not met to Pass
+    else if(BLOCK_BIT_MIN > GetTerminalnBitAverage )
+    {
+        LogPrintf("DENIED: Minimum nBit value has not met System Constraints\n");
+        if(nHeight >= VELOCITY_NBITTOGGLE[i])
+            return false;
+    }
+    // Verify maximum Nbit rate
+    if(BLOCK_BIT_MAX > GetTerminalnBitAverage )
+    {
+        LogPrintf("CHECK_PASSED: Maximum nBit Value has met System Constraints\n");
+    }
+    // nBit restraints not met to Pass
+    else if(BLOCK_BIT_MAX < GetTerminalnBitAverage )
+    {
+        LogPrintf("DENIED: Maximum nBit value has not met System Constraints\n");
+        if(nHeight >= VELOCITY_NBITTOGGLE[i])
+            return false;
+    }
+    // Validate timestamp is logical based on previous block history
+>>>>>>> Stashed changes
     else if(CURstamp < CURvalstamp || OLDstamp < OLDvalstamp || TXstampC < CURvalstamp || TXstampO < OLDvalstamp)
     {
         LogPrintf("DENIED: Block timestamp is not logical\n");
