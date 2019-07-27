@@ -8,12 +8,14 @@
 
 #include "bignum.h"
 
-/** Reserve Phase start block */ 
+/** Reserve Phase start block */
 static const int64_t nReservePhaseStart = 1;
 /** Reserve Phase prolong block */
 static const int64_t nReservePhaseProlong = 290;
 /** Velocity toggle block */
 static const int64_t VELOCITY_TOGGLE = 175; // Implementation of the Velocity system into the chain.
+/** nBit toggle block */
+static const int64_t NBIT_TOGGLE =  9999999; // Implementation of the nBit constraint system into the chain.
 /** Velocity retarget toggle block */
 static const int64_t VELOCITY_TDIFF = 0; // Use Velocity's retargetting method.
 /** Protocol 3.0 toggle */

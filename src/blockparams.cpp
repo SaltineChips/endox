@@ -36,6 +36,11 @@ double VLF2 = 0;
 double VLF3 = 0;
 double VLF4 = 0;
 double VLF5 = 0;
+double VLN1 = 0;
+double VLN2 = 0;
+double VLN3 = 0;
+double VLN4 = 0;
+double VLN5 = 0;
 double VLFtmp = 0;
 double VRFsm1 = 1;
 double VRFdw1 = 0.75;
@@ -44,6 +49,7 @@ double VRFup1 = 1.25;
 double VRFup2 = 1.5;
 double VRFup3 = 2;
 double TerminalAverage = 0;
+double TerminalnBitAverage = 0;
 double TerminalFactor = 10000;
 double debugTerminalAverage = 0;
 CBigNum newBN = 0;
@@ -54,6 +60,12 @@ int64_t VLrate3 = 0;
 int64_t VLrate4 = 0;
 int64_t VLrate5 = 0;
 int64_t VLRtemp = 0;
+int64_t VLbits1 = 0;
+int64_t VLbits2 = 0;
+int64_t VLbits3 = 0;
+int64_t VLbits4 = 0;
+int64_t VLbits5 = 0;
+int64_t VLNtemp = 0;
 int64_t DSrateNRM = BLOCK_SPACING;
 int64_t DSrateMAX = BLOCK_SPACING_MAX;
 int64_t FRrateDWN = DSrateNRM - 60;
@@ -75,6 +87,7 @@ uint64_t hourRounds = 0;
 uint64_t difCurve = 0;
 uint64_t debugHourRounds = 0;
 uint64_t debugDifCurve = 0;
+double GetTerminalnBitAverage = 0;
 bool fDryRun;
 bool fCRVreset;
 const CBlockIndex* pindexPrev = 0;
@@ -250,8 +263,27 @@ void VRX_BaseEngine(const CBlockIndex* pindexLast, bool fProofOfStake)
            // move up per scan round
            scanblocks ++;
        }
-       // Final mathematics
+       // Final mathematics for nTime
        TerminalAverage = (VLF1 + VLF2 + VLF3 + VLF4 + VLF5) / AverageDivisor;
+
+       // nBits calculations
+       while(scanblocks < scanheight)
+       {
+           scantime_1 = scantime_2;
+           pindexPrev = pindexPrev->pprev;
+           scantime_2 = pindexPrev->nBits;
+           // Set standard values
+           if(scanblocks > 0){
+               if        (scanblocks < scanheight-4){ VLNtemp = VLbits1; }
+               else if(scanblocks < scanheight-3){ VLNtemp = VLbits2; }
+               else if(scanblocks < scanheight-2){ VLNtemp = VLbits3; }
+               else if(scanblocks < scanheight-1){ VLNtemp = VLbits4; }
+               else if(scanblocks < scanheight-0){ VLNtemp = VLbits5; }
+           }
+       }
+       // Final mathematics for nBits
+       TerminalnBitAverage = (VLN1 + VLN2 + VLN3 + VLN4 + VLN5) / AverageDivisor;
+       GetTerminalnBitAverage = TerminalnBitAverage;
        return;
 }
 
