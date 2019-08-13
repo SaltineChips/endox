@@ -550,6 +550,102 @@ public:
 
 
 
+/** Data structure that represents a partial merkle tree.
+ *
+ * It respresents a subset of the txid's of a known block, in a way that
+ * allows recovery of the list of txid's and the merkle root, in an
+ * authenticated way.
+ *
+ * The encoding works as follows: we traverse the tree in depth-first order,
+ * storing a bit for each traversed node, signifying whether the node is the
+ * parent of at least one matched leaf txid (or a matched txid itself). In
+ * case we are at the leaf level, or this bit is 0, its merkle node hash is
+ * stored, and its children are not explorer further. Otherwise, no hash is
+ * stored, but we recurse into both (or the only) child branch. During
+ * decoding, the same depth-first traversal is performed, consuming bits and
+ * hashes as they written during encoding.
+ *
+ * The serialization is fixed and provides a hard guarantee about the
+ * encoded size:
+ *
+ *   SIZE <= 10 + ceil(32.25*N)
+ *
+ * Where N represents the number of leaf nodes of the partial tree. N itself
+ * is bounded by:
+ *
+ *   N <= total_transactions
+ *   N <= 1 + matched_transactions*tree_height
+ *
+ * The serialization format:
+ *  - uint32     total_transactions (4 bytes)
+ *  - varint     number of hashes   (1-3 bytes)
+ *  - uint256[]  hashes in depth-first order (<= 32*N bytes)
+ *  - varint     number of bytes of flag bits (1-3 bytes)
+ *  - byte[]     flag bits, packed per 8 in a byte, least significant bit first (<= 2*N-1 bits)
+ * The size constraints follow from this.
+ */
+/* class CPartialMerkleTree
+{
+protected:
+    // the total number of transactions in the block
+    unsigned int nTransactions;
+
+    // node-is-parent-of-matched-txid bits
+    std::vector<bool> vBits;
+
+    // txids and internal hashes
+    std::vector<uint256> vHash;
+
+    // flag set when encountering invalid data
+    bool fBad;
+
+    // helper function to efficiently calculate the number of nodes at given height in the merkle tree
+    unsigned int CalcTreeWidth(int height) {
+        return (nTransactions+(1 << height)-1) >> height;
+    }
+
+    // calculate the hash of a node in the merkle tree (at leaf level: the txid's themself)
+    uint256 CalcHash(int height, unsigned int pos, const std::vector<uint256> &vTxid);
+
+    // recursive function that traverses tree nodes, storing the data as bits and hashes
+    void TraverseAndBuild(int height, unsigned int pos, const std::vector<uint256> &vTxid, const std::vector<bool> &vMatch);
+
+    // recursive function that traverses tree nodes, consuming the bits and hashes produced by TraverseAndBuild.
+    // it returns the hash of the respective node.
+    uint256 TraverseAndExtract(int height, unsigned int pos, unsigned int &nBitsUsed, unsigned int &nHashUsed, std::vector<uint256> &vMatch);
+
+public:
+
+    // serialization implementation
+    IMPLEMENT_SERIALIZE(
+        READWRITE(nTransactions);
+        READWRITE(vHash);
+        std::vector<unsigned char> vBytes;
+        if (fRead) {
+            READWRITE(vBytes);
+            CPartialMerkleTree &us = *(const_cast<CPartialMerkleTree*>(this));
+            us.vBits.resize(vBytes.size() * 8);
+            for (unsigned int p = 0; p < us.vBits.size(); p++)
+                us.vBits[p] = (vBytes[p / 8] & (1 << (p % 8))) != 0;
+            us.fBad = false;
+        } else {
+            vBytes.resize((vBits.size()+7)/8);
+            for (unsigned int p = 0; p < vBits.size(); p++)
+                vBytes[p / 8] |= vBits[p] << (p % 8);
+            READWRITE(vBytes);
+        }
+    )
+
+    // Construct a partial merkle tree from a list of transaction id's, and a mask that selects a subset of them
+    CPartialMerkleTree(const std::vector<uint256> &vTxid, const std::vector<bool> &vMatch);
+
+    CPartialMerkleTree();
+
+    // extract the matching txid's represented by this partial merkle tree.
+    // returns the merkle root, or 0 in case of failure
+    uint256 ExtractMatches(std::vector<uint256> &vMatch);
+}; */
+
 
 /**  A txdb record that contains the disk location of a transaction and the
  * locations of transactions that spend its outputs.  vSpent is really only
@@ -685,6 +781,18 @@ public:
         vMerkleTree.clear();
         nDoS = 0;
     }
+/* 
+    CBlockHeader GetBlockHeader() const
+    {
+        CBlockHeader block;
+        block.nVersion       = nVersion;
+        block.hashPrevBlock  = hashPrevBlock;
+        block.hashMerkleRoot = hashMerkleRoot;
+        block.nTime          = nTime;
+        block.nBits          = nBits;
+        block.nNonce         = nNonce;
+        return block;
+    } */ // TODO:
 
     bool IsNull() const
     {
@@ -1377,8 +1485,161 @@ public:
     }
 };
 
+/* class CTxMemPool
+{
+public:
+    mutable CCriticalSection cs;
+    std::map<uint256, CTransaction> mapTx;
+    std::map<COutPoint, CInPoint> mapNextTx;
+    bool accept(CTransaction &tx, bool fCheckInputs, bool* pfMissingInputs);
+    bool addUnchecked(const uint256& hash, CTransaction &tx);
+    bool remove(const CTransaction &tx, bool fRecursive = false);
+    bool removeConflicts(const CTransaction &tx);
+    void clear();
+    void queryHashes(std::vector<uint256>& vtxid);
+    void pruneSpent(const uint256& hash, CCoins &coins);
+    unsigned long size()
+    {
+        LOCK(cs);
+        return mapTx.size();
+    }
+    bool exists(uint256 hash)
+    {
+        return (mapTx.count(hash) != 0);
+    }
+    CTransaction& lookup(uint256 hash)
+    {
+        return mapTx[hash];
+    }
+};
+extern CTxMemPool mempool;
+struct CCoinsStats
+{
+    int nHeight;
+    uint64 nTransactions;
+    uint64 nTransactionOutputs;
+    uint64 nSerializedSize;
+    CCoinsStats() : nHeight(0), nTransactions(0), nTransactionOutputs(0), nSerializedSize(0) {}
+};
+/** Abstract view on the open txout dataset. */
+/* class CCoinsView
+{
+public:
+    // Retrieve the CCoins (unspent transaction outputs) for a given txid
+    virtual bool GetCoins(uint256 txid, CCoins &coins);
+    // Modify the CCoins for a given txid
+    virtual bool SetCoins(uint256 txid, const CCoins &coins);
+    // Just check whether we have data for a given txid.
+    // This may (but cannot always) return true for fully spent transactions
+    virtual bool HaveCoins(uint256 txid);
+    // Retrieve the block index whose state this CCoinsView currently represents
+    virtual CBlockIndex *GetBestBlock();
+    // Modify the currently active block index
+    virtual bool SetBestBlock(CBlockIndex *pindex);
+    // Do a bulk modification (multiple SetCoins + one SetBestBlock)
+    virtual bool BatchWrite(const std::map<uint256, CCoins> &mapCoins, CBlockIndex *pindex);
+    // Calculate statistics about the unspent transaction output set
+    virtual bool GetStats(CCoinsStats &stats);
+    // As we use CCoinsViews polymorphically, have a virtual destructor
+    virtual ~CCoinsView() {}
+};
+/** CCoinsView backed by another CCoinsView */
+/* class CCoinsViewBacked : public CCoinsView
+{
+protected:
+    CCoinsView *base;
+public:
+    CCoinsViewBacked(CCoinsView &viewIn);
+    bool GetCoins(uint256 txid, CCoins &coins);
+    bool SetCoins(uint256 txid, const CCoins &coins);
+    bool HaveCoins(uint256 txid);
+    CBlockIndex *GetBestBlock();
+    bool SetBestBlock(CBlockIndex *pindex);
+    void SetBackend(CCoinsView &viewIn);
+    bool BatchWrite(const std::map<uint256, CCoins> &mapCoins, CBlockIndex *pindex);
+    bool GetStats(CCoinsStats &stats);
+};
+/** CCoinsView that adds a memory cache for transactions to another CCoinsView */
+/* class CCoinsViewCache : public CCoinsViewBacked
+{
+protected:
+    CBlockIndex *pindexTip;
+    std::map<uint256,CCoins> cacheCoins;
+public:
+    CCoinsViewCache(CCoinsView &baseIn, bool fDummy = false);
+    // Standard CCoinsView methods
+    bool GetCoins(uint256 txid, CCoins &coins);
+    bool SetCoins(uint256 txid, const CCoins &coins);
+    bool HaveCoins(uint256 txid);
+    CBlockIndex *GetBestBlock();
+    bool SetBestBlock(CBlockIndex *pindex);
+    bool BatchWrite(const std::map<uint256, CCoins> &mapCoins, CBlockIndex *pindex);
+    // Return a modifiable reference to a CCoins. Check HaveCoins first.
+    // Many methods explicitly require a CCoinsViewCache because of this method, to reduce
+    // copying.
+    CCoins &GetCoins(uint256 txid);
+    // Push the modifications applied to this cache to its base.
+    // Failure to call this method before destruction will cause the changes to be forgotten.
+    bool Flush();
+    // Calculate the size of the cache (in number of transactions)
+    unsigned int GetCacheSize();
+private:
+    std::map<uint256,CCoins>::iterator FetchCoins(uint256 txid);
+};
+/** CCoinsView that brings transactions from a memorypool into view.
+    It does not check for spendings by memory pool transactions. */
+/* class CCoinsViewMemPool : public CCoinsViewBacked
+{
+protected:
+    CTxMemPool &mempool;
+public:
+    CCoinsViewMemPool(CCoinsView &baseIn, CTxMemPool &mempoolIn);
+    bool GetCoins(uint256 txid, CCoins &coins);
+    bool HaveCoins(uint256 txid);
+};
+/** Global variable that points to the active CCoinsView (protected by cs_main) */
+// extern CCoinsViewCache *pcoinsTip;
+/** Global variable that points to the active block tree (protected by cs_main) */
+/* extern CBlockTreeDB *pblocktree;
+struct CBlockTemplate
+{
+    CBlock block;
+    std::vector<int64_t> vTxFees;
+    std::vector<int64_t> vTxSigOps;
+};
 
 
+
+
+
+
+/** Used to relay blocks as header + vector<merkle branch>
+ * to filtered nodes.
+ */
+/* class CMerkleBlock
+{
+public:
+    // Public only for unit testing
+    CBlockHeader header;
+    CPartialMerkleTree txn;
+
+public:
+    // Public only for unit testing and relay testing
+    // (not relayed)
+    std::vector<std::pair<unsigned int, uint256> > vMatchedTxn;
+
+    // Create from a CBlock, filtering transactions according to filter
+    // Note that this will call IsRelevantAndUpdate on the filter for each transaction,
+    // thus the filter will likely be modified.
+    CMerkleBlock(const CBlock& block, CBloomFilter& filter);
+
+    IMPLEMENT_SERIALIZE
+    (
+        READWRITE(header);
+        READWRITE(txn);
+    )
+};
+*/ // TODO:
 
 /** Capture information about block/transaction validation */
 class CValidationState {

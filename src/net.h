@@ -8,6 +8,7 @@
 #include "compat.h"
 #include "chain.h"
 #include "hash.h"
+// #include "bloom.h" TODO:
 #include "limitedmap.h"
 #include "mruset.h"
 #include "netbase.h"
@@ -333,6 +334,8 @@ public:
     CSemaphoreGrant grantOutbound;
     int nRefCount;
     NodeId id;
+//    CCriticalSection cs_filter; TODO:
+//    CBloomFilter* pfilter; TODO:
 protected:
 
     // Denial-of-service detection/prevention
@@ -407,7 +410,9 @@ public:
         fGetAddr = false;
         fRelayTxes = false; // TODO: reference this again
         hashCheckpointKnown = 0;
+//        fRelayTxes = false; TODO:
         setInventoryKnown.max_size(SendBufferSize() / 1000);
+//        pfilter = NULL; TODO:
         nPingNonceSent = 0;
         nPingUsecStart = 0;
         nPingUsecTime = 0;
@@ -432,6 +437,8 @@ public:
             closesocket(hSocket);
             hSocket = INVALID_SOCKET;
         }
+//        if (pfilter) TODO:
+//            delete pfilter; TODO:
         GetNodeSignals().FinalizeNode(GetId());
     }
 
@@ -930,5 +937,9 @@ public:
 };
 
 void DumpBanlist();
+
+/* class CTransaction;
+void RelayTransaction(const CTransaction& tx, const uint256& hash);
+void RelayTransaction(const CTransaction& tx, const uint256& hash, const CDataStream& ss); */ // TODO:
 
 #endif

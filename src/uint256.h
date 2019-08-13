@@ -365,6 +365,18 @@ public:
     }
 
     unsigned int size()
+// TODO: UNCOMMENT THIS SECTION IN A LATER UPDATE!
+//    const unsigned char* begin() const
+//    {
+//        return (unsigned char*)&pn[0];
+//    }
+//
+//    const unsigned char* end() const
+//    {
+//        return (unsigned char*)&pn[WIDTH];
+//    }
+//
+//    unsigned int size() const
     {
         return sizeof(pn);
     }
