@@ -7,8 +7,8 @@
 
 #include <vector>
 
-#include "uint256.h"
-#include "serialize.h"
+#include "primitives/uint256.h"
+#include "primitives/serialize.h"
 
 class COutPoint;
 class CTransaction;

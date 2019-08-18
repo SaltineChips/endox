@@ -1,7 +1,7 @@
 #include <boost/test/unit_test.hpp>
 
-#include "uint256.h"
-#include "main.h"
+#include "primitives/uint256.h"
+#include "core/main.h"
 
 using namespace std;
 

@@ -2,10 +2,10 @@
 #include <vector>
 
 #include "bloom.h"
-#include "util.h"
-#include "key.h"
-#include "base58.h"
-#include "main.h"
+#include "util/util.h"
+#include "subcore/key.h"
+#include "primitives/base58.h"
+#include "core/main.h"
 
 using namespace std;
 using namespace boost::tuples;

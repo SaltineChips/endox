@@ -1,4 +1,16 @@
 *
 !support
 !crypto
+!consensus
+!core
+!daemon
+!database
+!makefile
+!node
+!primitives
+!rpc
+!subcore
+!ui
+!util
+!xnode 
 !.gitignore
