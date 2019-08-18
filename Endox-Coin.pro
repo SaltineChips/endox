@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = Endox-Coin-qt
-VERSION = 1.8.9.7
+VERSION = 1.8.10.8
 INCLUDEPATH += src src/json src/qt src/qt/plugins/mrichtexteditor
 QT += core gui network printsupport
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
