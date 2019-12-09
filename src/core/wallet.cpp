@@ -22,7 +22,7 @@
 #include "node/masternodeman.h"
 #include "node/masternode-payments.h"
 #include "chainparams.h"
-
+#include "smessage.h"
 #include <boost/algorithm/string/replace.hpp>
 
 using namespace std;
@@ -270,6 +270,7 @@ bool CWallet::Unlock(const SecureString& strWalletPassphrase, bool anonymizeOnly
         fWalletUnlockAnonymizeOnly = anonymizeOnly;
         fWalletUnlockStakingOnly = stakingOnly;
         UnlockStealthAddresses(vMasterKey);
+        SecureMsgWalletUnlocked();
         return true;
     }
     return false;

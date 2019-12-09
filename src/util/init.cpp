@@ -23,6 +23,7 @@
 #include "node/masternodeman.h"
 #include "node/masternodeconfig.h"
 #include "spork.h"
+#include "smessage.h"
 
 #ifdef ENABLE_WALLET
 #include "database/db.h"
@@ -114,6 +115,7 @@ void Shutdown()
     RenameThread("Endox-Coin-shutoff");
     mempool.AddTransactionsUpdated(1);
     StopRPCThreads();
+    SecureMsgShutdown();
 
 #ifdef ENABLE_WALLET
     ShutdownRPCMining();
@@ -982,6 +984,10 @@ bool AppInit2(boost::thread_group& threadGroup)
 
     LogPrintf("Loaded %i addresses from peers.dat  %dms\n",
            addrman.size(), GetTimeMillis() - nStart);
+
+    // ********************************************************* Step 10.1: startup secure messaging
+
+    SecureMsgStart(fNoSmsg, GetBoolArg("-smsgscanchain", false));
 
     // ********************************************************* Step 11: start node
 
