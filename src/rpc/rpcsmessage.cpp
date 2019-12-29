@@ -8,7 +8,7 @@
 #include <boost/lexical_cast.hpp>
 
 #include "smessage.h"
-#include "init.h" // pwalletMain
+#include "util/init.h" // pwalletMain
 
 using namespace json_spirit;
 using namespace std;
