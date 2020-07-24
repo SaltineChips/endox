@@ -9,8 +9,8 @@
 #include "addresstablemodel.h"
 #include "bitcoinunits.h"
 
-#include "core/wallet.h"
-#include "ui/ui_interface.h"
+#include "wallet.h"
+#include "ui_interface.h"
 
 #include <QList>
 #include <QColor>

@@ -6,12 +6,12 @@
 #include "guiutil.h"
 #include "peertablemodel.h"
 
-#include "core/main.h"
-#include "core/chainparams.h"
-#include "util/util.h"
+#include "main.h"
+#include "chainparams.h"
+#include "util.h"
 
-#include "rpc/rpcserver.h"
-#include "rpc/rpcclient.h"
+#include "rpcserver.h"
+#include "rpcclient.h"
 
 #include "optionsmodel.h"
 

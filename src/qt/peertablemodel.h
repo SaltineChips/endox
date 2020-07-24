@@ -5,8 +5,8 @@
 #ifndef PEERTABLEMODEL_H
 #define PEERTABLEMODEL_H
 
-#include "core/main.h"
-#include "node/net.h"
+#include "main.h"
+#include "net.h"
 
 #include <QAbstractTableModel>
 #include <QStringList>

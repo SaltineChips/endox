@@ -7,9 +7,9 @@
 
 #include "walletmodeltransaction.h"
 
-#include "primitives/allocators.h" /* for SecureString */
+#include "allocators.h" /* for SecureString */
 #include "instantx.h"
-#include "core/wallet.h"
+#include "wallet.h"
 
 #include <map>
 #include <vector>

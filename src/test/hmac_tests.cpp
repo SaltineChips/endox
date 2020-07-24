@@ -1,7 +1,7 @@
 #include <boost/test/unit_test.hpp>
 
-#include "subcore/hash.h"
-#include "util/util.h"
+#include "hash.h"
+#include "util.h"
 
 using namespace std;
 

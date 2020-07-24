@@ -12,8 +12,8 @@
 #include <stdint.h>
 #include <string>
 #include <vector>
-#include "primitives/serialize.h"
-#include "primitives/allocators.h"
+#include "serialize.h"
+#include "allocators.h"
 
 
 #include <boost/date_time/posix_time/posix_time.hpp>

@@ -5,7 +5,7 @@
 
 #include "utilstrencodings.h"
 
-#include "primitives/tinyformat.h"
+#include "tinyformat.h"
 
 #include <errno.h>
 #include <limits>

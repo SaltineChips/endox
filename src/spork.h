@@ -5,15 +5,15 @@
 #ifndef SPORK_H
 #define SPORK_H
 
-#include "primitives/bignum.h"
-#include "core/sync.h"
-#include "node/net.h"
-#include "subcore/key.h"
+#include "bignum.h"
+#include "sync.h"
+#include "net.h"
+#include "key.h"
 
-#include "util/util.h"
-#include "subcore/script.h"
-#include "primitives/base58.h"
-#include "core/main.h"
+#include "util.h"
+#include "script.h"
+#include "base58.h"
+#include "main.h"
 
 using namespace std;
 using namespace boost;
@@ -49,12 +49,12 @@ using namespace boost;
 class CSporkMessage;
 class CSporkManager;
 
-#include "primitives/bignum.h"
-#include "node/net.h"
-#include "subcore/key.h"
-#include "util/util.h"
-#include "subcore/protocol.h"
-#include "node/mnengine.h"
+#include "bignum.h"
+#include "net.h"
+#include "key.h"
+#include "util.h"
+#include "protocol.h"
+#include "mnengine.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace std;

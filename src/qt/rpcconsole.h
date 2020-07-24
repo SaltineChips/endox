@@ -2,7 +2,7 @@
 #define RPCCONSOLE_H
 
 #include "guiutil.h"
-#include "node/net.h"
+#include "net.h"
 
 #include "peertablemodel.h"
 

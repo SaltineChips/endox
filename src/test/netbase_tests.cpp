@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "node/netbase.h"
+#include "netbase.h"
 
 using namespace std;
 

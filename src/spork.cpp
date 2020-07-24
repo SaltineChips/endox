@@ -4,16 +4,16 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 
-#include "primitives/bignum.h"
-#include "core/sync.h"
-#include "node/net.h"
-#include "subcore/key.h"
-#include "util/util.h"
-#include "subcore/script.h"
-#include "primitives/base58.h"
-#include "subcore/protocol.h"
+#include "bignum.h"
+#include "sync.h"
+#include "net.h"
+#include "key.h"
+#include "util.h"
+#include "script.h"
+#include "base58.h"
+#include "protocol.h"
 #include "spork.h"
-#include "core/main.h"
+#include "main.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace std;
