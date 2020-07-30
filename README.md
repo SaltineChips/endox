@@ -96,10 +96,20 @@ rpcport=51221
 port=51441
 rpcconnect=127.0.0.1
 rpcallowip=127.0.0.1
-addnode=157.230.107.144
-addnode=138.197.161.183
-addnode=188.166.109.87
 addnode=46.101.73.64
+addnode=46.101.73.64:51441
+addnode=159.203.38.89
+addnode=159.203.38.89:51441
+addnode=206.189.87.188
+addnode=206.189.87.188:51441
+addnode=188.166.109.87
+addnode=188.166.109.87:51441
+addnode=167.99.88.37
+addnode=167.99.88.37:51441
+addnode=157.230.107.144
+addnode=157.230.107.144:51441
+addnode=138.197.161.183
+addnode=138.197.161.183:51441
 CONFIG
 chmod 700 ~/.EDX/Endox-Coin.conf; chmod 700 ~/.EDX; ls -la ~/.EDX
 ```
