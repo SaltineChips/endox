@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = Endox-Coin-qt
-VERSION = 1.7.8.6
+VERSION = 1.7.8.7
 INCLUDEPATH += src src/json src/qt src/qt/plugins/mrichtexteditor
 QT += core gui widgets network printsupport
 DEFINES += ENABLE_WALLET
