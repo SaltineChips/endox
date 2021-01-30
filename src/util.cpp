@@ -1218,11 +1218,20 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
                fprintf(ConfFile, "rpcport=51221\n");
                fprintf(ConfFile, "rpcconnect=127.0.0.1\n");
                fprintf(ConfFile, "rpcallowip=127.0.0.1\n");
-               fprintf(ConfFile, "addnode=157.230.107.144\n");
-               fprintf(ConfFile, "addnode=138.197.161.183\n");
-               fprintf(ConfFile, "addnode=188.166.109.87\n");
                fprintf(ConfFile, "addnode=46.101.73.64\n");
-
+               fprintf(ConfFile, "addnode=46.101.73.64:51441\n");
+               fprintf(ConfFile, "addnode=159.203.38.89\n");
+               fprintf(ConfFile, "addnode=159.203.38.89:51441\n");
+               fprintf(ConfFile, "addnode=206.189.87.188\n");
+               fprintf(ConfFile, "addnode=206.189.87.188:51441\n");
+               fprintf(ConfFile, "addnode=188.166.109.87\n");
+               fprintf(ConfFile, "addnode=188.166.109.87:51441\n");
+               fprintf(ConfFile, "addnode=167.99.88.37\n");
+               fprintf(ConfFile, "addnode=167.99.88.37:51441\n");
+               fprintf(ConfFile, "addnode=157.230.107.144\n");
+               fprintf(ConfFile, "addnode=157.230.107.144:51441\n");
+               fprintf(ConfFile, "addnode=138.197.161.183\n");
+               fprintf(ConfFile, "addnode=138.197.161.183:51441\n");
                fclose(ConfFile);
     }
 
